@@ -72,4 +72,6 @@ dependencies {
 
     implementation("com.google.dagger:dagger:$daggerVersion")
     kapt("com.google.dagger:dagger-compiler:$daggerVersion")
+
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
 }
