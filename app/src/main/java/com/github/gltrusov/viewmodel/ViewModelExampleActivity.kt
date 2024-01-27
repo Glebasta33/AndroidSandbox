@@ -48,5 +48,13 @@ class ViewModelExampleActivity : ComponentActivity() {
                 viewModel.incrementState()
             }
         }
+
+        viewModelWithDependencies.doSomething()
     }
+
+    /**
+     * Кастомную фабрику можно передать в ViewModelProvider.
+     * Последний параметр factoryProducer: (() -> Factory)? = null позволяет передать свою фабрику.
+     */
+    private val viewModelWithDependencies: ViewModelWithDependencies by viewModels { ViewModelWithDependencies.Factory }
 }
