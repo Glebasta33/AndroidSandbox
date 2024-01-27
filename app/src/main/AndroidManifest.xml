@@ -14,7 +14,7 @@
         android:theme="@style/Theme.AndroidSandbox"
         tools:targetApi="31">
         <activity
-            android:name=".dagger.c2_dependency_organization.DaggerExampleActivity"
+            android:name=".viewmodel.ViewModelExampleActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.AndroidSandbox">
