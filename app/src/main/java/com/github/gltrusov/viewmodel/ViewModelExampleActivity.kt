@@ -5,6 +5,11 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.viewModels
 import androidx.lifecycle.ViewModelProvider
+import com.github.gltrusov.dagger.c2_dependency_organization.appComponent
+import com.github.gltrusov.viewmodel.di.DIViewModel
+import com.github.gltrusov.viewmodel.di.DIViewModel2
+import com.github.gltrusov.viewmodel.di.DIViewModelFactory
+import javax.inject.Inject
 import kotlin.concurrent.thread
 
 /**
@@ -12,8 +17,21 @@ import kotlin.concurrent.thread
  */
 class ViewModelExampleActivity : ComponentActivity() {
 
+    /**
+     * Для иньекции ViewModel достаточно заинжектить фабрику и передать её в ViewModelProvider.
+     */
+    @Inject
+    lateinit var diViewModelFactory: DIViewModelFactory
+    private val diViewModel: DIViewModel by viewModels { diViewModelFactory }
+    private val diViewModel2: DIViewModel2 by viewModels { diViewModelFactory }
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        appComponent.inject(this)
         super.onCreate(savedInstanceState)
+
+        diViewModel.loadData()
+        diViewModel2.loadData()
+
         /**
          * ViewModelProvider первым параметром принимает ViewModelStoreOwner.
          * ViewModelStoreOwner интерфейс (реализуется Activity, Fragment...) с одним полем ViewModelStore.

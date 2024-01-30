@@ -52,6 +52,7 @@ class NewsRepositoryImpl @Inject constructor(
      */
 //    @param:Named("prod")
 //    @param:Prod
+    @param:Test
     private val newsService: NewsService,
     private val analytics: Analytics,
 ) : NewsRepository {

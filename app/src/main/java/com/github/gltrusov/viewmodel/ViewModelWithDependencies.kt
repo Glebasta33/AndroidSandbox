@@ -37,7 +37,6 @@ class ViewModelWithDependencies(
                 // Получение контекста Application из extras
                 val application = checkNotNull(extras[APPLICATION_KEY])
 
-                // Имя доступ к Application, можно инджектить зависимости через DI.
                 val repository = ExampleRepository(application)
 
                 return ViewModelWithDependencies(repository) as T

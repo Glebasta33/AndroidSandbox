@@ -1,5 +1,7 @@
 package com.github.gltrusov.dagger.c2_dependency_organization
 
+import com.github.gltrusov.viewmodel.ViewModelExampleActivity
+import com.github.gltrusov.viewmodel.di.ViewModelModule
 import dagger.Binds
 import dagger.Component
 import dagger.Module
@@ -12,12 +14,13 @@ import javax.inject.Qualifier
 @Component(modules = [AppModule::class])
 interface AppComponent {
     fun inject(activity: DaggerExampleActivity)
+    fun inject(activity: ViewModelExampleActivity)
 }
 
 /**
  * В модули можно вкладывать другие модули.
  */
-@Module(includes = [NetworkModule::class, AppBindModule::class])
+@Module(includes = [NetworkModule::class, AppBindModule::class, ViewModelModule::class])
 class AppModule {
 
     /**
@@ -88,6 +91,15 @@ class NetworkModule {
             .build()
         return retrofit.create()
     }
+
+    @Provides
+    @Test
+    fun provideMockNewsService(): NewsService {
+        return object : NewsService {
+            override suspend fun news(): List<News> = emptyList()
+            override suspend fun news(id: String): News = News("test", "test", "test")
+        }
+    }
 }
 
 
@@ -116,3 +128,7 @@ annotation class Prod
 @Qualifier
 @Retention(AnnotationRetention.RUNTIME)
 annotation class Stage
+
+@Qualifier
+@Retention(AnnotationRetention.RUNTIME)
+annotation class Test
