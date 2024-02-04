@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <application
-        android:name=".dagger.c2_dependency_organization.MainApp"
+        android:name=".dagger.c3_subcomponents.dependent._0.DaggerApp31"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
