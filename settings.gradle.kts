@@ -15,3 +15,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "AndroidSandbox"
 include(":app")
+include(":core")
+include(":api")
+include(":feature_sample")
