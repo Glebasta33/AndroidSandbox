@@ -28,7 +28,7 @@ internal class ArticleViewHolder(
 
     fun bind(article: Article) {
         binding.content.text = article.content
-        binding.title.text = article.content
+        binding.title.text = article.title
     }
 }
 

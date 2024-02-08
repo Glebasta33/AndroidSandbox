@@ -12,8 +12,12 @@ import kotlin.properties.Delegates.notNull
 annotation class Feature
 
 /**
+ * У фичи есть свой компонент, реализующий иньекцию зависимостей в экран фичи.
  * Компонент фичи помечается internal, потому что про этот компонент никто не должен знать, кроме самой фичи.
- * Чтобы передать зависимости в компонент, нужно определить их в отдельно интерфейсе ArticlesDeps и передать их в параметр dependencies/
+ *
+ * Какие-то зависимости в ArticlesComponent нужно передавать извне (например, нет смысла создавать каждый раз в графе фичи отдельный OkHttpClient).
+ * Эти зависимости нужно определить в отдельном интерфейсе.
+ * Чтобы передать зависимости в компонент, нужно определить их в интерфейсе ArticlesDeps и передать их в параметр Component(dependencies= )  (поход Component Dependencies).
  */
 @[Feature Component(dependencies = [ArticlesDeps::class])]
 internal interface ArticlesComponent {
@@ -46,7 +50,7 @@ interface ArticlesDeps {
 /**
  * Если с BaseAppComponent понятно, что его нужно хранить в классе Application, то где хранить ссылку на FeatureComponent, потому что он должен жить пока живёт фича.
  * Где хранить ссылку на FeatureComponent?
- * Это может быть Fragment, Activity, Service, ViewModel (+), своё произвольное место.
+ * Это может быть Fragment, Activity, Service, ViewModel (+), своё произвольное место (FeatureHolder?).
  *
  * ArticlesComponentViewModel - это VM, единственная задача которой - сохранять в себе компонент фичи.
  */

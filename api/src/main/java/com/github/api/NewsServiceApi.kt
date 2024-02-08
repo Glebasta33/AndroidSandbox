@@ -34,7 +34,32 @@ fun NewsService(apiKey: String): NewsServiceApi {
         .addConverterFactory(json.asConverterFactory(MediaType.parse("application/json")!!))
         .build()
 
-    return retrofit.create(NewsServiceApi::class.java)
+    return object : NewsServiceApi {
+        override suspend fun everything(): Articles {
+            return Articles(
+                articles = listOf(
+                    Article(
+                        author = "J. Lock",
+                        title = "Dagger 2 & DI",
+                        description = "Evolution of DI in Android",
+                        url = "https://newsapi.org/url",
+                        null,
+                        "Evolution of DI in Android"
+                    ),
+                    Article(
+                        author = "J. Lock",
+                        title = "Dagger 2 & DI",
+                        description = "Evolution of DI in Android",
+                        url = "https://newsapi.org/url",
+                        null,
+                        "Evolution of DI in Android"
+                    )
+                )
+            )
+        }
+
+    }
+        //retrofit.create(NewsServiceApi::class.java)
 }
 
 private const val HEADER_API_KEY = "X-Api-Key"

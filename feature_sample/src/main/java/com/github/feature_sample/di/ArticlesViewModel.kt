@@ -20,10 +20,8 @@ internal class ArticlesViewModel(private val newsService: NewsServiceApi) : View
 
     val articles = flow {
         try {
-            Log.d(TAG, "${newsService.everything().articles}")
             emit(newsService.everything().articles)
         } catch (e: Exception) {
-            //TODO: Пофиксить ошибку
             Log.d(TAG, "Error", e)
         }
     }.stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())

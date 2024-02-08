@@ -38,16 +38,20 @@ import javax.inject.Scope
  * Упрощённая структура:
  * - Core
  * - API
- *      - NewsList-фича
- *          - App
+ *      - NewsList-фича (Gradle dependencies: implementation(project(":core")), implementation(project(":api")))
+ *          - App (Gradle dependencies: implementation(project(":feature_sample")), implementation(project(":api")))
  *
  * Для данных модулей нужно создать следующие компоненты:
  * - Утилитарные модули Core, API (без Components, тк они не должны за собой ничего нести)
  *      - FeatureComponent
  *          - AppComponent
  *
+ * Направление зависимости между фича модулями и app-модулем:
+ * app gradle module -> feature gradle module
+ * MainActivity   ->    ArticlesFragment
+ * AppComponent    <-   ArticlesComponent
  *
- * AppComponent реализует интерфейс с зависимостями фичи.
+ * AppComponent реализует интерфейс с зависимостями фичи - ArticlesDeps (объявленный в фича-модуле).
  *
  * Если с BaseAppComponent понятно, что его нужно хранить в классе Application, то где хранить ссылку на FeatureComponent,
  * потому что он должен жить пока живёт фича.
@@ -57,6 +61,9 @@ import javax.inject.Scope
 @[AppScope Component(modules = [BaseAppModule::class])]
 interface BaseAppComponent : ArticlesDeps {
 
+    /**
+     * Переопределение зависимости из ArticlesDeps
+     */
     override val newsService: NewsServiceApi
 
     @Component.Builder

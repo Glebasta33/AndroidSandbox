@@ -29,7 +29,7 @@ class ArticlesFragment : Fragment(R.layout.fragment_articles) {
 
     override fun onAttach(context: Context) {
         /**
-         * Чтобы работать с компонентов фичи, получаем её из ViewModel, к которому компонент привязан.
+         * Чтобы работать с компонентом фичи, получаем её из ViewModel, внутри которой билдится и хранится компонент фичи.
          */
         ViewModelProvider(this).get<ArticlesComponentViewModel>()
             .newDetailsComponent.inject(this)

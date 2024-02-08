@@ -8,6 +8,9 @@ import com.github.gltrusov.dagger.c5_multimodularity.app_module.di.DaggerBaseApp
 
 class NewsApp : Application() {
 
+    /**
+     * Создание компонента app:
+     */
     val appComponent: BaseAppComponent by lazy {
         DaggerBaseAppComponent.builder()
             .application(this)
@@ -17,6 +20,9 @@ class NewsApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        /**
+         * AppComponent кладётся в держатель зависимостей фичи и затем используется для построения графа фичи.
+         */
         ArticlesDepsStore.deps = appComponent
     }
 }

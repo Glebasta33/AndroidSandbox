@@ -10,6 +10,9 @@ class BaseMainActivity : AppCompatActivity(R.layout.activity_main) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val fragmentManager = supportFragmentManager
+        /**
+         * Фрагмент из фича-модуля создаётся в app-модуле:
+         */
         if (fragmentManager.findFragmentById(R.id.fragment_container) == null) {
             fragmentManager.beginTransaction()
                 .add(R.id.fragment_container, ArticlesFragment.newInstance())
