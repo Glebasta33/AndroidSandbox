@@ -14,7 +14,7 @@
         android:theme="@style/Theme.AndroidSandbox.AppCompat"
         tools:targetApi="31">
         <activity
-            android:name=".dagger.c5_multimodularity.app_module.BaseMainActivity"
+            android:name=".interview_fuckups.assets.AssetsActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.AndroidSandbox.AppCompat">
