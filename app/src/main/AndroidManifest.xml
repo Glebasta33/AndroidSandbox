@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <application
-        android:name=".dagger.c5_multimodularity.app_module.NewsApp"
+        android:name=".dagger.c6_hilt.HiltApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -14,9 +14,8 @@
         android:theme="@style/Theme.AndroidSandbox.AppCompat"
         tools:targetApi="31">
         <activity
-            android:name=".interview_fuckups.assets.AssetsActivity"
+            android:name=".dagger.c6_hilt.HiltExampleActivity"
             android:exported="true"
-            android:label="@string/app_name"
             android:theme="@style/Theme.AndroidSandbox.AppCompat">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
