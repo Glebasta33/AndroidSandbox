@@ -1,4 +1,4 @@
-package com.github.gltrusov.dagger.di_basics
+package com.github.gltrusov.dagger.c1_di_basics
 
 class Processor {
     override fun toString(): String = "Intel Core i9"

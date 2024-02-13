@@ -1,4 +1,4 @@
-package com.github.gltrusov.dagger.di_basics
+package com.github.gltrusov.dagger.c1_di_basics
 
 import com.github.gltrusov.MainActivity
 import dagger.Component
