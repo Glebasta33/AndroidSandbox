@@ -9,8 +9,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.github.gltrusov.dagger.c1_di_basics.Computer
-import com.github.gltrusov.dagger.c1_di_basics.appComponent
+import com.github.gltrusov.dagger.androidbroadcast.c1_di_basics.Computer
+import com.github.gltrusov.dagger.androidbroadcast.c1_di_basics.appComponent
 import com.github.gltrusov.ui.theme.AndroidSandboxTheme
 import javax.inject.Inject
 

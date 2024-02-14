@@ -54,6 +54,13 @@ android {
         javaCompileOptions.annotationProcessorOptions.arguments["dagger.hilt.disableModulesHaveInstallInCheck"] =
             "true"
     }
+    kapt {
+        arguments {
+            arg("dagger.formatGeneratedSource", "disabled")
+            arg("dagger.fastInit", "enabled")
+            arg("dagger.gradle.incremental", "enabled")
+        }
+    }
 }
 
 val daggerVersion = "2.50"

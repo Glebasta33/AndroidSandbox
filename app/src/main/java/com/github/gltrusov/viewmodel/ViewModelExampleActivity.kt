@@ -5,7 +5,7 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.viewModels
 import androidx.lifecycle.ViewModelProvider
-import com.github.gltrusov.dagger.c2_dependency_organization.appComponent
+import com.github.gltrusov.dagger.androidbroadcast.c2_dependency_organization.appComponent
 import com.github.gltrusov.viewmodel.di.DIViewModel
 import com.github.gltrusov.viewmodel.di.DIViewModel2
 import com.github.gltrusov.viewmodel.di.DIViewModelFactory
