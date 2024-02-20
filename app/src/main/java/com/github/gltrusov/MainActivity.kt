@@ -14,7 +14,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
@@ -24,6 +23,7 @@ import androidx.navigation.activity
 import androidx.navigation.createGraph
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.fragment
+import androidx.navigation.navigation
 import com.github.gltrusov.navigation.ExampleComposeActivity
 import com.github.gltrusov.ui.theme.AndroidSandboxTheme
 
@@ -86,6 +86,14 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             activity("example_activity") {
                 activityClass = ExampleComposeActivity::class
             }
+            /**
+             * Вложенный граф создаётся тем же самым методом, что и в Compose - navigation().
+             */
+            navigation(startDestination = "solid", route = "solid_root") {
+                fragment<SolidFragment>("solid")
+                fragment<SingleResponsibilityFragment>("single_responsibility")
+                fragment<OpenClosedFragment>("open_closed")
+            }
         }
         navController.setGraph(navGraph, null)
     }
@@ -123,15 +131,10 @@ class RootCatalogFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View = ComposeView(inflater.context).apply {
-        setViewCompositionStrategy(
-            ViewCompositionStrategy.DisposeOnLifecycleDestroyed(
-                viewLifecycleOwner
-            )
-        )
         setContent {
             AndroidSandboxTheme {
                 LazyColumn {
-                    items(listOf("custom_view", "recycler_view", "example_activity")) { item ->
+                    items(listOf("custom_view", "recycler_view", "example_activity", "solid_root")) { item ->
                         Text(
                             text = item,
                             modifier = Modifier
@@ -154,11 +157,6 @@ class CustomViewFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View = ComposeView(inflater.context).apply {
-        setViewCompositionStrategy(
-            ViewCompositionStrategy.DisposeOnLifecycleDestroyed(
-                viewLifecycleOwner
-            )
-        )
         setContent {
             AndroidSandboxTheme {
                 Text("CustomView")
@@ -173,14 +171,69 @@ class RecyclerViewFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View = ComposeView(inflater.context).apply {
-        setViewCompositionStrategy(
-            ViewCompositionStrategy.DisposeOnLifecycleDestroyed(
-                viewLifecycleOwner
-            )
-        )
         setContent {
             AndroidSandboxTheme {
                 Text("RecyclerView")
+            }
+        }
+    }
+}
+
+//Фрагменты для вложенного графа:
+class SolidFragment : Fragment() {
+    lateinit var navController: NavController
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View = ComposeView(inflater.context).apply {
+        setContent {
+            AndroidSandboxTheme {
+                LazyColumn {
+                    items(listOf("single_responsibility", "open_closed")) { item ->
+                        Text(
+                            text = item,
+                            modifier = Modifier
+                                .padding(16.dp)
+                                .clickable {
+                                    navController.navigate(item)
+                                }
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+class SingleResponsibilityFragment : Fragment() {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View = ComposeView(inflater.context).apply {
+        setContent {
+            AndroidSandboxTheme {
+                Text("SingleResponsibility")
+            }
+        }
+    }
+}
+
+class OpenClosedFragment : Fragment() {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View = ComposeView(inflater.context).apply {
+        setContent {
+            AndroidSandboxTheme {
+                Text("OpenClosed")
             }
         }
     }
