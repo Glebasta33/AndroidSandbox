@@ -64,6 +64,7 @@ android {
 }
 
 val daggerVersion = "2.50"
+val nav_version = "2.7.7"
 
 dependencies {
 
@@ -92,6 +93,9 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:$daggerVersion")
 
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
+
+    implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
+    implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
 
     implementation(project(":feature_sample"))
     implementation(project(":api"))

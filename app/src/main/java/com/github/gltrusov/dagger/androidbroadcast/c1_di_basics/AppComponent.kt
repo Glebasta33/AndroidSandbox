@@ -1,6 +1,5 @@
 package com.github.gltrusov.dagger.androidbroadcast.c1_di_basics
 
-import com.github.gltrusov.MainActivity
 import dagger.Component
 import dagger.Module
 import dagger.Provides
