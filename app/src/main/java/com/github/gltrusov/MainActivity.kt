@@ -1,7 +1,9 @@
 package com.github.gltrusov
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
@@ -18,9 +20,11 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph
 import androidx.navigation.Navigation
+import androidx.navigation.activity
 import androidx.navigation.createGraph
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.fragment
+import com.github.gltrusov.navigation.ExampleComposeActivity
 import com.github.gltrusov.ui.theme.AndroidSandboxTheme
 
 /**
@@ -51,12 +55,17 @@ import com.github.gltrusov.ui.theme.AndroidSandboxTheme
  */
 class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
+    lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setSupportActionBar(findViewById(R.id.my_toolbar))
+        setupActionBar()
+
+
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        val navController: NavController = navHostFragment.navController
+        navController = navHostFragment.navController
 
         /**
          * Более устарвеший подход создания графа - через XML.
@@ -74,8 +83,31 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             fragment<RecyclerViewFragment>("recycler_view") {
                 label = "Recycler view"
             }
+            activity("example_activity") {
+                activityClass = ExampleComposeActivity::class
+            }
         }
         navController.setGraph(navGraph, null)
+    }
+
+    private fun setupActionBar() {
+        supportActionBar?.apply {
+            title = resources.getString(R.string.app_name)
+            setDisplayHomeAsUpEnabled(true)
+        }
+    }
+
+    @SuppressLint("RestrictedApi")
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            if (navController.currentBackStack.value.isNotEmpty()) {
+                navController.popBackStack()
+            } else {
+                onBackPressedDispatcher.onBackPressed()
+            }
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
 
@@ -85,6 +117,7 @@ class RootCatalogFragment : Fragment() {
         super.onCreate(savedInstanceState)
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -98,7 +131,7 @@ class RootCatalogFragment : Fragment() {
         setContent {
             AndroidSandboxTheme {
                 LazyColumn {
-                    items(listOf("custom_view", "recycler_view")) { item ->
+                    items(listOf("custom_view", "recycler_view", "example_activity")) { item ->
                         Text(
                             text = item,
                             modifier = Modifier
@@ -114,7 +147,7 @@ class RootCatalogFragment : Fragment() {
     }
 }
 
-
+// example region:
 class CustomViewFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -152,3 +185,4 @@ class RecyclerViewFragment : Fragment() {
         }
     }
 }
+// region end.
