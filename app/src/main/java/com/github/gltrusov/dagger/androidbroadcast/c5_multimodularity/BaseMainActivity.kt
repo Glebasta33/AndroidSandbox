@@ -13,9 +13,9 @@ class BaseMainActivity : AppCompatActivity(R.layout.activity_main) {
         /**
          * Фрагмент из фича-модуля создаётся в app-модуле:
          */
-        if (fragmentManager.findFragmentById(R.id.fragment_container) == null) {
+        if (fragmentManager.findFragmentById(R.id.nav_host_fragment) == null) {
             fragmentManager.beginTransaction()
-                .add(R.id.fragment_container, ArticlesFragment.newInstance())
+                .add(R.id.nav_host_fragment, ArticlesFragment.newInstance())
                 .commit()
         }
     }
