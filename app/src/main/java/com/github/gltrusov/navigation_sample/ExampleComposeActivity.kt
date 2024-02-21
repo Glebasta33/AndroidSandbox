@@ -1,4 +1,4 @@
-package com.github.gltrusov.navigation
+package com.github.gltrusov.navigation_sample
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
