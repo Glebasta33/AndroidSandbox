@@ -24,6 +24,8 @@ import androidx.navigation.createGraph
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.fragment
 import androidx.navigation.navigation
+import com.github.feature_sample.di.FeatureActivity
+import com.github.feature_sample.di.FeatureFragment
 import com.github.gltrusov.navigation.ExampleComposeActivity
 import com.github.gltrusov.ui.theme.AndroidSandboxTheme
 
@@ -86,6 +88,10 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             activity("example_activity") {
                 activityClass = ExampleComposeActivity::class
             }
+            activity("feature_activity") {
+                activityClass = FeatureActivity::class
+            }
+            fragment<FeatureFragment>("feature_fragment")
             /**
              * Вложенный граф создаётся тем же самым методом, что и в Compose - navigation().
              */
@@ -123,6 +129,10 @@ class RootCatalogFragment : Fragment() {
     lateinit var navController: NavController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        /**
+         *  Navigation - точка входа для операций навигации.
+         *  Класс Navigation способен найти релевантный NavController из множества мест в приложении.
+         */
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
     }
 
@@ -134,7 +144,15 @@ class RootCatalogFragment : Fragment() {
         setContent {
             AndroidSandboxTheme {
                 LazyColumn {
-                    items(listOf("custom_view", "recycler_view", "example_activity", "solid_root")) { item ->
+                    items(
+                        listOf(
+                            "custom_view",
+                            "recycler_view",
+                            "example_activity",
+                            "solid_root",
+                            "feature_fragment"
+                        )
+                    ) { item ->
                         Text(
                             text = item,
                             modifier = Modifier
@@ -226,6 +244,15 @@ class SingleResponsibilityFragment : Fragment() {
 }
 
 class OpenClosedFragment : Fragment() {
+    lateinit var navController: NavController
+    lateinit var navGraph: NavGraph
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
+        navGraph = navController.graph
+    }
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -233,7 +260,13 @@ class OpenClosedFragment : Fragment() {
     ): View = ComposeView(inflater.context).apply {
         setContent {
             AndroidSandboxTheme {
-                Text("OpenClosed")
+                Text(
+                    "OpenClosed",
+                    modifier = Modifier.clickable {
+                        navController.navigate("feature_activity")
+//                        openDeepLink<FeatureActivity>(navController, navGraph)
+                    }
+                )
             }
         }
     }
