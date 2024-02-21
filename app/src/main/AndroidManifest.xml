@@ -18,7 +18,7 @@
             android:label="@string/title_activity_example_compose"
             android:theme="@style/Theme.AndroidSandbox.AppCompat" />
         <activity
-            android:name=".navigation_sample.NavigationDraftActivity"
+            android:name=".MainActivity"
             android:exported="true"
             android:theme="@style/Theme.AndroidSandbox.AppCompat">
             <intent-filter>
