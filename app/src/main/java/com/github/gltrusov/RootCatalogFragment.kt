@@ -18,7 +18,9 @@ import androidx.navigation.Navigation
 import com.github.gltrusov.navigation.Screen
 import com.github.gltrusov.ui.theme.AndroidSandboxTheme
 
-class RootFragment : Fragment() {
+class RootCatalogFragment : Fragment() {
+
+    //TODO: Логику инициализации NavController нужно вынести в базовый CoreFragment, чтобы не повторяться.
     lateinit var navController: NavController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +31,7 @@ class RootFragment : Fragment() {
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
     }
 
+    //TODO: Сделать несколько экранов с примерами ViewModel
     /**
      * Хорошо бы где-то хранить список экранов в едином месте.
      */

@@ -5,10 +5,8 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
-import androidx.navigation.createGraph
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.fragment
-import com.github.gltrusov.navigation.Screen
+import com.github.gltrusov.navigation.graph.AppNavGraph
 
 /**
  * Главная стартовая активность приложения.
@@ -25,15 +23,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
 
-        with(navController) {
-            createGraph(
-                startDestination = Screen.Root.route
-            ) {
-                fragment<RootFragment>(Screen.Root.route)
-            }.also { navGraph ->
-                setGraph(navGraph, null)
-            }
-        }
+        AppNavGraph.setGraph(navController)
     }
 
     private fun setupActionBar() {

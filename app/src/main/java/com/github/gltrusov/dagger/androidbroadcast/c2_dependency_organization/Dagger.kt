@@ -1,6 +1,6 @@
 package com.github.gltrusov.dagger.androidbroadcast.c2_dependency_organization
 
-import com.github.gltrusov.viewmodel.ViewModelExampleActivity
+import com.github.gltrusov.viewmodel.vm_basics.ViewModelExampleActivity
 import com.github.gltrusov.viewmodel.di.ViewModelModule
 import dagger.Binds
 import dagger.Component
@@ -8,7 +8,6 @@ import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
 import retrofit2.create
-import javax.inject.Named
 import javax.inject.Qualifier
 
 @Component(modules = [AppModule::class])

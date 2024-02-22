@@ -1,4 +1,4 @@
-package com.github.gltrusov.viewmodel
+package com.github.gltrusov.viewmodel.vm_basics
 
 import android.app.Application
 import android.util.Log
