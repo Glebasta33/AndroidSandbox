@@ -12,24 +12,11 @@ import androidx.compose.material3.Text
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.unit.dp
-import androidx.fragment.app.Fragment
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import com.github.gltrusov.navigation.Screen
+import com.github.gltrusov.navigation.component.CoreFragment
 import com.github.gltrusov.ui.theme.AndroidSandboxTheme
 
-class RootCatalogFragment : Fragment() {
-
-    //TODO: Логику инициализации NavController нужно вынести в базовый CoreFragment, чтобы не повторяться.
-    lateinit var navController: NavController
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        /**
-         *  Navigation - точка входа для операций навигации.
-         *  Класс Navigation способен найти релевантный NavController из множества мест в приложении.
-         */
-        navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
-    }
+class RootCatalogFragment : CoreFragment() {
 
     //TODO: Сделать несколько экранов с примерами ViewModel
     /**

@@ -1,4 +1,4 @@
-package com.github.gltrusov.viewmodel
+package com.github.gltrusov.viewmodel.nav_samples
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,17 +12,12 @@ import androidx.compose.material3.Text
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.unit.dp
-import androidx.fragment.app.Fragment
-import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.fragment
 import androidx.navigation.navigation
-import com.github.gltrusov.R
 import com.github.gltrusov.navigation.Screen
+import com.github.gltrusov.navigation.component.CoreFragment
 import com.github.gltrusov.ui.theme.AndroidSandboxTheme
-import com.github.gltrusov.viewmodel.nav_samples.ViewModel1Fragment
-import com.github.gltrusov.viewmodel.nav_samples.ViewModel2Fragment
 
 fun NavGraphBuilder.ViewModelsNavGraph() {
     navigation(startDestination = Screen.ViewModel.Root.route, route = Screen.ViewModel.route) {
@@ -32,18 +27,12 @@ fun NavGraphBuilder.ViewModelsNavGraph() {
     }
 }
 
-class RootViewModelsFragment : Fragment() {
+class RootViewModelsFragment : CoreFragment() {
 
     val screens = listOf(
         Screen.ViewModel.ViewModel1,
         Screen.ViewModel.ViewModel2
     )
-
-    lateinit var navController: NavController
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

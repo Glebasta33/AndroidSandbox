@@ -10,22 +10,13 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.ComposeView
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
-import com.github.gltrusov.R
+import com.github.gltrusov.navigation.component.CoreFragment
 import com.github.gltrusov.ui.theme.AndroidSandboxTheme
 
-class ViewModel1Fragment : Fragment() {
+class ViewModel1Fragment : CoreFragment() {
 
     private val viewModel1 by viewModels<ViewModel1>()
-
-    lateinit var navController: NavController
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -6,7 +6,7 @@ import androidx.navigation.createGraph
 import androidx.navigation.fragment.fragment
 import com.github.gltrusov.RootCatalogFragment
 import com.github.gltrusov.navigation.Screen
-import com.github.gltrusov.viewmodel.ViewModelsNavGraph
+import com.github.gltrusov.viewmodel.nav_samples.ViewModelsNavGraph
 
 object AppNavGraph {
     fun setGraph(navController: NavController) {
