@@ -99,6 +99,8 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
     implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
 
+    implementation("org.jetbrains.kotlin:kotlin-reflect:1.9.21")
+
     implementation(project(":feature_sample"))
     implementation(project(":api"))
 }

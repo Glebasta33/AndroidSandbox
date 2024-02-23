@@ -1,9 +1,11 @@
 package com.github.gltrusov.viewmodel.nav_samples
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -29,10 +31,26 @@ fun NavGraphBuilder.ViewModelsNavGraph() {
 
 class RootViewModelsFragment : CoreFragment() {
 
-    val screens = listOf(
+    private val screens = listOf(
         Screen.ViewModel.ViewModel1,
         Screen.ViewModel.ViewModel2
     )
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val kClass = this::class.java
+        kClass.declaredFields.forEach {
+            println("MY_TEST. field: ${it.name}: ${it.genericType}")
+        }
+        kClass.declaredMethods.forEach {
+            val params = it.parameters.map { it.type.simpleName }
+                .joinToString(separator = ", ")
+
+            println("MY_TEST. method: ${it.name}($params): ${it.returnType.simpleName}")
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
