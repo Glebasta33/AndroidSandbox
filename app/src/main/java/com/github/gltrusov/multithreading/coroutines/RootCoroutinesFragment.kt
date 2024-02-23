@@ -1,4 +1,4 @@
-package com.github.gltrusov
+package com.github.gltrusov.multithreading.coroutines
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,19 +12,26 @@ import androidx.compose.material3.Text
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.fragment.fragment
+import androidx.navigation.navigation
 import com.github.gltrusov.navigation.Screen
 import com.github.gltrusov.navigation.component.CoreFragment
 import com.github.gltrusov.ui.theme.AndroidSandboxTheme
 
-class RootCatalogFragment : CoreFragment() {
+fun NavGraphBuilder.CoroutinesNavGraph() {
+    navigation(startDestination = Screen.Coroutines.Root.route, route = Screen.Coroutines.route) {
+        fragment<RootCoroutinesFragment>(Screen.Coroutines.Root.route)
+        fragment<CoroutinesInAndroidFragment>(route = Screen.Coroutines.CoroutinesInAndroid.route)
+    }
+}
 
-    /**
-     * Хорошо бы где-то хранить список экранов в едином месте.
-     */
-    val screens = listOf(
-        Screen.ViewModel,
-        Screen.Coroutines
+class RootCoroutinesFragment : CoreFragment() {
+
+    private val screens = listOf(
+        Screen.Coroutines.CoroutinesInAndroid,
     )
+
 
     override fun onCreateView(
         inflater: LayoutInflater,

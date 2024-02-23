@@ -11,4 +11,8 @@ sealed class Screen(
         data object ViewModel2 : Screen("view_model2")
     }
 
+    data object Coroutines : Screen("coroutines_graph") {
+        data object Root : Screen("coroutines_root")
+        data object CoroutinesInAndroid : Screen("coroutines_base")
+    }
 }
