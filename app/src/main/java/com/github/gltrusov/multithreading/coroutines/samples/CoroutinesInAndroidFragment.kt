@@ -1,4 +1,4 @@
-package com.github.gltrusov.multithreading.coroutines
+package com.github.gltrusov.multithreading.coroutines.samples
 
 import android.os.Bundle
 import android.view.LayoutInflater

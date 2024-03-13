@@ -15,4 +15,9 @@ sealed class Screen(
         data object Root : Screen("coroutines_root")
         data object CoroutinesInAndroid : Screen("coroutines_base")
     }
+
+    data object ComposeCustomView : Screen("compose_custom_view") {
+        data object Root : Screen("compose_root")
+        data object CanvasTest : Screen("compose_canvas_test")
+    }
 }

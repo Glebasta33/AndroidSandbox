@@ -23,7 +23,8 @@ class RootCatalogFragment : CoreFragment() {
      */
     val screens = listOf(
         Screen.ViewModel,
-        Screen.Coroutines
+        Screen.Coroutines,
+        Screen.ComposeCustomView
     )
 
     override fun onCreateView(

@@ -1,4 +1,4 @@
-package com.github.gltrusov.multithreading.coroutines
+package com.github.gltrusov.compose
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,22 +15,22 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.fragment.fragment
 import androidx.navigation.navigation
-import com.github.gltrusov.multithreading.coroutines.samples.CoroutinesInAndroidFragment
+import com.github.gltrusov.compose.samples.ComposeCanvasTestFragment
 import com.github.gltrusov.navigation.Screen
 import com.github.gltrusov.navigation.component.CoreFragment
 import com.github.gltrusov.ui.theme.AndroidSandboxTheme
 
-fun NavGraphBuilder.CoroutinesNavGraph() {
-    navigation(startDestination = Screen.Coroutines.Root.route, route = Screen.Coroutines.route) {
-        fragment<RootCoroutinesFragment>(Screen.Coroutines.Root.route)
-        fragment<CoroutinesInAndroidFragment>(route = Screen.Coroutines.CoroutinesInAndroid.route)
+fun NavGraphBuilder.ComposeCustomViewNavGraph() {
+    navigation(startDestination = Screen.ComposeCustomView.Root.route, route = Screen.ComposeCustomView.route) {
+        fragment<RootComposeFragment>(Screen.ComposeCustomView.Root.route)
+        fragment<ComposeCanvasTestFragment>(Screen.ComposeCustomView.CanvasTest.route)
     }
 }
 
-class RootCoroutinesFragment : CoreFragment() {
+class RootComposeFragment : CoreFragment() {
 
     private val screens = listOf(
-        Screen.Coroutines.CoroutinesInAndroid,
+        Screen.ComposeCustomView.CanvasTest,
     )
 
 

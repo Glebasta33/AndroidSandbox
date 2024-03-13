@@ -1,4 +1,4 @@
-package com.github.gltrusov.multithreading.coroutines
+package com.github.gltrusov.multithreading.coroutines.samples
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
