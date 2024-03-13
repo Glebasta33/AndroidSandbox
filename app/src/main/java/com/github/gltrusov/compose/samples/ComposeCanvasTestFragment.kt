@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.tooling.preview.Preview
@@ -60,8 +61,73 @@ private fun CanvasTest() {
         )
         drawCircle(
             color = Color.White,
-            radius = 100.dp.toPx(),
+            radius = 170.dp.toPx(),
             style = Stroke(width = 5.dp.toPx())
         )
+        drawLego()
     }
+}
+
+private fun DrawScope.drawLego() {
+    // Л
+    drawLine(
+        color = Color.White,
+        start = Offset(center.x - 120.dp.toPx(), center.y + 10.dp.toPx()),
+        end = Offset(center.x - 90.dp.toPx(), center.y - 50.dp.toPx()),
+        strokeWidth = 5.dp.toPx()
+    )
+    drawLine(
+        color = Color.White,
+        start = Offset(center.x - 60.dp.toPx(), center.y + 10.dp.toPx()),
+        end = Offset(center.x - 90.dp.toPx(), center.y - 50.dp.toPx()),
+        strokeWidth = 5.dp.toPx()
+    )
+
+    // E
+    drawLine(
+        color = Color.White,
+        start = Offset(center.x - 20.dp.toPx(), center.y - 140.dp.toPx()),
+        end = Offset(center.x - 20.dp.toPx(), center.y - 80.dp.toPx()),
+        strokeWidth = 5.dp.toPx()
+    )
+    drawLine(
+        color = Color.White,
+        start = Offset(center.x - 20.dp.toPx(), center.y - 140.dp.toPx()),
+        end = Offset(center.x + 10.dp.toPx(), center.y - 140.dp.toPx()),
+        strokeWidth = 5.dp.toPx()
+    )
+    drawLine(
+        color = Color.White,
+        start = Offset(center.x - 20.dp.toPx(), center.y - 110.dp.toPx()),
+        end = Offset(center.x + 10.dp.toPx(), center.y - 110.dp.toPx()),
+        strokeWidth = 5.dp.toPx()
+    )
+    drawLine(
+        color = Color.White,
+        start = Offset(center.x - 20.dp.toPx(), center.y - 80.dp.toPx()),
+        end = Offset(center.x + 10.dp.toPx(), center.y - 80.dp.toPx()),
+        strokeWidth = 5.dp.toPx()
+    )
+
+    // Г
+    drawLine(
+        color = Color.White,
+        start = Offset(center.x + 80.dp.toPx(), center.y + 10.dp.toPx()),
+        end = Offset(center.x + 80.dp.toPx(), center.y - 50.dp.toPx()),
+        strokeWidth = 5.dp.toPx()
+    )
+    drawLine(
+        color = Color.White,
+        start = Offset(center.x + 80.dp.toPx(), center.y - 50.dp.toPx()),
+        end = Offset(center.x + 110.dp.toPx(), center.y - 50.dp.toPx()),
+        strokeWidth = 5.dp.toPx()
+    )
+
+    // O
+    drawCircle(
+        color = Color.White,
+        radius = 30.dp.toPx(),
+        style = Stroke(width = 5.dp.toPx()),
+        center = center.copy(y = center.y + 110.dp.toPx())
+    )
 }
