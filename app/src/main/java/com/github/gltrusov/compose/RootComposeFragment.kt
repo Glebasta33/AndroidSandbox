@@ -17,6 +17,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.fragment.fragment
 import androidx.navigation.navigation
 import com.github.gltrusov.compose.samples.ComposeCanvasTestFragment
+import com.github.gltrusov.compose.samples.DetectGesturesFragment
 import com.github.gltrusov.compose.samples.PathAndBrushFragment
 import com.github.gltrusov.navigation.Screen
 import com.github.gltrusov.navigation.component.CoreFragment
@@ -30,6 +31,7 @@ fun NavGraphBuilder.ComposeCustomViewNavGraph() {
         fragment<RootComposeFragment>(Screen.ComposeCustomView.Root.route)
         fragment<ComposeCanvasTestFragment>(Screen.ComposeCustomView.CanvasTest.route)
         fragment<PathAndBrushFragment>(Screen.ComposeCustomView.PathAndBrush.route)
+        fragment<DetectGesturesFragment>(Screen.ComposeCustomView.DetectGestures.route)
     }
 }
 
@@ -37,7 +39,8 @@ class RootComposeFragment : CoreFragment() {
 
     private val screens = listOf(
         Screen.ComposeCustomView.CanvasTest,
-        Screen.ComposeCustomView.PathAndBrush
+        Screen.ComposeCustomView.PathAndBrush,
+        Screen.ComposeCustomView.DetectGestures
     )
 
 

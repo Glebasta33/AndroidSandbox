@@ -20,5 +20,6 @@ sealed class Screen(
         data object Root : Screen("compose_root")
         data object CanvasTest : Screen("compose_canvas_test")
         data object PathAndBrush : Screen("compose_path_brush_test")
+        data object DetectGestures : Screen("compose_detect_gestures")
     }
 }

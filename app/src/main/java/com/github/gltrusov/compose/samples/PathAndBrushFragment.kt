@@ -45,17 +45,11 @@ private fun PathAndBrush() {
                 /**
                  * Brush позволяет задавать градиенты
                  */
-                /**
-                 * Brush позволяет задавать градиенты
-                 */
                 brush = Brush.linearGradient(
                     colors = listOf(Color.Cyan, Color.Magenta)
                 )
             )
     ) {
-        /**
-         * Path позволяет рисовать сложные фигуры.
-         */
         /**
          * Path позволяет рисовать сложные фигуры.
          */
