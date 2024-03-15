@@ -19,5 +19,6 @@ sealed class Screen(
     data object ComposeCustomView : Screen("compose_custom_view") {
         data object Root : Screen("compose_root")
         data object CanvasTest : Screen("compose_canvas_test")
+        data object PathAndBrush : Screen("compose_path_brush_test")
     }
 }

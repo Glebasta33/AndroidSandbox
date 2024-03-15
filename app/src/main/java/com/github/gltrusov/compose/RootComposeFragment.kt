@@ -16,6 +16,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.fragment.fragment
 import androidx.navigation.navigation
 import com.github.gltrusov.compose.samples.ComposeCanvasTestFragment
+import com.github.gltrusov.compose.samples.PathAndBrushFragment
 import com.github.gltrusov.navigation.Screen
 import com.github.gltrusov.navigation.component.CoreFragment
 import com.github.gltrusov.ui.theme.AndroidSandboxTheme
@@ -24,6 +25,7 @@ fun NavGraphBuilder.ComposeCustomViewNavGraph() {
     navigation(startDestination = Screen.ComposeCustomView.Root.route, route = Screen.ComposeCustomView.route) {
         fragment<RootComposeFragment>(Screen.ComposeCustomView.Root.route)
         fragment<ComposeCanvasTestFragment>(Screen.ComposeCustomView.CanvasTest.route)
+        fragment<PathAndBrushFragment>(Screen.ComposeCustomView.PathAndBrush.route)
     }
 }
 
@@ -31,6 +33,7 @@ class RootComposeFragment : CoreFragment() {
 
     private val screens = listOf(
         Screen.ComposeCustomView.CanvasTest,
+        Screen.ComposeCustomView.PathAndBrush
     )
 
 

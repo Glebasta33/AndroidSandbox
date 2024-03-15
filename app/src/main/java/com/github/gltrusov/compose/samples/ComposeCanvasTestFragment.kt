@@ -6,22 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Path
-import androidx.compose.ui.graphics.TileMode
 import androidx.compose.ui.graphics.drawscope.DrawScope
-import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.tooling.preview.Preview
@@ -35,17 +25,7 @@ class ComposeCanvasTestFragment : CoreFragment() {
         savedInstanceState: Bundle?
     ): View = ComposeView(inflater.context).apply {
         setContent {
-            var isFirst by remember { mutableStateOf(true) }
-            Box(modifier = Modifier
-                .fillMaxSize()
-                .clickable { isFirst = !isFirst }) {
-                if (isFirst) {
-                    CanvasTest1()
-                } else {
-                    CanvasTest2()
-                }
-            }
-
+            CanvasTest()
         }
     }
 
@@ -53,7 +33,7 @@ class ComposeCanvasTestFragment : CoreFragment() {
 
 @Preview
 @Composable
-private fun CanvasTest1() {
+private fun CanvasTest() {
     /**
      * onDraw - обязательный параметр Canvas. Это лямбда в которой происходит вся отрисовка.
      * onDraw - это extension-функция к DrawScope, у которого есть множество методов для
@@ -149,77 +129,5 @@ private fun DrawScope.drawLego() {
         radius = 30.dp.toPx(),
         style = Stroke(width = 5.dp.toPx()),
         center = center.copy(y = center.y + 110.dp.toPx())
-    )
-}
-
-@Preview
-@Composable
-private fun CanvasTest2() {
-    Canvas(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(
-                /**
-                 * Brush позволяет задавать градиенты
-                 */
-                brush = Brush.linearGradient(
-                    colors = listOf(Color.Cyan, Color.Magenta)
-                )
-            )
-    ) {
-        /**
-         * Path позволяет рисовать сложные фигуры.
-         */
-        drawPath(
-            path = Path().apply {
-                moveTo(center.x, 100.dp.toPx()) // установить координаты для курсора
-                lineTo(center.x + 25.dp.toPx(), 150.dp.toPx())
-                lineTo(center.x + 75.dp.toPx(), 150.dp.toPx())
-                lineTo(center.x + 35.dp.toPx(), 185.dp.toPx())
-                lineTo(center.x + 50.dp.toPx(), 230.dp.toPx())
-                lineTo(center.x, 205.dp.toPx())
-
-                lineTo(center.x - 50.dp.toPx(), 230.dp.toPx())
-                lineTo(center.x - 35.dp.toPx(), 185.dp.toPx())
-                lineTo(center.x - 75.dp.toPx(), 150.dp.toPx())
-                lineTo(center.x - 25.dp.toPx(), 150.dp.toPx())
-                lineTo(center.x, 100.dp.toPx())
-            },
-            style = Fill,
-            brush = Brush.linearGradient(
-                colors = listOf(Color.Cyan, Color.Magenta),
-                start = Offset(0f, 0f),
-                end = Offset(0f, 20.dp.toPx()),
-                tileMode = TileMode.Mirror
-            )
-        )
-
-        House()
-    }
-}
-
-private fun DrawScope.House() {
-    drawPath(
-        path = Path().apply {
-            moveTo(center.x, 300.dp.toPx())
-            lineTo(center.x + 100.dp.toPx(), 400.dp.toPx())
-            lineTo(center.x - 100.dp.toPx(), 400.dp.toPx())
-            lineTo(center.x, 300.dp.toPx())
-            moveTo(center.x + 100.dp.toPx(), 400.dp.toPx())
-            lineTo(center.x + 100.dp.toPx(), 550.dp.toPx())
-            lineTo(center.x - 100.dp.toPx(), 550.dp.toPx())
-            lineTo(center.x - 100.dp.toPx(), 400.dp.toPx())
-            moveTo(center.x - 50.dp.toPx(), 450.dp.toPx())
-            lineTo(center.x - 50.dp.toPx(), 500.dp.toPx())
-            lineTo(center.x + 50.dp.toPx(), 500.dp.toPx())
-            lineTo(center.x + 50.dp.toPx(), 450.dp.toPx())
-            lineTo(center.x - 50.dp.toPx(), 450.dp.toPx())
-            moveTo(center.x - 50.dp.toPx(), 475.dp.toPx())
-            lineTo(center.x + 50.dp.toPx(), 475.dp.toPx())
-            moveTo(center.x, 450.dp.toPx())
-            lineTo(center.x, 500.dp.toPx())
-        },
-        style = Stroke(width = 4.dp.toPx()),
-        color = Color.White
     )
 }
