@@ -19,7 +19,7 @@ import androidx.navigation.navigation
 import com.github.gltrusov.compose.samples.ComposeCanvasTestFragment
 import com.github.gltrusov.compose.samples.DetectGesturesFragment
 import com.github.gltrusov.compose.samples.PathAndBrushFragment
-import com.github.gltrusov.compose.samples.terminal.ComposeTerminalFragment
+import com.github.gltrusov.compose.samples.terminal.presentation.ComposeTerminalFragment
 import com.github.gltrusov.navigation.Screen
 import com.github.gltrusov.navigation.component.CoreFragment
 import com.github.gltrusov.ui.theme.AndroidSandboxTheme
