@@ -21,7 +21,7 @@ class ComposeTerminalFragment : CoreFragment() {
             val screenState = viewModel.state.collectAsState()
             when(val currentState = screenState.value) {
                 is TerminalScreenState.Content -> {
-                    Log.d("MyTest", currentState.bars.toString())
+                    Terminal(bars = currentState.bars)
                 }
                 is TerminalScreenState.Initial -> {
                     Log.d("MyTest", "Initial")
