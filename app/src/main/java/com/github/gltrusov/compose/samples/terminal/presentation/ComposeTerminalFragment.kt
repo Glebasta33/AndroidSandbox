@@ -17,16 +17,17 @@ class ComposeTerminalFragment : CoreFragment() {
         savedInstanceState: Bundle?
     ): View = ComposeView(inflater.context).apply {
         setContent {
-            val viewModel: TerminalViewModel = viewModel()
-            val screenState = viewModel.state.collectAsState()
-            when(val currentState = screenState.value) {
-                is TerminalScreenState.Content -> {
-                    Terminal(bars = currentState.bars)
-                }
-                is TerminalScreenState.Initial -> {
-                    Log.d("MyTest", "Initial")
-                }
-            }
+            Test()
+//            val viewModel: TerminalViewModel = viewModel()
+//            val screenState = viewModel.state.collectAsState()
+//            when(val currentState = screenState.value) {
+//                is TerminalScreenState.Content -> {
+//                    Terminal(bars = currentState.bars)
+//                }
+//                is TerminalScreenState.Initial -> {
+//                    Log.d("MyTest", "Initial")
+//                }
+//            }
         }
     }
 
