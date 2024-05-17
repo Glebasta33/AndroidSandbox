@@ -1,10 +1,10 @@
 package com.github.gltrusov.compose.samples.terminal.presentation
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.material3.Text
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.platform.ComposeView
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -24,7 +24,7 @@ class ComposeTerminalFragment : CoreFragment() {
                     Terminal(bars = currentState.bars)
                 }
                 is TerminalScreenState.Initial -> {
-                    Log.d("MyTest", "Initial")
+                    Text("Loading...")
                 }
             }
         }
