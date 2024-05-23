@@ -2,7 +2,7 @@ package com.github.gltrusov.compose.samples.terminal.presentation
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.TransformableState
+import androidx.compose.foundation.gestures.rememberTransformableState
 import androidx.compose.foundation.gestures.transformable
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PathEffect
@@ -31,7 +32,7 @@ private const val MIN_VISIBLE_BARS_COUNT = 10
 fun Terminal(bars: List<Bar>) {
     var state by rememberTerminalState(bars)
 
-    val transformableState = TransformableState { zoomChange, panChange, _ ->
+    val transformableState = rememberTransformableState { zoomChange, panChange, _ ->
         val visibleBarsCount = (state.visibleBarsCount / zoomChange)
             .roundToInt()
             .coerceIn(MIN_VISIBLE_BARS_COUNT, bars.size)
@@ -45,21 +46,23 @@ fun Terminal(bars: List<Bar>) {
         )
     }
 
-    val textMeasurer = rememberTextMeasurer()
-
     Canvas(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.Black)
+            .clipToBounds()
             .padding(vertical = 32.dp)
+            .padding(end = 32.dp)
             .transformable(transformableState)
             .onSizeChanged { size ->
-                state = state.copy(terminalWidth = size.width.toFloat())
+                state = state.copy(
+                    terminalWidth = size.width.toFloat(),
+                    terminalHeight = size.height.toFloat()
+                )
             },
     ) {
-        val max = state.visibleBars.maxOf { it.highest }
-        val min = state.visibleBars.minOf { it.lowest }
-        val pxPerPoint = size.height / (max - min)
+        val min = state.min
+        val pxPerPoint = state.pxPerPoint
 
         translate(left = state.scrolledBy) {// смещает канвас
             bars.forEachIndexed { i, bar ->
@@ -80,15 +83,40 @@ fun Terminal(bars: List<Bar>) {
                 )
             }
         }
-        bars.firstOrNull()?.let {
-            drawPrices(
-                max = max,
-                min = min,
-                pxPerPoint = pxPerPoint,
-                lastPrice = it.close,
-                textMeasurer = textMeasurer
-            )
-        }
+    }
+
+    bars.firstOrNull()?.let {
+        Prices(
+            max = state.max,
+            min = state.min,
+            pxPerPoint = state.pxPerPoint,
+            lastPrice = it.close
+        )
+    }
+
+}
+
+@Composable
+private fun Chart() {
+
+}
+
+@Composable
+private fun Prices(
+    max: Float,
+    min: Float,
+    pxPerPoint: Float,
+    lastPrice: Float
+) {
+    val textMeasurer = rememberTextMeasurer()
+
+    Canvas(
+        modifier = Modifier
+            .fillMaxSize()
+            .clipToBounds()
+            .padding(vertical = 32.dp)
+    ) {
+        drawPrices(max, min, pxPerPoint, lastPrice, textMeasurer)
     }
 }
 
