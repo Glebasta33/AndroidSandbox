@@ -1,6 +1,5 @@
 package com.github.gltrusov.compose.samples.terminal.presentation
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.gltrusov.compose.samples.terminal.data.ApiFactory
@@ -16,17 +15,26 @@ class TerminalViewModel : ViewModel() {
     private val _state = MutableStateFlow<TerminalScreenState>(TerminalScreenState.Initial)
     val state = _state.asStateFlow()
 
+    private var lastState: TerminalScreenState = TerminalScreenState.Initial
+
     private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        Log.d("TerminalViewModel", "${throwable.message}")
+        _state.value = lastState
     }
 
     init {
         loadBarList()
     }
 
-    private fun loadBarList() {
+    fun loadBarList(
+        timeframe: Timeframe = Timeframe.HOUR_1
+    ) {
+        lastState = _state.value
+        _state.value = TerminalScreenState.Loading
         viewModelScope.launch(exceptionHandler) {
-            _state.value = TerminalScreenState.Content(apiService.loadBars().bars)
+            _state.value = TerminalScreenState.Content(
+                apiService.loadBars(timeframe.path).bars,
+                timeframe = timeframe
+            )
         }
     }
 
