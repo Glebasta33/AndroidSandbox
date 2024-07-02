@@ -1,6 +1,6 @@
 package com.github.di_framework.core
 
-import com.github.di_framework.meta.Api
+import com.github.di_framework.meta.FeatureApi
 
 /**
  * Держатель фичи, базовая реализация которого способна:
@@ -8,10 +8,10 @@ import com.github.di_framework.meta.Api
  * - синхронизировать получение зависимостей из разных потоков,
  * - обеспечить ленивую инициализацию Dagger-компонента и исключить пересоздание.
  */
-interface FeatureHolder<T : Api> {
+interface FeatureHolder<out Feature : FeatureApi> {
 
     /** Получить экземпляр фичи */
-    fun getFeature(): T
+    fun getFeature(): Feature
 
     /** Зануляет экземпляр фичи */
     fun releaseFeature()

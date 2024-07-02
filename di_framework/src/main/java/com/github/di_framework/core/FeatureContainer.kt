@@ -1,7 +1,6 @@
 package com.github.di_framework.core
 
-import com.github.di_framework.meta.Api
-import com.github.di_framework.meta.ReleasableApi
+import com.github.di_framework.meta.FeatureApi
 import kotlin.reflect.KClass
 
 /**
@@ -10,15 +9,15 @@ import kotlin.reflect.KClass
 interface FeatureContainer {
 
     /** Получить фичу для непосредственного использования в бизнес-логике приложения */
-    fun <T : Api> getFeature(key: KClass<T>): T
+    fun <Feature : FeatureApi> getFeature(key: KClass<Feature>): Feature
 
     /** Получить фичу для использования в качестве зависимости при построении других компонентов */
-    fun <T : Api> getDependency(
-        key: KClass<T>,
-        targetFeatureHolderClass: Class<*>
-    ): T
+    fun <FeatureDependency : FeatureApi> getDependency(
+        key: KClass<FeatureDependency>,
+        targetFeatureHolderClass: KClass<*>
+    ): FeatureDependency
 
     /** Удалить экземпляр фичи */
-    fun <T : ReleasableApi> releaseFeature(key: KClass<T>)
+    fun <Feature : FeatureApi> releaseFeature(key: KClass<Feature>)
 
 }
