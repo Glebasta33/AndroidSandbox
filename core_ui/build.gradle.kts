@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.github.zharovvv.core.ui"
+    namespace = "com.github.gltrusov.core.ui"
     compileSdk = 34
 
     buildTypes {
