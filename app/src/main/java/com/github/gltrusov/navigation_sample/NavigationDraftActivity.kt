@@ -55,7 +55,7 @@ import com.github.gltrusov.ui.theme.AndroidSandboxTheme
  * - Dialog - алерты.
  * - Activity - отдельная активность (за пределами текущего графа).
  */
-class NavigationDraftActivity : AppCompatActivity(R.layout.activity_main) {
+class NavigationDraftActivity : AppCompatActivity(R.layout.activity_main_legacy) {
 
     lateinit var navController: NavController
 

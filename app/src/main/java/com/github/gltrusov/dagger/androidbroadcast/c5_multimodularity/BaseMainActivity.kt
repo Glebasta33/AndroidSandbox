@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.github.feature_sample.di.ArticlesFragment
 import com.github.gltrusov.R
 
-class BaseMainActivity : AppCompatActivity(R.layout.activity_main) {
+class BaseMainActivity : AppCompatActivity(R.layout.activity_main_legacy) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

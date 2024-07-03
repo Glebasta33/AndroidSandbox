@@ -20,7 +20,7 @@
             android:label="@string/title_activity_example_compose"
             android:theme="@style/Theme.AndroidSandbox.AppCompat" />
         <activity
-            android:name=".MainActivity"
+            android:name=".MainActivityLegacy"
             android:exported="true"
             android:theme="@style/Theme.AndroidSandbox.AppCompat">
             <intent-filter>
