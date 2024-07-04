@@ -24,8 +24,6 @@ import androidx.navigation.createGraph
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.fragment
 import androidx.navigation.navigation
-import com.github.feature_sample.di.FeatureActivity
-import com.github.feature_sample.di.FeatureFragment
 import com.github.gltrusov.R
 import com.github.gltrusov.ui.theme.AndroidSandboxTheme
 
@@ -82,10 +80,6 @@ class NavigationDraftActivity : AppCompatActivity(R.layout.activity_main_legacy)
             activity(ScreenSample.ExampleCompose.route) {
                 activityClass = ExampleComposeActivity::class
             }
-            activity(ScreenSample.FeatureActivity.route) {
-                activityClass = FeatureActivity::class
-            }
-            fragment<FeatureFragment>(ScreenSample.FeatureFragment.route)
             /**
              * Вложенный граф создаётся тем же самым методом, что и в Compose - navigation().
              */

@@ -1,5 +1,4 @@
 <resources>
     <string name="app_name">AndroidSandbox</string>
-    <string name="title_feature_sample">FeatureSample</string>
     <string name="title_activity_example_compose">ExampleComposeActivity</string>
 </resources>
