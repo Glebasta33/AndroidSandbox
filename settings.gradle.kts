@@ -15,7 +15,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "AndroidSandbox"
 include(":app")
-include(":api")
 include(":di_framework")
 include(":core_navigation")
 include(":core_ui")
