@@ -50,5 +50,4 @@ dependencies {
     kapt("com.google.dagger:dagger-compiler:$daggerVersion")
 
     implementation(project(":api"))
-    implementation(project(":core"))
 }
