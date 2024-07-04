@@ -10,6 +10,7 @@ import com.github.di_framework.core.FeatureHolder
 import com.github.di_framework.meta.FeatureApi
 import com.github.gltrusov.di.entrypoints.MainScreenEntryPointsFeatureHolder
 import com.github.gltrusov.di.entrypoints.api.MainScreenEntryPointsApi
+import com.github.gltrusov.graphics.di.TestFeatureFeatureHolderModule
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -19,7 +20,7 @@ import javax.inject.Singleton
 @Module(
     includes = [
         //Здесь указываем модули (featureHolders) фич, которые хотим подключить к приложению
-
+        TestFeatureFeatureHolderModule::class
     ]
 )
 abstract class CommonFeatureHoldersModule {
