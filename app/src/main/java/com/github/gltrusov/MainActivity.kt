@@ -8,7 +8,7 @@ import com.github.gltrusov.di.entrypoints.api.MainScreenEntryPointsApi
 import com.github.gltrusov.ui.DefaultEntryPointsAdapter
 
 @OptIn(OnlyForMainScreen::class)
-class MainActivity : AppCompatActivity(R.layout.activity_main_legacy) {
+class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

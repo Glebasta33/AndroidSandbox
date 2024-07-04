@@ -108,4 +108,6 @@ dependencies {
     implementation(project(":feature_sample"))
     implementation(project(":api"))
     implementation(project(":di_framework"))
+
+    implementation(project(":test_feature"))
 }
