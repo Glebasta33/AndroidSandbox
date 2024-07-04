@@ -9,10 +9,7 @@ java {
     targetCompatibility = JavaVersion.VERSION_17
 }
 
-val daggerVersion = "2.50"
-
 dependencies {
-
-    implementation("com.google.dagger:dagger:$daggerVersion")
-    kapt("com.google.dagger:dagger-compiler:$daggerVersion")
+    implementation(libs.dagger)
+    kapt(libs.dagger.compiler)
 }
