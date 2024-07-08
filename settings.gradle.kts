@@ -18,4 +18,6 @@ include(":app")
 include(":di_framework")
 include(":core_navigation")
 include(":core_ui")
+
 include(":test_feature")
+include(":compose")

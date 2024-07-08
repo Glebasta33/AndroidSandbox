@@ -86,4 +86,5 @@ dependencies {
     implementation(project(":di_framework"))
     implementation(project(":core_navigation"))
     implementation(project(":test_feature"))
+    implementation(project(":compose"))
 }
