@@ -1,6 +1,6 @@
-package com.github.gltrusov.compose.samples.terminal.presentation
+package com.github.gltrusov.compose.sandbox.terminal.presentation
 
-import com.github.gltrusov.compose.samples.terminal.data.Bar
+import com.github.gltrusov.compose.sandbox.terminal.data.Bar
 
 sealed class TerminalScreenState {
 

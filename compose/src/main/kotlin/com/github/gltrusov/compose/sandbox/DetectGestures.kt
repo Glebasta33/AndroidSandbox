@@ -1,9 +1,5 @@
-package com.github.gltrusov.compose.samples
+package com.github.gltrusov.compose.sandbox
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectDragGestures
@@ -22,25 +18,11 @@ import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.unit.dp
-import com.github.gltrusov.navigation.component.CoreFragment
-
-class DetectGesturesFragment : CoreFragment() {
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View = ComposeView(inflater.context).apply {
-        setContent {
-            DetectGestures()
-        }
-    }
-}
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-private fun DetectGestures() {
+internal fun DetectGestures() {
     var circleCenters by rememberSaveable { mutableStateOf<List<Point>>(emptyList()) }
     Canvas(
         modifier = Modifier

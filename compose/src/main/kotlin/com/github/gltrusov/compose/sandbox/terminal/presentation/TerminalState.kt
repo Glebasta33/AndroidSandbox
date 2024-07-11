@@ -1,11 +1,11 @@
-package com.github.gltrusov.compose.samples.terminal.presentation
+package com.github.gltrusov.compose.sandbox.terminal.presentation
 
 import android.os.Parcelable
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
-import com.github.gltrusov.compose.samples.terminal.data.Bar
+import com.github.gltrusov.compose.sandbox.terminal.data.Bar
 import kotlinx.parcelize.Parcelize
 import kotlin.math.roundToInt
 

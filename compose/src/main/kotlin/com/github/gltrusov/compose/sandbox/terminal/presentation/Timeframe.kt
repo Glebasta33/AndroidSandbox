@@ -1,4 +1,4 @@
-package com.github.gltrusov.compose.samples.terminal.presentation
+package com.github.gltrusov.compose.sandbox.terminal.presentation
 
 enum class Timeframe(val label: String, val path: String) {
 

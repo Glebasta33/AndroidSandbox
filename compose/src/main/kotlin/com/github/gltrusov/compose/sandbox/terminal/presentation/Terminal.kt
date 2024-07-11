@@ -1,4 +1,4 @@
-package com.github.gltrusov.compose.samples.terminal.presentation
+package com.github.gltrusov.compose.sandbox.terminal.presentation
 
 import android.util.Log
 import androidx.compose.foundation.Canvas
@@ -34,7 +34,7 @@ import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.github.gltrusov.compose.samples.terminal.data.Bar
+import com.github.gltrusov.compose.sandbox.terminal.data.Bar
 import java.util.Calendar
 import java.util.Locale
 import kotlin.math.roundToInt

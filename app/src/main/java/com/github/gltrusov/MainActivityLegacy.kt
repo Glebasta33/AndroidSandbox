@@ -3,10 +3,10 @@ package com.github.gltrusov
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.MenuItem
-import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
-import com.github.gltrusov.compose.samples.terminal.presentation.Terminal
+import androidx.navigation.fragment.NavHostFragment
+import com.github.gltrusov.navigation.graph.AppNavGraph
 
 /**
  * Главная стартовая активность приложения.
@@ -19,15 +19,11 @@ class MainActivityLegacy : AppCompatActivity(R.layout.activity_main_legacy) {
         setSupportActionBar(findViewById(R.id.my_toolbar))
         setupActionBar()
 
-//        val navHostFragment =
-//            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-//        navController = navHostFragment.navController
-//
-//        AppNavGraph.setGraph(navController)
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        navController = navHostFragment.navController
 
-        setContent {
-            Terminal()
-        }
+        AppNavGraph.setGraph(navController)
     }
 
     private fun setupActionBar() {

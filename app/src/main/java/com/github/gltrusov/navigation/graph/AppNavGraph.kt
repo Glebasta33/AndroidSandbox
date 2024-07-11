@@ -5,7 +5,6 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.createGraph
 import androidx.navigation.fragment.fragment
 import com.github.gltrusov.RootCatalogFragment
-import com.github.gltrusov.compose.ComposeCustomViewNavGraph
 import com.github.gltrusov.multithreading.coroutines.CoroutinesNavGraph
 import com.github.gltrusov.navigation.Screen
 import com.github.gltrusov.viewmodel.nav_samples.ViewModelsNavGraph
@@ -29,5 +28,4 @@ fun NavGraphBuilder.RootCatalogNavGraph() {
     fragment<RootCatalogFragment>(Screen.Root.route)
     ViewModelsNavGraph()
     CoroutinesNavGraph()
-    ComposeCustomViewNavGraph()
 }

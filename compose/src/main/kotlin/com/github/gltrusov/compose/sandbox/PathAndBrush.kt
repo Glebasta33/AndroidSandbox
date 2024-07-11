@@ -1,9 +1,5 @@
-package com.github.gltrusov.compose.samples
+package com.github.gltrusov.compose.sandbox
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,31 +13,20 @@ import androidx.compose.ui.graphics.TileMode
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.github.gltrusov.navigation.component.CoreFragment
-
-class PathAndBrushFragment : CoreFragment() {
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View = ComposeView(inflater.context).apply {
-        setContent {
-            PathAndBrush()
-        }
-    }
-}
 
 
 @Preview
 @Composable
-private fun PathAndBrush() {
+internal fun PathAndBrush() {
     Canvas(
         modifier = Modifier
             .fillMaxSize()
             .background(
+                /**
+                 * Brush позволяет задавать градиенты
+                 */
                 /**
                  * Brush позволяет задавать градиенты
                  */
@@ -50,6 +35,9 @@ private fun PathAndBrush() {
                 )
             )
     ) {
+        /**
+         * Path позволяет рисовать сложные фигуры.
+         */
         /**
          * Path позволяет рисовать сложные фигуры.
          */

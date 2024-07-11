@@ -5,15 +5,22 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.material3.Text
-import androidx.compose.ui.unit.sp
+import com.github.gltrusov.compose.presentation.navigation.RootNavGraph
+import com.github.gltrusov.compose.presentation.navigation.Screen
 
 class ComposeSandboxActivity : ComponentActivity() {
+    private val screens = listOf(
+        Screen.CanvasBasics,
+        Screen.PathAndBrush,
+        Screen.DetectGestures,
+        Screen.Terminal
+    )
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            Text("Hello Compose Module!!!", fontSize = 42.sp)
+            RootNavGraph(screens)
         }
     }
 

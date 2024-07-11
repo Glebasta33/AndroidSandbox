@@ -38,6 +38,7 @@ retrofit-converter-gson = { module = "com.squareup.retrofit2:converter-gson", ve
 
 navigation-fragment = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigation" }
 navigation-ui = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigation" }
+navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigation" }
 
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version = "1.9.21" }
 drawablepainter = { module = "com.google.accompanist:accompanist-drawablepainter", version = "0.28.0" }
@@ -65,3 +66,5 @@ retrofit = [
     "retrofit",
     "retrofit-converter-gson"
 ]
+
+#TODO Вынести плагины в libs.versions.toml

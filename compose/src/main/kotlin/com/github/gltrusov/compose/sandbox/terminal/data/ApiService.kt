@@ -1,4 +1,4 @@
-package com.github.gltrusov.compose.samples.terminal.data
+package com.github.gltrusov.compose.sandbox.terminal.data
 
 import retrofit2.http.GET
 import retrofit2.http.Path

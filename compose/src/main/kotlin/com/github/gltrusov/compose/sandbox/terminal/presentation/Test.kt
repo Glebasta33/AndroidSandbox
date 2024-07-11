@@ -1,4 +1,4 @@
-package com.github.gltrusov.compose.samples.terminal.presentation
+package com.github.gltrusov.compose.sandbox.terminal.presentation
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box

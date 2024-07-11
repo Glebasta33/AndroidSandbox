@@ -2,6 +2,7 @@ plugins {
     id("com.android.library")
     kotlin("android")
     kotlin("kapt")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -26,6 +27,9 @@ android {
     }
     namespace = "com.github.gltrusov.compose"
     compileSdk = 34
+    defaultConfig {
+        minSdk = 24
+    }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -38,12 +42,11 @@ dependencies {
 
     implementation(libs.dagger)
     kapt(libs.dagger.compiler)
-
     implementation(libs.bundles.core)
-
     implementation(platform(libs.compose.bom))
     implementation(libs.bundles.compose)
-
+    implementation(libs.navigation.compose)
+    implementation(libs.bundles.retrofit)
 
     implementation(project(":core_ui"))
     implementation(project(":core_navigation"))

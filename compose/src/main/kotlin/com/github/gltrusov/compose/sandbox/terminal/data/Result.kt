@@ -1,4 +1,4 @@
-package com.github.gltrusov.compose.samples.terminal.data
+package com.github.gltrusov.compose.sandbox.terminal.data
 
 import com.google.gson.annotations.SerializedName
 
