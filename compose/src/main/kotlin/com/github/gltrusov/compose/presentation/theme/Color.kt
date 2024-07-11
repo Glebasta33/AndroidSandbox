@@ -1,4 +1,4 @@
-package com.github.gltrusov.ui.theme
+package com.github.gltrusov.compose.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 

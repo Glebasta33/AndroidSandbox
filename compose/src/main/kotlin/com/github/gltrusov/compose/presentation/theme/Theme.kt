@@ -1,4 +1,4 @@
-package com.github.gltrusov.ui.theme
+package com.github.gltrusov.compose.presentation.theme
 
 import android.app.Activity
 import android.os.Build
