@@ -3,6 +3,7 @@ package com.github.gltrusov.di.entrypoints.api
 import com.github.di_framework.meta.FeatureApi
 import com.github.gltrusov.EntryPoint
 import com.github.gltrusov.OnlyForMainScreen
+import com.github.gltrusov.background.di.navigation.BackgroundNavigationModule
 import com.github.gltrusov.compose.di.navigation.ComposeSandboxNavigationModule
 import com.github.gltrusov.graphics.di.navigation.TestFeatureNavigationModule
 import dagger.Module
@@ -16,7 +17,8 @@ import kotlin.reflect.KClass
         //здесь указываем модули, в которых объявлены фичевые entryPoint-ы, которые мы хотим увидеть
         //на главном экране
         TestFeatureNavigationModule::class,
-        ComposeSandboxNavigationModule::class
+        ComposeSandboxNavigationModule::class,
+        BackgroundNavigationModule::class
     ]
 )
 class MainScreenEntryPointsModule {

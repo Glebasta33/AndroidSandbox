@@ -8,6 +8,7 @@ import com.github.di_framework.core.FeatureContainer
 import com.github.di_framework.core.FeatureContainerManager
 import com.github.di_framework.core.FeatureHolder
 import com.github.di_framework.meta.FeatureApi
+import com.github.gltrusov.background.di.BackgroundFeatureHolderModule
 import com.github.gltrusov.compose.di.ComposeSandboxFeatureHolderModule
 import com.github.gltrusov.di.entrypoints.MainScreenEntryPointsFeatureHolder
 import com.github.gltrusov.di.entrypoints.api.MainScreenEntryPointsApi
@@ -22,7 +23,8 @@ import javax.inject.Singleton
     includes = [
         //Здесь указываем модули (featureHolders) фич, которые хотим подключить к приложению
         TestFeatureFeatureHolderModule::class,
-        ComposeSandboxFeatureHolderModule::class
+        ComposeSandboxFeatureHolderModule::class,
+        BackgroundFeatureHolderModule::class
     ]
 )
 abstract class CommonFeatureHoldersModule {

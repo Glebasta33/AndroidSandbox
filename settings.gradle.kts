@@ -21,3 +21,4 @@ include(":core_ui")
 
 include(":test_feature")
 include(":compose")
+include(":background")

@@ -87,4 +87,5 @@ dependencies {
     implementation(project(":core_navigation"))
     implementation(project(":test_feature"))
     implementation(project(":compose"))
+    implementation(project(":background"))
 }
