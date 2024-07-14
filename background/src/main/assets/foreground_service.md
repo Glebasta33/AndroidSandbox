@@ -78,7 +78,6 @@ internal class ForegroundService : Service() {
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
     private lateinit var notificationManager: NotificationManager
 
-    @RequiresApi(Build.VERSION_CODES.ECLAIR)
     override fun onCreate() {
         notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         super.onCreate()

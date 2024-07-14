@@ -18,5 +18,9 @@
         <service android:name=".services.foreground_service.ForegroundService"
             android:foregroundServiceType="remoteMessaging"/>
 
+        <activity android:name=".services.intent_service.IntentServiceActivity" />
+        <service android:name=".services.intent_service.MyIntentService"
+            android:foregroundServiceType="remoteMessaging"/>
+
     </application>
 </manifest>
