@@ -11,10 +11,6 @@
             Для запуска сервиса, нужно вызвать метод Context.startService и передать Intent. \n
     </string>
 
-    <string name="foreground_service_info"> \n
-        С Android 8 (API 24) на работу сервисов наложили доп. ограничения.
-    </string>
-
     <string name="notification_info_1">
         Для отправки уведомления необходимо создать объект через Notification.Builder
         и передать его метод notify NotificationManager. Но это будет работать только до API 26 (Android 8) включительно.
@@ -27,5 +23,19 @@
         Но до Android 9 каналы не поддерживаются, поэтому нужно делать проверку SDK. \n
         Начиная с Android 13 нужно добавить в манифест android.permission.POST_NOTIFICATIONS, а также
         через runtime permission попросить пользователя разрешить отправку уведомлений в настройках.
+    </string>
+
+    <string name="foreground_service_info_1"> \n
+        onStartCommand возращает int, константное значение, которая задаёт режим для перезапуска сервиса. \n
+        START_STICKY - сервис перезапустится, после выхода из приложения. \n
+        START_NOT_STICKY - сервис не перезапустится, после выхода из приложения.\n
+        START_REDELIVER_INTENT - сервис перезапустится с данными из intent. \n
+    </string>
+
+    <string name="foreground_service_info_2"> \n
+        С Android 8 (API 26) на работу сервисов наложили доп. ограничения - сервисы не могут продолжить работу, если приложение было закрыто. \n
+        Необходимо уведомить пользователя о работе сервиса. Для этого используется Foreground Service, при работе которого отображается уведомление, которое невозможно смахнуть. \n
+        Для запуска ForegroundService нужно вызвать метод Context.startForeground() и вызвать startForeground в onCreate сервиса, куда нужно передать id и объект уведомления, а также добавить android.permission.FOREGROUND_SERVICE в манифест. \n
+        Начиная с Android 10 нужно добавить аттрибут android:foregroundServiceType в манифесте для сервиса.
     </string>
 </resources>

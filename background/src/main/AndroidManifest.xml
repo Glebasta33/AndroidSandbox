@@ -1,12 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_REMOTE_MESSAGING" />
+
     <application>
         <activity android:name=".presentation.BackgroundActivity" />
 
         <activity android:name=".services.service.ServiceActivity" />
         <service android:name=".services.service.BasicService" />
         <service android:name=".services.service.BasicServiceWithBackground" />
+
+        <activity android:name=".notification.NotificationAboutActivity" />
+
+        <activity android:name=".services.foreground_service.ForegroundServiceActivity" />
+        <service android:name=".services.foreground_service.RestartingService" />
+        <service android:name=".services.foreground_service.ForegroundService"
+            android:foregroundServiceType="remoteMessaging"/>
 
     </application>
 </manifest>
