@@ -89,6 +89,8 @@ internal class ForegroundServiceActivity : AppCompatActivity() {
                 )
             )
         }
+
+        binding.markdown.loadMarkdownFile("file:///android_asset/foreground_service.md")
     }
 
     internal companion object {

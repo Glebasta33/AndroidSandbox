@@ -1,43 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="top"
-    android:orientation="vertical"
-    tools:context=".notification.NotificationAboutActivity">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/notifications_info_1"
-        style="@style/InfoTextStyle"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/notification_info_1"
-        />
+        android:gravity="top"
+        android:orientation="vertical"
+        tools:context=".notification.NotificationAboutActivity">
 
-    <Button
-        android:id="@+id/basic_notification"
-        style="@style/ServiceButtonStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Отправить базовое уведомление (без канала)"
-        />
+        <TextView
+            android:id="@+id/notifications_info_1"
+            style="@style/InfoTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/notification_info_1" />
 
-    <TextView
-        android:id="@+id/notifications_info_2"
-        style="@style/InfoTextStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/notification_info_2"
-        />
+        <Button
+            android:id="@+id/basic_notification"
+            style="@style/ServiceButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Отправить базовое уведомление (без канала)" />
 
-    <Button
-        android:id="@+id/notification_with_channel"
-        style="@style/ServiceButtonStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Отправить уведомление с каналом"
-        />
+        <TextView
+            android:id="@+id/notifications_info_2"
+            style="@style/InfoTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/notification_info_2" />
 
-</LinearLayout>
+        <Button
+            android:id="@+id/notification_with_channel"
+            style="@style/ServiceButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Отправить уведомление с каналом" />
+
+        <org.billthefarmer.markdown.MarkdownView
+            android:id="@+id/markdown"
+            style="@style/InfoTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+</ScrollView>

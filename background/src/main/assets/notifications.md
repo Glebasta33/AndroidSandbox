@@ -1,17 +1,6 @@
-package com.github.gltrusov.background.notification
+### Notifications
 
-import android.app.Notification
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.content.Context
-import android.content.Intent
-import android.os.Build
-import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.NotificationCompat
-import com.github.gltrusov.background.R
-import com.github.gltrusov.background.databinding.ActivityNotificationAboutBinding
-
+``` kotlin
 class NotificationAboutActivity : AppCompatActivity() {
 
     private val binding by lazy {
@@ -27,8 +16,6 @@ class NotificationAboutActivity : AppCompatActivity() {
         binding.notificationWithChannel.setOnClickListener {
             showNotificationWithChannel()
         }
-
-        binding.markdown.loadMarkdownFile("file:///android_asset/notifications.md")
     }
 
     private fun showNotification() {
@@ -73,3 +60,4 @@ class NotificationAboutActivity : AppCompatActivity() {
             }
     }
 }
+```

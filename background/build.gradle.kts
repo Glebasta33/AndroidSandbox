@@ -40,4 +40,5 @@ dependencies {
     implementation(project(":core_ui"))
     implementation(project(":core_navigation"))
     implementation(project(":di_framework"))
+    implementation("com.github.billthefarmer:MarkdownView:v1.09")
 }

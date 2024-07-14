@@ -37,6 +37,8 @@ internal class ServiceActivity : AppCompatActivity() {
             startService(BasicServiceWithBackground.newIntent(this))
         }
         binding.logs.movementMethod = ScrollingMovementMethod()
+
+        binding.markdown.loadMarkdownFile("file:///android_asset/basic_service.md")
     }
 
     internal companion object {

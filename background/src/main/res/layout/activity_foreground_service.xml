@@ -1,66 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="top"
-    android:orientation="vertical"
-    tools:context=".presentation.BackgroundActivity">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/info_1"
-        style="@style/InfoTextStyle"
+    <LinearLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/foreground_service_info_1"
-        />
+        android:gravity="top"
+        android:orientation="vertical"
+        tools:context=".presentation.BackgroundActivity">
 
-    <Spinner
-        android:id="@+id/start_service_constant_spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/ds_medium_margin"
-        android:spinnerMode="dialog"
-     />
+        <TextView
+            android:id="@+id/info_1"
+            style="@style/InfoTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/foreground_service_info_1" />
 
-    <Button
-        android:id="@+id/service_with_constant"
-        style="@style/ServiceButtonStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Запустить сервис с константой: "
-        />
+        <Spinner
+            android:id="@+id/start_service_constant_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/ds_medium_margin"
+            android:spinnerMode="dialog" />
 
-    <TextView
-        android:id="@+id/info_2"
-        style="@style/InfoTextStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/foreground_service_info_2"
-        />
+        <Button
+            android:id="@+id/service_with_constant"
+            style="@style/ServiceButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Запустить сервис с константой: " />
 
-    <Button
-        android:id="@+id/foreground_service"
-        style="@style/ServiceButtonStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Запустить Foreground Service с константой: "
-        />
+        <TextView
+            android:id="@+id/info_2"
+            style="@style/InfoTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/foreground_service_info_2" />
 
-    <TextView
-        android:id="@+id/info_3"
-        style="@style/InfoTextStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Чтобы остановить сервис изнутри, нужно вызвать stopSelf() внутри метода onStartCommand. \n Чтобы остановить сервис снаружи, нужно вызвать метод Context.stopService(intent: Intent)"
-        />
+        <Button
+            android:id="@+id/foreground_service"
+            style="@style/ServiceButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Запустить Foreground Service с константой: " />
 
-    <Button
-        android:id="@+id/stop_foreground_service"
-        style="@style/ServiceButtonStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Остановить Foreground Service"
-        />
+        <TextView
+            android:id="@+id/info_3"
+            style="@style/InfoTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Чтобы остановить сервис изнутри, нужно вызвать stopSelf() внутри метода onStartCommand. \n Чтобы остановить сервис снаружи, нужно вызвать метод Context.stopService(intent: Intent)" />
 
-</LinearLayout>
+        <Button
+            android:id="@+id/stop_foreground_service"
+            style="@style/ServiceButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Остановить Foreground Service" />
+
+        <org.billthefarmer.markdown.MarkdownView
+            android:id="@+id/markdown"
+            style="@style/InfoTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+</ScrollView>

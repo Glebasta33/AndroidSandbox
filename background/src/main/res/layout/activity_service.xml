@@ -1,52 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="top"
-    android:orientation="vertical"
-    tools:context=".presentation.BackgroundActivity">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/info"
-        style="@style/InfoTextStyle"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/service_info"
-        />
+        android:gravity="top"
+        android:orientation="vertical"
+        tools:context=".presentation.BackgroundActivity">
 
-    <Button
-        android:id="@+id/blocking_service"
-        style="@style/ServiceButtonStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Service (по дефолту - главный поток заблочится)"
-        />
+        <TextView
+            android:id="@+id/info"
+            style="@style/InfoTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/service_info" />
 
-    <Button
-        android:id="@+id/not_blocking_service"
-        style="@style/ServiceButtonStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Service (с фоновым потоком внутри)"
-        />
+        <Button
+            android:id="@+id/blocking_service"
+            style="@style/ServiceButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Service (по дефолту - главный поток заблочится)" />
 
-    <TextView
-        android:id="@+id/logs_title"
-        style="@style/InfoTextStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Logs:"
-        />
+        <Button
+            android:id="@+id/not_blocking_service"
+            style="@style/ServiceButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Service (с фоновым потоком внутри)" />
 
-    <TextView
-        android:id="@+id/logs"
-        style="@style/InfoTextStyle"
-        android:scrollbars = "vertical"
-        android:gravity="bottom"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        <TextView
+            android:id="@+id/logs_title"
+            style="@style/InfoTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Logs:" />
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/logs"
+            style="@style/InfoTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            android:scrollbars="vertical" />
+
+        <org.billthefarmer.markdown.MarkdownView
+            android:id="@+id/markdown"
+            style="@style/InfoTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+</ScrollView>
