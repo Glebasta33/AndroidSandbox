@@ -3,21 +3,22 @@ package com.github.gltrusov.background.presentation
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.github.di_framework.core.internalFeatureApi
-import com.github.gltrusov.background.R
-import com.github.gltrusov.background.di.api.BackgroundApi
-import com.github.gltrusov.background.di.internal.BackgroundInternalApi
+import com.github.gltrusov.background.databinding.ActivityBackgroundBinding
+import com.github.gltrusov.background.services.service.ServiceActivity
 
-class BackgroundActivity : AppCompatActivity() {
+internal class BackgroundActivity : AppCompatActivity() {
+
+    private val binding by lazy {
+        ActivityBackgroundBinding.inflate(layoutInflater)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_feature_test)
-        val internalApi: BackgroundInternalApi = internalFeatureApi<BackgroundApi, BackgroundInternalApi>()
-        val textView = findViewById<TextView>(R.id.test_text_view)
-        textView.text = internalApi.BackgroundDependencyMock.text
+        setContentView(binding.root)
+        binding.simpleService.setOnClickListener {
+            ServiceActivity.start(this)
+        }
     }
 
     internal companion object {

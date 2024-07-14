@@ -3,5 +3,10 @@
 
     <application>
         <activity android:name=".presentation.BackgroundActivity" />
+
+        <activity android:name=".services.service.ServiceActivity" />
+        <service android:name=".services.service.BasicService" />
+        <service android:name=".services.service.BasicServiceWithBackground" />
+
     </application>
 </manifest>

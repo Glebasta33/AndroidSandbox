@@ -29,10 +29,12 @@ android {
 
 dependencies {
 
+    implementation(libs.dagger)
+    kapt(libs.dagger.compiler)
     implementation(libs.bundles.core)
+    implementation(libs.corotines.core)
+    implementation(libs.corotines.android)
     implementation(project(":core_ui"))
     implementation(project(":core_navigation"))
     implementation(project(":di_framework"))
-    implementation(libs.dagger)
-    kapt(libs.dagger.compiler)
 }

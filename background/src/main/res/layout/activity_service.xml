@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="top"
+    android:orientation="vertical"
+    tools:context=".presentation.BackgroundActivity">
+
+    <TextView
+        android:id="@+id/info"
+        style="@style/InfoTextStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/service_info"
+        />
+
+    <Button
+        android:id="@+id/blocking_service"
+        style="@style/ServiceButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Service (по дефолту - главный поток заблочится)"
+        />
+
+    <Button
+        android:id="@+id/not_blocking_service"
+        style="@style/ServiceButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Service (с фоновым потоком внутри)"
+        />
+
+    <TextView
+        android:id="@+id/logs_title"
+        style="@style/InfoTextStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Logs:"
+        />
+
+    <TextView
+        android:id="@+id/logs"
+        style="@style/InfoTextStyle"
+        android:scrollbars = "vertical"
+        android:gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+</LinearLayout>

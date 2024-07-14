@@ -43,6 +43,9 @@ navigation-compose = { module = "androidx.navigation:navigation-compose", versio
 kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version = "1.9.21" }
 drawablepainter = { module = "com.google.accompanist:accompanist-drawablepainter", version = "0.28.0" }
 
+corotines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core" }
+corotines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android" }
+
 [bundles]
 core = [
     "androidx-core-ktx",
