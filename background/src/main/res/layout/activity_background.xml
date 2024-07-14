@@ -17,6 +17,14 @@
         />
 
     <Button
+        android:id="@+id/about_notification"
+        style="@style/ServiceButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/about_notification"
+        />
+
+    <Button
         android:id="@+id/foreground_service"
         style="@style/ServiceButtonStyle"
         android:layout_width="match_parent"

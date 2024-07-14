@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.github.gltrusov.background.databinding.ActivityBackgroundBinding
+import com.github.gltrusov.background.notification.NotificationAboutActivity
 import com.github.gltrusov.background.services.service.ServiceActivity
 
 internal class BackgroundActivity : AppCompatActivity() {
@@ -18,6 +19,9 @@ internal class BackgroundActivity : AppCompatActivity() {
         setContentView(binding.root)
         binding.simpleService.setOnClickListener {
             ServiceActivity.start(this)
+        }
+        binding.aboutNotification.setOnClickListener {
+            NotificationAboutActivity.start(this)
         }
     }
 

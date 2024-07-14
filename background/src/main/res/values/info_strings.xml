@@ -10,4 +10,22 @@
             По умолчанию код внутри сервисов выполняется на главном потоке. \n
             Для запуска сервиса, нужно вызвать метод Context.startService и передать Intent. \n
     </string>
+
+    <string name="foreground_service_info"> \n
+        С Android 8 (API 24) на работу сервисов наложили доп. ограничения.
+    </string>
+
+    <string name="notification_info_1">
+        Для отправки уведомления необходимо создать объект через Notification.Builder
+        и передать его метод notify NotificationManager. Но это будет работать только до API 26 (Android 8) включительно.
+    </string>
+
+    <string name="notification_info_2">
+        Начиная с Android 9 необходимо регистрировать уведомление в Notification Channel. \n
+        Для создания канала необходимо указать его id, имя и importance. \n
+        id канала нужно передавать в Notification.Builder. \n
+        Но до Android 9 каналы не поддерживаются, поэтому нужно делать проверку SDK. \n
+        Начиная с Android 13 нужно добавить в манифест android.permission.POST_NOTIFICATIONS, а также
+        через runtime permission попросить пользователя разрешить отправку уведомлений в настройках.
+    </string>
 </resources>
