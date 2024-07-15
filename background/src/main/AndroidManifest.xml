@@ -4,6 +4,12 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_REMOTE_MESSAGING" />
 
+    <!-->Разрешения для ограничений JobService (проверка wifi)<-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!-->Разрешение, чтобы JobService перезапустился после выключения устройства.<-->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
     <application>
         <activity android:name=".presentation.BackgroundActivity" />
 
@@ -21,6 +27,10 @@
         <activity android:name=".services.intent_service.IntentServiceActivity" />
         <service android:name=".services.intent_service.MyIntentService"
             android:foregroundServiceType="remoteMessaging"/>
+
+        <activity android:name=".services.job_dispatcher.JobServiceActivity" />
+        <service android:name=".services.job_dispatcher.MyJobService"
+            android:permission="android.permission.BIND_JOB_SERVICE"/>
 
     </application>
 </manifest>

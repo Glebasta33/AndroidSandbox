@@ -8,6 +8,7 @@ import com.github.gltrusov.background.databinding.ActivityBackgroundBinding
 import com.github.gltrusov.background.notification.NotificationAboutActivity
 import com.github.gltrusov.background.services.foreground_service.ForegroundServiceActivity
 import com.github.gltrusov.background.services.intent_service.IntentServiceActivity
+import com.github.gltrusov.background.services.job_dispatcher.JobServiceActivity
 import com.github.gltrusov.background.services.service.ServiceActivity
 
 internal class BackgroundActivity : AppCompatActivity() {
@@ -30,6 +31,9 @@ internal class BackgroundActivity : AppCompatActivity() {
         }
         binding.intentService.setOnClickListener {
             IntentServiceActivity.start(this)
+        }
+        binding.jobService.setOnClickListener {
+            JobServiceActivity.start(this)
         }
     }
 

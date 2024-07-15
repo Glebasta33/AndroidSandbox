@@ -9,14 +9,14 @@
         android:layout_height="wrap_content"
         android:gravity="top"
         android:orientation="vertical"
-        tools:context=".services.intent_service.IntentServiceActivity">
+        tools:context=".presentation.BackgroundActivity">
 
         <Button
-            android:id="@+id/intent_service"
+            android:id="@+id/job_service"
             style="@style/ServiceButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Start IntentService" />
+            android:text="Start JobService" />
 
         <org.billthefarmer.markdown.MarkdownView
             android:id="@+id/markdown"
