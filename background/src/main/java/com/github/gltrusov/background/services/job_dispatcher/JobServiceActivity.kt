@@ -40,8 +40,10 @@ internal class JobServiceActivity : AppCompatActivity() {
         }
 
         binding.buttonSavePages.setOnClickListener {
-            binding.jobServiceParams.text = "Start JobService with param: ${binding.editTextPagesInput.text}"
-            binding.scheduledJobService.text = "Start ScheduledJobService with param: ${binding.editTextPagesInput.text}"
+            binding.jobServiceParams.text =
+                "Start JobService with param: ${binding.editTextPagesInput.text}"
+            binding.scheduledJobService.text =
+                "Start ScheduledJobService with param: ${binding.editTextPagesInput.text}"
             binding.editTextPagesInput.clearFocus()
         }
 
@@ -50,7 +52,11 @@ internal class JobServiceActivity : AppCompatActivity() {
 
             val jobInfo = JobInfo.Builder(JobServiceWithParam.JOB_ID, componentName)
                 // передача параметров
-                .setExtras(JobServiceWithParam.newBundle(binding.editTextPagesInput.text.toString().toInt()))
+                .setExtras(
+                    JobServiceWithParam.newBundle(
+                        binding.editTextPagesInput.text.toString().toInt()
+                    )
+                )
                 .setRequiresCharging(true)
                 .setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED)
                 .setPersisted(true)
@@ -70,14 +76,21 @@ internal class JobServiceActivity : AppCompatActivity() {
                 .build()
 
             val jobScheduler = getSystemService(JOB_SCHEDULER_SERVICE) as JobScheduler
+            val page = binding.editTextPagesInput.text.toString().toInt()
 
             /**
              * С Android 8 (API 26) можно выполнять JobService последовательно
              * друг за другом через метод enqueue.
+             *
+             * При API 26 аналог - IntentService.
+             *
+             * JobIntent делает эту проверку под капотом.
              */
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                val intent = ScheduledJobService.newIntent(binding.editTextPagesInput.text.toString().toInt())
+                val intent = ScheduledJobService.newIntent(page)
                 jobScheduler.enqueue(jobInfo, JobWorkItem(intent))
+            } else {
+                startService(MyIntentService2.newIntent(this, page))
             }
         }
 

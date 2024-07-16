@@ -35,6 +35,7 @@
             android:permission="android.permission.BIND_JOB_SERVICE"/>
         <service android:name=".services.job_dispatcher.ScheduledJobService"
             android:permission="android.permission.BIND_JOB_SERVICE"/>
+        <service android:name=".services.job_dispatcher.MyIntentService2" />
 
     </application>
 </manifest>
