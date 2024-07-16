@@ -37,6 +37,7 @@ dependencies {
     implementation(libs.bundles.core)
     implementation(libs.corotines.core)
     implementation(libs.corotines.android)
+    implementation(libs.work.manager)
     implementation(project(":core_ui"))
     implementation(project(":core_navigation"))
     implementation(project(":di_framework"))

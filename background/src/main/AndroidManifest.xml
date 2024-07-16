@@ -43,5 +43,7 @@
             android:name=".services.job_intent_service.MyJobIntentService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
+        <activity android:name=".services.work_manager.WorkManagerActivity" />
+
     </application>
 </manifest>

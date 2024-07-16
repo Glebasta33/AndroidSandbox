@@ -10,6 +10,7 @@ import com.github.gltrusov.background.services.foreground_service.ForegroundServ
 import com.github.gltrusov.background.services.intent_service.IntentServiceActivity
 import com.github.gltrusov.background.services.job_service.JobServiceActivity
 import com.github.gltrusov.background.services.service.ServiceActivity
+import com.github.gltrusov.background.services.work_manager.WorkManagerActivity
 
 internal class BackgroundActivity : AppCompatActivity() {
 
@@ -34,6 +35,9 @@ internal class BackgroundActivity : AppCompatActivity() {
         }
         binding.jobService.setOnClickListener {
             JobServiceActivity.start(this)
+        }
+        binding.workManager.setOnClickListener {
+            WorkManagerActivity.start(this)
         }
     }
 
