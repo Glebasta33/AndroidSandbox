@@ -18,6 +18,42 @@
             android:layout_height="wrap_content"
             android:text="Start JobService" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/edit_text_pages_input"
+                android:layout_width="64.dp"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:text="0"/>
+
+            <Button
+                android:id="@+id/button_save_pages"
+                android:layout_width="64.dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10.dp"
+                android:text="OK"/>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/job_service_params"
+            style="@style/ServiceButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Start JobService with param: " />
+
+        <Button
+            android:id="@+id/scheduled_job_service"
+            style="@style/ServiceButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Start ScheduledJobService with param: " />
+
         <org.billthefarmer.markdown.MarkdownView
             android:id="@+id/markdown"
             style="@style/InfoTextStyle"

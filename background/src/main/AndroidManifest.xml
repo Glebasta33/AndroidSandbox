@@ -31,6 +31,10 @@
         <activity android:name=".services.job_dispatcher.JobServiceActivity" />
         <service android:name=".services.job_dispatcher.MyJobService"
             android:permission="android.permission.BIND_JOB_SERVICE"/>
+        <service android:name=".services.job_dispatcher.JobServiceWithParam"
+            android:permission="android.permission.BIND_JOB_SERVICE"/>
+        <service android:name=".services.job_dispatcher.ScheduledJobService"
+            android:permission="android.permission.BIND_JOB_SERVICE"/>
 
     </application>
 </manifest>

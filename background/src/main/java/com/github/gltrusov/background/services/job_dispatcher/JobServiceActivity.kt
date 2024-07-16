@@ -2,9 +2,11 @@ package com.github.gltrusov.background.services.job_dispatcher
 
 import android.app.job.JobInfo
 import android.app.job.JobScheduler
+import android.app.job.JobWorkItem
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.github.gltrusov.background.databinding.ActivityJobServiceBinding
@@ -35,6 +37,48 @@ internal class JobServiceActivity : AppCompatActivity() {
 
             val jobScheduler = getSystemService(JOB_SCHEDULER_SERVICE) as JobScheduler
             jobScheduler.schedule(jobInfo)
+        }
+
+        binding.buttonSavePages.setOnClickListener {
+            binding.jobServiceParams.text = "Start JobService with param: ${binding.editTextPagesInput.text}"
+            binding.scheduledJobService.text = "Start ScheduledJobService with param: ${binding.editTextPagesInput.text}"
+            binding.editTextPagesInput.clearFocus()
+        }
+
+        binding.jobServiceParams.setOnClickListener {
+            val componentName = ComponentName(this, JobServiceWithParam::class.java)
+
+            val jobInfo = JobInfo.Builder(JobServiceWithParam.JOB_ID, componentName)
+                // передача параметров
+                .setExtras(JobServiceWithParam.newBundle(binding.editTextPagesInput.text.toString().toInt()))
+                .setRequiresCharging(true)
+                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED)
+                .setPersisted(true)
+                .build()
+
+            val jobScheduler = getSystemService(JOB_SCHEDULER_SERVICE) as JobScheduler
+            jobScheduler.schedule(jobInfo)
+        }
+
+        binding.scheduledJobService.setOnClickListener {
+            val componentName = ComponentName(this, ScheduledJobService::class.java)
+
+            val jobInfo = JobInfo.Builder(ScheduledJobService.JOB_ID, componentName)
+                .setRequiresCharging(true)
+                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED)
+//                .setPersisted(true) - нельзя использовать для очереди сервисов
+                .build()
+
+            val jobScheduler = getSystemService(JOB_SCHEDULER_SERVICE) as JobScheduler
+
+            /**
+             * С Android 8 (API 26) можно выполнять JobService последовательно
+             * друг за другом через метод enqueue.
+             */
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                val intent = ScheduledJobService.newIntent(binding.editTextPagesInput.text.toString().toInt())
+                jobScheduler.enqueue(jobInfo, JobWorkItem(intent))
+            }
         }
 
         binding.markdown.loadMarkdownFile("file:///android_asset/job_service.md")

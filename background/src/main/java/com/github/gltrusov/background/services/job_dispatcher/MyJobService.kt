@@ -27,8 +27,8 @@ class MyJobService : JobService() {
 
     override fun onCreate() {
         super.onCreate()
-        log("onCreate")
         createLoggingNotificationChannel()
+        log("onCreate")
     }
 
     /**
@@ -42,12 +42,13 @@ class MyJobService : JobService() {
      * Второй boolean-параметр - нужно ли перезапускать сервис.
      */
     override fun onStartJob(params: JobParameters?): Boolean {
-        log("onStartCommand")
+        log("onStartJob")
         coroutineScope.launch {
-            for (i in 0 until 100) {
-                delay(1000)
-                log("JobService $i")
-                notifyLog(11, "JobService $i")
+            for (page in 0 until 10) {
+                for (i in 0 until 10) {
+                    delay(1000)
+                    log("JobService: page $page loading ${i * 10} %")
+                }
             }
             jobFinished(params, true)
         }
@@ -56,7 +57,7 @@ class MyJobService : JobService() {
 
     /**
      * onStopJob - вызывается, когда система убивает сервис,
-     * но не когда в ручную вызывается jobFinished.
+     * но не когда вручную вызывается jobFinished.
      * onStopJob: Boolean - нужно ли перезапустить сервис
      * после того, как его убила система.
      */
@@ -72,7 +73,8 @@ class MyJobService : JobService() {
     }
 
     private fun log(message: String) {
-        Log.d("MyLog", "MyService: $message")
+        Log.d("MyLog", "MyJobService: $message")
+        notifyLog(11, message)
     }
 
     companion object {
