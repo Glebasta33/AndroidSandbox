@@ -1,4 +1,4 @@
-package com.github.gltrusov.background.services.job_dispatcher
+package com.github.gltrusov.background.services.job_service
 
 import android.app.IntentService
 import android.content.Context
@@ -35,7 +35,7 @@ class MyIntentService2 : IntentService(NAME) {
 
     private fun log(message: String) {
         val text = "IntentService: $message"
-        Log.d("SERVICE_TAG", text)
+        Log.d("MyLog", text)
         notifyLog(14, text)
     }
 

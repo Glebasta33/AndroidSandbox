@@ -1,4 +1,4 @@
-package com.github.gltrusov.background.services.job_dispatcher
+package com.github.gltrusov.background.services.job_service
 
 import android.app.job.JobInfo
 import android.app.job.JobScheduler
@@ -10,6 +10,7 @@ import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.github.gltrusov.background.databinding.ActivityJobServiceBinding
+import com.github.gltrusov.background.services.job_intent_service.MyJobIntentService
 
 internal class JobServiceActivity : AppCompatActivity() {
 
@@ -44,6 +45,8 @@ internal class JobServiceActivity : AppCompatActivity() {
                 "Start JobService with param: ${binding.editTextPagesInput.text}"
             binding.scheduledJobService.text =
                 "Start ScheduledJobService with param: ${binding.editTextPagesInput.text}"
+            binding.jobIntentService.text =
+                "Start JobIntentService with param: ${binding.editTextPagesInput.text}"
             binding.editTextPagesInput.clearFocus()
         }
 
@@ -92,6 +95,10 @@ internal class JobServiceActivity : AppCompatActivity() {
             } else {
                 startService(MyIntentService2.newIntent(this, page))
             }
+        }
+
+        binding.jobIntentService.setOnClickListener {
+            MyJobIntentService.enqueue(this, binding.editTextPagesInput.text.toString().toInt())
         }
 
         binding.markdown.loadMarkdownFile("file:///android_asset/job_service.md")

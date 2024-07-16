@@ -1,4 +1,4 @@
-package com.github.gltrusov.background.services.job_dispatcher
+package com.github.gltrusov.background.services.job_service
 
 import android.app.job.JobParameters
 import android.app.job.JobService

@@ -190,6 +190,79 @@ class ScheduledJobService : JobService() {
     }
 }
 
+/**
+ * Для организации последовательного выполнения
+ * сервисов (в очереди) используются:
+ * - С API 26 - JobService.
+ * - До API 26 - IntentService.
+ *
+ * Но чтобы не делать проверку версии API можно
+ * использовать JobIntentService, который делает
+ * эту проверку автоматически.
+ *
+ * С API 26 запускается JobService через JobScheduler.
+ * До API 26 запускается IntentService через Context.startIntent.
+ *
+ * Но для JobIntentService нельзя устанавливать ограничения,
+ * как в JobIntent (подключение к WiFi и т.д.)
+ */
+class MyJobIntentService : JobIntentService() {
+
+    override fun onCreate() {
+        super.onCreate()
+        log("onCreate")
+        createLoggingNotificationChannel()
+    }
+
+    /**
+     * Метод аналогичен методу onHandleIntent
+     */
+    override fun onHandleWork(intent: Intent) {
+        log("onHandleIntent")
+        val page = intent.getIntExtra(PAGE, 0)
+        for (i in 0 until 5) {
+            Thread.sleep(1000)
+            log("page $page loading ${i * 10} %")
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        log("onDestroy")
+    }
+
+    private fun log(message: String) {
+        val text = "MyJobIntentService: $message"
+        Log.d("MyLog", text)
+        notifyLog(15, text)
+    }
+
+    companion object {
+
+        private const val PAGE = "page"
+        private const val JOB_ID = 111
+
+        /**
+         * Запускается JobIntentService через
+         * вызов статического метода enqueueWork
+         */
+        fun enqueue(context: Context, page: Int) {
+            JobIntentService.enqueueWork(
+                context,
+                MyJobIntentService::class.java,
+                JOB_ID,
+                newIntent(context, page)
+            )
+        }
+
+        private fun newIntent(context: Context, page: Int): Intent {
+            return Intent(context, MyJobIntentService::class.java).apply {
+                putExtra(PAGE, page)
+            }
+        }
+    }
+}
+
 internal class JobServiceActivity : AppCompatActivity() {
 
     private val binding by lazy {
@@ -219,8 +292,12 @@ internal class JobServiceActivity : AppCompatActivity() {
         }
 
         binding.buttonSavePages.setOnClickListener {
-            binding.jobServiceParams.text = "Start JobService with param: ${binding.editTextPagesInput.text}"
-            binding.scheduledJobService.text = "Start ScheduledJobService with param: ${binding.editTextPagesInput.text}"
+            binding.jobServiceParams.text =
+                "Start JobService with param: ${binding.editTextPagesInput.text}"
+            binding.scheduledJobService.text =
+                "Start ScheduledJobService with param: ${binding.editTextPagesInput.text}"
+            binding.jobIntentService.text =
+                "Start JobIntentService with param: ${binding.editTextPagesInput.text}"
             binding.editTextPagesInput.clearFocus()
         }
 
@@ -229,7 +306,11 @@ internal class JobServiceActivity : AppCompatActivity() {
 
             val jobInfo = JobInfo.Builder(JobServiceWithParam.JOB_ID, componentName)
                 // передача параметров
-                .setExtras(JobServiceWithParam.newBundle(binding.editTextPagesInput.text.toString().toInt()))
+                .setExtras(
+                    JobServiceWithParam.newBundle(
+                        binding.editTextPagesInput.text.toString().toInt()
+                    )
+                )
                 .setRequiresCharging(true)
                 .setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED)
                 .setPersisted(true)
@@ -256,7 +337,7 @@ internal class JobServiceActivity : AppCompatActivity() {
              * друг за другом через метод enqueue.
              *
              * При API 26 аналог - IntentService.
-             * 
+             *
              * JobIntent делает эту проверку под капотом.
              */
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -265,6 +346,10 @@ internal class JobServiceActivity : AppCompatActivity() {
             } else {
                 startService(MyIntentService2.newIntent(this, page))
             }
+        }
+        
+        binding.jobIntentService.setOnClickListener { 
+            MyJobIntentService.enqueue(this, binding.editTextPagesInput.text.toString().toInt())
         }
 
         binding.markdown.loadMarkdownFile("file:///android_asset/job_service.md")

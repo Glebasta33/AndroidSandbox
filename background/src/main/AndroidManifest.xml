@@ -10,6 +10,8 @@
     <!-->Разрешение, чтобы JobService перезапустился после выключения устройства.<-->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
     <application>
         <activity android:name=".presentation.BackgroundActivity" />
 
@@ -28,14 +30,18 @@
         <service android:name=".services.intent_service.MyIntentService"
             android:foregroundServiceType="remoteMessaging"/>
 
-        <activity android:name=".services.job_dispatcher.JobServiceActivity" />
-        <service android:name=".services.job_dispatcher.MyJobService"
+        <activity android:name=".services.job_service.JobServiceActivity" />
+        <service android:name=".services.job_service.MyJobService"
             android:permission="android.permission.BIND_JOB_SERVICE"/>
-        <service android:name=".services.job_dispatcher.JobServiceWithParam"
+        <service android:name=".services.job_service.JobServiceWithParam"
             android:permission="android.permission.BIND_JOB_SERVICE"/>
-        <service android:name=".services.job_dispatcher.ScheduledJobService"
+        <service android:name=".services.job_service.ScheduledJobService"
             android:permission="android.permission.BIND_JOB_SERVICE"/>
-        <service android:name=".services.job_dispatcher.MyIntentService2" />
+        <service android:name=".services.job_service.MyIntentService2" />
+
+        <service
+            android:name=".services.job_intent_service.MyJobIntentService"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
 
     </application>
 </manifest>
