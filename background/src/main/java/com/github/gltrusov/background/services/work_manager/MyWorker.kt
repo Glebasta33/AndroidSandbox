@@ -12,16 +12,16 @@ import com.github.gltrusov.background.notification.notifyLog
 
 /**
  * Worker + WorkManager - это замена сервисам
- * из библиотеки JetPack.
+ * из библиотеки Jetpack. Работает с API 14 (Android 4).
+ *
+ * При использовании WorkManager ничего не нужно
+ * регистрировать в манифесте (это делается автоматически).
  *
  * Внутри Worker нет доступа к контексту,
  * Context передаётся в конструктор.
  *
  * WorkerParameters содержит inputData, в котором как
  * в Bundle храняться данные парами ключ-значение.
- *
- * При использовании WorkManager ничего не нужно
- * регистрировать в манифесте (это делается автоматически).
  */
 internal class MyWorker(
     private val context: Context,
