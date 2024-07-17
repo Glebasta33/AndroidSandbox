@@ -8,6 +8,8 @@ import android.os.Build
 import androidx.core.app.NotificationCompat
 import com.github.gltrusov.background.R
 
+//TODO Сделать Runtime permission для предоставления разрешения на отправку уведомлений в настройках
+
 fun Context.createLoggingNotificationChannel() {
     val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -27,7 +29,7 @@ fun Context.notifyLog(id: Int, text: String) {
         .setContentTitle("Log")
         .setContentText(text)
         .setSmallIcon(R.drawable.ic_launcher_foreground)
-        .setSilent(true)
+        .setOnlyAlertOnce(true)
         .build()
 
     notificationManager.notify(id, notification)

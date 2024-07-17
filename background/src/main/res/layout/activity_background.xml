@@ -33,6 +33,14 @@
         />
 
     <Button
+        android:id="@+id/bound_service"
+        style="@style/ServiceButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/bound_service"
+        />
+
+    <Button
         android:id="@+id/intent_service"
         style="@style/ServiceButtonStyle"
         android:layout_width="match_parent"

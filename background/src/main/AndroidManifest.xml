@@ -16,27 +16,35 @@
         <activity android:name=".presentation.BackgroundActivity" />
 
         <activity android:name=".services.service.ServiceActivity" />
+
         <service android:name=".services.service.BasicService" />
         <service android:name=".services.service.BasicServiceWithBackground" />
 
         <activity android:name=".notification.NotificationAboutActivity" />
 
         <activity android:name=".services.foreground_service.ForegroundServiceActivity" />
+
         <service android:name=".services.foreground_service.RestartingService" />
-        <service android:name=".services.foreground_service.ForegroundService"
-            android:foregroundServiceType="remoteMessaging"/>
+        <service
+            android:name=".services.foreground_service.ForegroundService"
+            android:foregroundServiceType="remoteMessaging" />
 
         <activity android:name=".services.intent_service.IntentServiceActivity" />
-        <service android:name=".services.intent_service.MyIntentService"
-            android:foregroundServiceType="remoteMessaging"/>
+        <service
+            android:name=".services.intent_service.MyIntentService"
+            android:foregroundServiceType="remoteMessaging" />
 
         <activity android:name=".services.job_service.JobServiceActivity" />
-        <service android:name=".services.job_service.MyJobService"
-            android:permission="android.permission.BIND_JOB_SERVICE"/>
-        <service android:name=".services.job_service.JobServiceWithParam"
-            android:permission="android.permission.BIND_JOB_SERVICE"/>
-        <service android:name=".services.job_service.ScheduledJobService"
-            android:permission="android.permission.BIND_JOB_SERVICE"/>
+
+        <service
+            android:name=".services.job_service.MyJobService"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+        <service
+            android:name=".services.job_service.JobServiceWithParam"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+        <service
+            android:name=".services.job_service.ScheduledJobService"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
         <service android:name=".services.job_service.MyIntentService2" />
 
         <service
@@ -44,6 +52,12 @@
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <activity android:name=".services.work_manager.WorkManagerActivity" />
+
+        <activity android:name=".services.bound_service.BoundServiceActivity" />
+
+        <service
+            android:name=".services.bound_service.BoundService"
+            android:foregroundServiceType="remoteMessaging" />
 
     </application>
 </manifest>
