@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_REMOTE_MESSAGING" />
@@ -11,6 +12,7 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
 
     <application>
         <activity android:name=".presentation.BackgroundActivity" />
@@ -58,6 +60,9 @@
         <service
             android:name=".services.bound_service.BoundService"
             android:foregroundServiceType="remoteMessaging" />
+
+        <activity android:name=".services.alarm_manager.AlarmManagerActivity" />
+        <receiver android:name=".services.alarm_manager.AlarmReceiver" />
 
     </application>
 </manifest>

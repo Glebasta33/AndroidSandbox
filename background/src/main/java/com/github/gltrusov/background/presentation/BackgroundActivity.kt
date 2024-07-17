@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.github.gltrusov.background.databinding.ActivityBackgroundBinding
 import com.github.gltrusov.background.notification.NotificationAboutActivity
+import com.github.gltrusov.background.services.alarm_manager.AlarmManagerActivity
 import com.github.gltrusov.background.services.bound_service.BoundServiceActivity
 import com.github.gltrusov.background.services.foreground_service.ForegroundServiceActivity
 import com.github.gltrusov.background.services.intent_service.IntentServiceActivity
@@ -42,6 +43,9 @@ internal class BackgroundActivity : AppCompatActivity() {
         }
         binding.boundService.setOnClickListener {
             BoundServiceActivity.start(this)
+        }
+        binding.alarmManager.setOnClickListener {
+            AlarmManagerActivity.start(this)
         }
     }
 
