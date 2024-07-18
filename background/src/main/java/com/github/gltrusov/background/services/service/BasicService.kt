@@ -5,7 +5,9 @@ import android.content.Context
 import android.content.Intent
 import android.os.IBinder
 import android.util.Log
+import com.github.gradle_sandbox.Markdown
 
+@Markdown("basic_service.md")
 class BasicService : Service() {
 
     /**

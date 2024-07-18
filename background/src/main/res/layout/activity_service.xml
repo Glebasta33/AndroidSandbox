@@ -48,7 +48,19 @@
             android:scrollbars="vertical" />
 
         <org.billthefarmer.markdown.MarkdownView
-            android:id="@+id/markdown"
+            android:id="@+id/markdown1"
+            style="@style/InfoTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <org.billthefarmer.markdown.MarkdownView
+            android:id="@+id/markdown2"
+            style="@style/InfoTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <org.billthefarmer.markdown.MarkdownView
+            android:id="@+id/markdown3"
             style="@style/InfoTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />

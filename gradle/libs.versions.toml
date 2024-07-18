@@ -10,6 +10,7 @@ retrofit = "2.9.0"
 navigation = "2.7.7"
 ui-android = "1.6.8"
 work-manager = "2.9.0"
+annotation-jvm = "1.8.0"
 
 [libraries]
 androidx-core-ktx = { module = "androidx.core:core-ktx" }
@@ -49,6 +50,7 @@ corotines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core" }
 corotines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android" }
 
 work-manager = { module = "androidx.work:work-runtime-ktx", version.ref = "work-manager" }
+androidx-annotation-jvm = { group = "androidx.annotation", name = "annotation-jvm", version.ref = "annotation-jvm" }
 
 [bundles]
 core = [

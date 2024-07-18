@@ -2,6 +2,19 @@ import com.gltrusov.custom_tasks.CreateTextFileTask
 import com.gltrusov.custom_tasks.PrintFileContentTask
 import com.gltrusov.custom_tasks.PrintKotlinFileContentTask
 
+plugins {
+    kotlin("jvm") version "1.9.0"
+    kotlin("kapt")
+}
+
+sourceSets.main {
+    java.srcDirs("src/main/kotlin")
+}
+
+dependencies {
+    implementation("com.google.auto.service:auto-service:1.1.1")
+    kapt("com.google.auto.service:auto-service:1.1.1")
+}
 
 // ./gradlew printHelloGradle
 // TaskProvider - для ускорения выполнения таски

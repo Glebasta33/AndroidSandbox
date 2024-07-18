@@ -1,17 +1,6 @@
-package com.github.gltrusov.background.services.service
+### ServiceActivity``` kotlin 
 
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
-import android.os.Bundle
-import android.text.method.ScrollingMovementMethod
-import androidx.appcompat.app.AppCompatActivity
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import com.github.gltrusov.background.databinding.ActivityServiceBinding
-import com.github.gradle_sandbox.Markdown
 
-@Markdown("service_activity.md")
 internal class ServiceActivity : AppCompatActivity() {
 
     private val binding by lazy {
@@ -54,3 +43,5 @@ internal class ServiceActivity : AppCompatActivity() {
     }
 
 }
+
+```

@@ -6,12 +6,14 @@ import android.content.Intent
 import android.os.IBinder
 import android.util.Log
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.github.gradle_sandbox.Markdown
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+@Markdown("basic_service_with_background.md")
 class BasicServiceWithBackground : Service() {
 
     private val coroutineScope = CoroutineScope(Dispatchers.Main)

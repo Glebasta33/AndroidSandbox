@@ -51,4 +51,6 @@ dependencies {
     implementation(project(":core_ui"))
     implementation(project(":core_navigation"))
     implementation(project(":di_framework"))
+    implementation(project(":gradle_sandbox"))
+    kapt(project(":gradle_sandbox"))
 }
