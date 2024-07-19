@@ -12,6 +12,7 @@ import com.github.gltrusov.background.di.BackgroundFeatureHolderModule
 import com.github.gltrusov.compose.di.ComposeSandboxFeatureHolderModule
 import com.github.gltrusov.di.entrypoints.MainScreenEntryPointsFeatureHolder
 import com.github.gltrusov.di.entrypoints.api.MainScreenEntryPointsApi
+import com.github.gltrusov.rxjava.di.RxJavaFeatureHolderModule
 import com.github.gltrusov.test_feature.di.TestFeatureFeatureHolderModule
 import dagger.Binds
 import dagger.Module
@@ -22,9 +23,10 @@ import javax.inject.Singleton
 @Module(
     includes = [
         //Здесь указываем модули (featureHolders) фич, которые хотим подключить к приложению
-        TestFeatureFeatureHolderModule::class,
         ComposeSandboxFeatureHolderModule::class,
-        BackgroundFeatureHolderModule::class
+        BackgroundFeatureHolderModule::class,
+        RxJavaFeatureHolderModule::class,
+        TestFeatureFeatureHolderModule::class,
     ]
 )
 abstract class CommonFeatureHoldersModule {

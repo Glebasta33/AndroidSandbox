@@ -88,4 +88,5 @@ dependencies {
     implementation(project(":test_feature"))
     implementation(project(":compose"))
     implementation(project(":background"))
+    implementation(project(":rxjava"))
 }

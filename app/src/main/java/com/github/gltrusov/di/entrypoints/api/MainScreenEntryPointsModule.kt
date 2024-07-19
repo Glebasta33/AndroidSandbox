@@ -5,6 +5,7 @@ import com.github.gltrusov.EntryPoint
 import com.github.gltrusov.OnlyForMainScreen
 import com.github.gltrusov.background.di.navigation.BackgroundNavigationModule
 import com.github.gltrusov.compose.di.navigation.ComposeSandboxNavigationModule
+import com.github.gltrusov.rxjava.di.navigation.RxJavaNavigationModule
 import com.github.gltrusov.test_feature.di.navigation.TestFeatureNavigationModule
 import dagger.Module
 import dagger.Provides
@@ -18,6 +19,7 @@ import kotlin.reflect.KClass
         //на главном экране
         ComposeSandboxNavigationModule::class,
         BackgroundNavigationModule::class,
+        RxJavaNavigationModule::class,
         TestFeatureNavigationModule::class
     ]
 )
