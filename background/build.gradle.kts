@@ -38,7 +38,7 @@ dependencies {
     implementation(libs.corotines.core)
     implementation(libs.corotines.android)
     implementation(libs.work.manager)
-    implementation("com.github.billthefarmer:MarkdownView:v1.09")
+    implementation("com.github.billthefarmer:MarkdownView:v1.11")
     implementation(project(":core_ui"))
     implementation(project(":core_navigation"))
     implementation(project(":di_framework"))
