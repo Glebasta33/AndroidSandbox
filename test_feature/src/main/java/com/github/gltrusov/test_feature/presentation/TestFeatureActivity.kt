@@ -1,4 +1,4 @@
-package com.github.gltrusov.graphics.presentation
+package com.github.gltrusov.test_feature.presentation
 
 import android.content.Context
 import android.content.Intent
@@ -6,9 +6,9 @@ import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.github.di_framework.core.internalFeatureApi
-import com.github.gltrusov.graphics.R
-import com.github.gltrusov.graphics.di.api.TestFeatureApi
-import com.github.gltrusov.graphics.di.internal.TestFeatureInternalApi
+import com.github.gltrusov.test_feature.R
+import com.github.gltrusov.test_feature.di.api.TestFeatureApi
+import com.github.gltrusov.test_feature.di.internal.TestFeatureInternalApi
 
 class TestFeatureActivity : AppCompatActivity() {
 

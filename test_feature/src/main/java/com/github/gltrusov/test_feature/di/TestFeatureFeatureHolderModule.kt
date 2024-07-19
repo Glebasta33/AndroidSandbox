@@ -1,4 +1,4 @@
-package com.github.gltrusov.graphics.di
+package com.github.gltrusov.test_feature.di
 
 import android.content.Context
 import com.github.di_framework.annotation.ApplicationContext
@@ -6,7 +6,7 @@ import com.github.di_framework.annotation.FeatureApiKey
 import com.github.di_framework.core.FeatureContainer
 import com.github.di_framework.core.FeatureHolder
 import com.github.di_framework.meta.FeatureApi
-import com.github.gltrusov.graphics.di.api.TestFeatureApi
+import com.github.gltrusov.test_feature.di.api.TestFeatureApi
 import dagger.Module
 import dagger.Provides
 import dagger.multibindings.IntoMap

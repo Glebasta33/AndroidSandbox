@@ -18,7 +18,7 @@ android {
     buildFeatures {
         viewBinding = true
     }
-    namespace = "com.github.gltrusov.graphics"
+    namespace = "com.github.gltrusov.test_feature"
     compileSdk = 34
 
     compileOptions {

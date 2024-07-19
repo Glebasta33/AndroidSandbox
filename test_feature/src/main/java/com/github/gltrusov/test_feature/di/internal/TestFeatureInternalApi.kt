@@ -1,6 +1,6 @@
-package com.github.gltrusov.graphics.di.internal
+package com.github.gltrusov.test_feature.di.internal
 
-import com.github.gltrusov.graphics.di.api.TestFeatureApi
+import com.github.gltrusov.test_feature.di.api.TestFeatureApi
 
 internal interface TestFeatureInternalApi : TestFeatureApi {
 

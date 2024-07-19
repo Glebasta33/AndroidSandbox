@@ -1,4 +1,4 @@
-package com.github.gltrusov.graphics.di.internal
+package com.github.gltrusov.test_feature.di.internal
 
 import com.github.di_framework.annotation.PerFeature
 import dagger.Module

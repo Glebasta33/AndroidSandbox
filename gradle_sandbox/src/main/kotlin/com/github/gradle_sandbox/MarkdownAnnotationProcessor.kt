@@ -61,7 +61,7 @@ class MarkdownAnnotationProcessor : AbstractProcessor() {
                         code.append(line).append("\n")
                     }
                 }
-            val mdText = "### ${clazz.simpleName}" +
+            val mdText = "### ${clazz.simpleName} \n" +
                     "``` kotlin \n" +
                     code + "\n" +
                     "```"

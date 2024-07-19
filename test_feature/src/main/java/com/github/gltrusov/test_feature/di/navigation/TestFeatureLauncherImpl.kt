@@ -1,7 +1,7 @@
-package com.github.gltrusov.graphics.di.navigation
+package com.github.gltrusov.test_feature.di.navigation
 
 import android.content.Context
-import com.github.gltrusov.graphics.presentation.TestFeatureActivity
+import com.github.gltrusov.test_feature.presentation.TestFeatureActivity
 
 internal class TestFeatureLauncherImpl : TestFeatureLauncher {
 

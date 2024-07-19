@@ -1,10 +1,10 @@
-package com.github.gltrusov.graphics.di
+package com.github.gltrusov.test_feature.di
 
 import android.content.Context
 import com.github.di_framework.core.BaseFeatureHolder
 import com.github.di_framework.core.FeatureContainer
-import com.github.gltrusov.graphics.di.api.DaggerTestFeatureComponent
-import com.github.gltrusov.graphics.di.api.TestFeatureApi
+import com.github.gltrusov.test_feature.di.api.DaggerTestFeatureComponent
+import com.github.gltrusov.test_feature.di.api.TestFeatureApi
 
 class TestFeatureFeatureHolder(
     featureContainer: FeatureContainer,
