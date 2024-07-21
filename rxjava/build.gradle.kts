@@ -16,7 +16,10 @@ android {
     }
 
     buildFeatures {
-        viewBinding = true
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.1"
     }
     namespace = "com.github.gltrusov.rxjava"
     compileSdk = 34
@@ -30,9 +33,20 @@ android {
 dependencies {
 
     implementation(libs.bundles.core)
+    implementation(libs.dagger)
+    kapt(libs.dagger.compiler)
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.gson)
+    implementation(libs.retrofit.adapter.rxjava)
+    implementation(libs.rxjava)
+    implementation(libs.rxjava.android)
+    implementation(libs.bundles.compose)
+    implementation(libs.compose.runtime.livedata)
     implementation(project(":core_ui"))
     implementation(project(":core_navigation"))
     implementation(project(":di_framework"))
-    implementation(libs.dagger)
-    kapt(libs.dagger.compiler)
+    implementation(project(":gradle_sandbox"))
+    kapt(project(":gradle_sandbox"))
+    implementation(libs.markdownview.android)
+
 }

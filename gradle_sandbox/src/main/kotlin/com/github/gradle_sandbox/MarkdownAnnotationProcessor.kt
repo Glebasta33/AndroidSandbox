@@ -23,6 +23,7 @@ class MarkdownAnnotationProcessor : AbstractProcessor() {
 
     @Suppress("NewApi")
     override fun init(processingEnv: ProcessingEnvironment?) {
+        println("MarkdownAnnotationProcessor init")
         super.init(processingEnv)
         val filer = processingEnv?.filer ?: return
         val res = filer.createResource(StandardLocation.CLASS_OUTPUT, "", "tmp", null)
@@ -65,6 +66,8 @@ class MarkdownAnnotationProcessor : AbstractProcessor() {
                     "``` kotlin \n" +
                     code + "\n" +
                     "```"
+
+            println("MarkdownAnnotationProcessor: \nfoundFile: $foundFile\nassetsDir: $assetsDir\nfoundFileSrc: $foundFileSrc \n\n")
 
             val mdFile = File("$assetsDir\\$md")
             mdFile.createNewFile()
