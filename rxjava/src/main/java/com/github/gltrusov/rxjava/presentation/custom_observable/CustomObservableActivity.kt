@@ -6,14 +6,13 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.ui.Modifier
-import com.github.gltrusov.rxjava.presentation.MarkdownFrom
+import androidx.compose.runtime.rxjava3.subscribeAsState
 import com.github.gradle_sandbox.Markdown
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
+import java.util.Locale
 
 /**
  * RxJava - библиотека для асинхронного программирования,
@@ -35,9 +34,11 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 class CustomObservableActivity : ComponentActivity() {
 
     private val disposables = CompositeDisposable()
-    private val simpleObservable = Observable.create<String> { emmiter ->
+    private val simpleObservable = Observable.create<Any> { emmiter ->
         repeat(5) { i ->
             emmiter.onNext("Hello, RxJava $i!")
+            Thread.sleep(1000)
+            emmiter.onNext(i)
             Thread.sleep(1000)
         }
 
@@ -47,24 +48,29 @@ class CustomObservableActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MarkdownFrom(fileName = "custom_observable.md", modifier = Modifier.fillMaxSize())
-            val disposable = simpleObservable
-                .subscribeOn(Schedulers.computation())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    { string ->
-                        toast("onNext: $string")
-                    },
-                    { error ->
-                        toast("onError: ${error.message}")
-                    },
-                    {
-                        toast("onComplete")
-                    }
-                )
-
-            disposables.add(disposable)
+            val state = simpleObservable.subscribeAsState(initial = "Initial")
+            CustomObservableScreen(state.value.toString())
         }
+
+        val disposable = simpleObservable
+            .subscribeOn(Schedulers.computation())
+            .observeOn(AndroidSchedulers.mainThread())
+            .filter { it !is Number }
+            .map { it.toString() }
+            .map { it.uppercase(Locale.ROOT) }
+            .subscribe(
+                { string ->
+                    toast("onNext: $string")
+                },
+                { error ->
+                    toast("onError: ${error.message}")
+                },
+                {
+                    toast("onComplete")
+                }
+            )
+
+        disposables.add(disposable)
     }
 
     override fun onDestroy() {

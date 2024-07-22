@@ -23,6 +23,9 @@ android {
     }
     namespace = "com.github.gltrusov.rxjava"
     compileSdk = 34
+    defaultConfig {
+        minSdk = 24
+    }
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -42,6 +45,7 @@ dependencies {
     implementation(libs.rxjava.android)
     implementation(libs.bundles.compose)
     implementation(libs.compose.runtime.livedata)
+    implementation("androidx.compose.runtime:runtime-rxjava3:1.6.8") // конвертация Observable в Compose State
     implementation(project(":core_ui"))
     implementation(project(":core_navigation"))
     implementation(project(":di_framework"))
