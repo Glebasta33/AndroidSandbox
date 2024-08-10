@@ -5,6 +5,7 @@ import com.github.gltrusov.EntryPoint
 import com.github.gltrusov.OnlyForMainScreen
 import com.github.gltrusov.background.di.navigation.BackgroundNavigationModule
 import com.github.gltrusov.compose.di.navigation.ComposeSandboxNavigationModule
+import com.github.gltrusov.fundamentals.di.navigation.AndroidOsFundamentalsNavigationModule
 import com.github.gltrusov.rxjava.di.navigation.RxJavaNavigationModule
 import com.github.gltrusov.test_feature.di.navigation.TestFeatureNavigationModule
 import dagger.Module
@@ -17,10 +18,11 @@ import kotlin.reflect.KClass
     includes = [
         //здесь указываем модули, в которых объявлены фичевые entryPoint-ы, которые мы хотим увидеть
         //на главном экране
+        AndroidOsFundamentalsNavigationModule::class,
         ComposeSandboxNavigationModule::class,
         BackgroundNavigationModule::class,
         RxJavaNavigationModule::class,
-        TestFeatureNavigationModule::class
+        TestFeatureNavigationModule::class,
     ]
 )
 class MainScreenEntryPointsModule {

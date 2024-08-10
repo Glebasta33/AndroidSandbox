@@ -12,6 +12,7 @@ import com.github.gltrusov.background.di.BackgroundFeatureHolderModule
 import com.github.gltrusov.compose.di.ComposeSandboxFeatureHolderModule
 import com.github.gltrusov.di.entrypoints.MainScreenEntryPointsFeatureHolder
 import com.github.gltrusov.di.entrypoints.api.MainScreenEntryPointsApi
+import com.github.gltrusov.fundamentals.di.AndroidOsFundamentalsFeatureHolderModule
 import com.github.gltrusov.rxjava.di.RxJavaFeatureHolderModule
 import com.github.gltrusov.test_feature.di.TestFeatureFeatureHolderModule
 import dagger.Binds
@@ -27,6 +28,7 @@ import javax.inject.Singleton
         BackgroundFeatureHolderModule::class,
         RxJavaFeatureHolderModule::class,
         TestFeatureFeatureHolderModule::class,
+        AndroidOsFundamentalsFeatureHolderModule::class
     ]
 )
 abstract class CommonFeatureHoldersModule {
