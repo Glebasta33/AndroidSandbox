@@ -24,6 +24,7 @@ include(":core_navigation")
 include(":core_ui")
 
 include(":test_feature")
+include(":views")
 include(":android_fundamentals")
 include(":compose")
 include(":background")

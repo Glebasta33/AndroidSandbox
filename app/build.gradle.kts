@@ -90,4 +90,5 @@ dependencies {
     implementation(project(":background"))
     implementation(project(":rxjava"))
     implementation(project(":android_fundamentals"))
+    implementation(project(":views"))
 }
