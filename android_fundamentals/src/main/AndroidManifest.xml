@@ -2,8 +2,18 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application>
-        <activity android:name=".BundleActivity" android:exported="false" />
-        <activity android:name=".BundleReceiverActivity" android:exported="false" />
+        <activity
+            android:name=".ParcelableActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SerializationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".BundleActivity"
+            android:exported="false" />
+        <activity
+            android:name=".BundleReceiverActivity"
+            android:exported="false" />
         <activity android:name=".presentation.AndroidOsFundamentalsActivity" />
     </application>
 

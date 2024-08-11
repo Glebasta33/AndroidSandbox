@@ -7,7 +7,7 @@ import com.github.gradle_sandbox.Markdown
 
 
 @Markdown("bundle_receiver_activity.md")
-class BundleReceiverActivity : AppCompatActivity() {
+internal class BundleReceiverActivity : AppCompatActivity() {
 
     private val binding by lazy {
         ActivityBundleReceiverBinding.inflate(layoutInflater)

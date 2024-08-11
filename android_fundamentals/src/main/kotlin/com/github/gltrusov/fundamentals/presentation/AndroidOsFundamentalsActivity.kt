@@ -8,7 +8,9 @@ import android.widget.ArrayAdapter
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import com.github.gltrusov.fundamentals.BundleActivity
+import com.github.gltrusov.fundamentals.ParcelableActivity
 import com.github.gltrusov.fundamentals.R
+import com.github.gltrusov.fundamentals.SerializationActivity
 
 data class MenuItem(
     val text: String,
@@ -27,10 +29,12 @@ internal class AndroidOsFundamentalsActivity : AppCompatActivity() {
             onClick = { BundleActivity.start(this) }
         ),
         MenuItem(
-            text = "CustomView",
-            onClick = {
-                println("MyTest: CustomView")
-            }
+            text = "Serialization",
+            onClick = { startActivity(Intent(this, SerializationActivity::class.java)) }
+        ),
+        MenuItem(
+            text = "Parcelable",
+            onClick = { startActivity(Intent(this, ParcelableActivity::class.java)) }
         )
     )
 
@@ -44,9 +48,10 @@ internal class AndroidOsFundamentalsActivity : AppCompatActivity() {
 
         listViewMenu.adapter = adapter
 
-        listViewMenu.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
-            menuItems[position].onClick.invoke()
-        }
+        listViewMenu.onItemClickListener =
+            AdapterView.OnItemClickListener { parent, view, position, id ->
+                menuItems[position].onClick.invoke()
+            }
     }
 
     internal companion object {

@@ -22,6 +22,12 @@ import kotlin.concurrent.thread
  * 2. State preservation (onSaveInstanceState).
  *
  * Размер Bundle: Google рекомендует не привышать 50kb для saved state.
+ *
+ * Вообще Bundle может быть и больше.
+ * Но при отправке данных через Intent, транзакция осуществляется
+ * через IBinder, у которого есть ограничение в 1mb.
+ * Если размер Bundle для Intent будет больше 1mb,
+ * будет отброшено исключение - TransactionTooLargeException.
  */
 
 data class SerializableObject(
