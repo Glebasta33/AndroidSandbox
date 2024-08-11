@@ -14,6 +14,8 @@ navigation = "2.7.7"
 ui-android = "1.6.8"
 work-manager = "2.9.0"
 annotation-jvm = "1.8.0"
+activity-version = "1.9.1"
+kotlin = "1.9.0"
 
 [libraries]
 androidx-core-ktx = { module = "androidx.core:core-ktx" }
@@ -60,6 +62,9 @@ rxjava-android = { module = "io.reactivex.rxjava3:rxandroid", version = "3.0.2" 
 
 work-manager = { module = "androidx.work:work-runtime-ktx", version.ref = "work-manager" }
 androidx-annotation-jvm = { group = "androidx.annotation", name = "annotation-jvm", version.ref = "annotation-jvm" }
+androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity-version" }
+[plugins]
+jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 
 [bundles]
 core = [
