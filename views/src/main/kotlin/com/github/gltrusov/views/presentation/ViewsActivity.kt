@@ -1,23 +1,51 @@
 package com.github.gltrusov.views.presentation
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.TextView
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
-import com.github.di_framework.core.internalFeatureApi
 import com.github.gltrusov.views.R
-import com.github.gltrusov.views.di.api.ViewsApi
-import com.github.gltrusov.views.di.internal.ViewsInternalApi
+import com.github.gltrusov.views.presentation.custom_view.BasicCustomViewActivity
 
-class ViewsActivity : AppCompatActivity() {
+data class MenuItem(
+    val text: String,
+    val onClick: () -> Unit
+) {
+    override fun toString(): String {
+        return text
+    }
+}
 
+internal class ViewsActivity : AppCompatActivity() {
+
+    private val menuItems = listOf(
+        MenuItem(
+            text = "CustomView (basics)",
+            onClick = { startActivity(Intent(this, BasicCustomViewActivity::class.java)) }
+        )
+    )
+
+
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_views)
-        val internalApi: ViewsInternalApi = internalFeatureApi<ViewsApi, ViewsInternalApi>()
-        val textView = findViewById<TextView>(R.id.test_text_view)
-        textView.text = internalApi.ViewsDependencyMock.text
+
+        val listViewMenu = findViewById<ListView>(R.id.list_view)
+
+        val adapter = ArrayAdapter(this, R.layout.menu_list_view_item, menuItems)
+
+        listViewMenu.adapter = adapter
+
+        listViewMenu.onItemClickListener =
+            AdapterView.OnItemClickListener { _, _, position, _ ->
+                menuItems[position].onClick.invoke()
+            }
+
     }
 
     internal companion object {

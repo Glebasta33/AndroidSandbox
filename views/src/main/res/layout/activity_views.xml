@@ -1,11 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/host"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:gravity="top"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".presentation.ViewsActivity">
+
     <TextView
-        android:id="@+id/test_text_view"
+        android:id="@+id/text_view_title"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Test Feature"/>
-</FrameLayout>
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textSize="22sp"
+        android:paddingBottom="12dp"
+        android:text="Views" />
+
+    <ListView
+        android:id="@+id/list_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

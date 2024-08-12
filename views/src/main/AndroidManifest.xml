@@ -3,5 +3,6 @@
 
     <application>
         <activity android:name=".presentation.ViewsActivity" />
+        <activity android:name=".presentation.custom_view.BasicCustomViewActivity" android:exported="false" />
     </application>
 </manifest>

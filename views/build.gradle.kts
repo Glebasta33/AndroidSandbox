@@ -35,4 +35,8 @@ dependencies {
     implementation(project(":di_framework"))
     implementation(libs.dagger)
     kapt(libs.dagger.compiler)
+
+    implementation("com.github.billthefarmer:MarkdownView:v1.11")
+    implementation(project(":gradle_sandbox"))
+    kapt(project(":gradle_sandbox"))
 }
