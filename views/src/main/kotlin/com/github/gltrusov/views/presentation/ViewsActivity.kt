@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.github.gltrusov.views.R
 import com.github.gltrusov.views.presentation.custom_view.basic.BasicCustomViewActivity
 import com.github.gltrusov.views.presentation.custom_view.on_measure.MeasuredCustomViewActivity
+import com.github.gltrusov.views.presentation.custom_view.state_preservation.StatePreservationCustomViewActivity
 
 data class MenuItem(
     val text: String,
@@ -31,6 +32,10 @@ internal class ViewsActivity : AppCompatActivity() {
         MenuItem(
             text = "CustomView (measuring)",
             onClick = { startActivity(Intent(this, MeasuredCustomViewActivity::class.java)) }
+        ),
+        MenuItem(
+            text = "CustomView (state preservation & size changing)",
+            onClick = { startActivity(Intent(this, StatePreservationCustomViewActivity::class.java)) }
         )
     )
 

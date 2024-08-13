@@ -6,4 +6,7 @@
 
     <declare-styleable name="MeasuredCustomView">
     </declare-styleable>
+
+    <declare-styleable name="StatePreservationCustomView">
+    </declare-styleable>
 </resources>
