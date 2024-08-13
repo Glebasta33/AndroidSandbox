@@ -10,6 +10,7 @@ import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import com.github.gltrusov.views.R
 import com.github.gltrusov.views.presentation.custom_view.basic.BasicCustomViewActivity
+import com.github.gltrusov.views.presentation.custom_view.gantt_chart.GanttChartCustomViewActivity
 import com.github.gltrusov.views.presentation.custom_view.on_measure.MeasuredCustomViewActivity
 import com.github.gltrusov.views.presentation.custom_view.state_preservation.StatePreservationCustomViewActivity
 import com.github.gltrusov.views.presentation.custom_view.touch_events.TouchEventsCustomViewActivity
@@ -41,6 +42,10 @@ internal class ViewsActivity : AppCompatActivity() {
         MenuItem(
             text = "CustomView (touch events & redrawing)",
             onClick = { startActivity(Intent(this, TouchEventsCustomViewActivity::class.java)) }
+        ),
+        MenuItem(
+            text = "Gantt Chart",
+            onClick = { startActivity(Intent(this, GanttChartCustomViewActivity::class.java)) }
         )
     )
 

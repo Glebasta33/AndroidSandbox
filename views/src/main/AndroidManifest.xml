@@ -7,5 +7,6 @@
         <activity android:name=".presentation.custom_view.on_measure.MeasuredCustomViewActivity" android:exported="false" />
         <activity android:name=".presentation.custom_view.state_preservation.StatePreservationCustomViewActivity" android:exported="false" />
         <activity android:name=".presentation.custom_view.touch_events.TouchEventsCustomViewActivity" android:exported="false" />
+        <activity android:name=".presentation.custom_view.gantt_chart.GanttChartCustomViewActivity" android:exported="false" />
     </application>
 </manifest>
