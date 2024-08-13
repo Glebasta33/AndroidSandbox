@@ -12,6 +12,7 @@ import com.github.gltrusov.views.R
 import com.github.gltrusov.views.presentation.custom_view.basic.BasicCustomViewActivity
 import com.github.gltrusov.views.presentation.custom_view.on_measure.MeasuredCustomViewActivity
 import com.github.gltrusov.views.presentation.custom_view.state_preservation.StatePreservationCustomViewActivity
+import com.github.gltrusov.views.presentation.custom_view.touch_events.TouchEventsCustomViewActivity
 
 data class MenuItem(
     val text: String,
@@ -36,6 +37,10 @@ internal class ViewsActivity : AppCompatActivity() {
         MenuItem(
             text = "CustomView (state preservation & size changing)",
             onClick = { startActivity(Intent(this, StatePreservationCustomViewActivity::class.java)) }
+        ),
+        MenuItem(
+            text = "CustomView (touch events & redrawing)",
+            onClick = { startActivity(Intent(this, TouchEventsCustomViewActivity::class.java)) }
         )
     )
 

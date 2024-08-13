@@ -9,4 +9,6 @@
 
     <declare-styleable name="StatePreservationCustomView">
     </declare-styleable>
+
+    <declare-styleable name="TouchEventsCustomView" />
 </resources>
