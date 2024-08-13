@@ -9,7 +9,8 @@ import android.widget.ArrayAdapter
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import com.github.gltrusov.views.R
-import com.github.gltrusov.views.presentation.custom_view.BasicCustomViewActivity
+import com.github.gltrusov.views.presentation.custom_view.basic.BasicCustomViewActivity
+import com.github.gltrusov.views.presentation.custom_view.on_measure.MeasuredCustomViewActivity
 
 data class MenuItem(
     val text: String,
@@ -24,8 +25,12 @@ internal class ViewsActivity : AppCompatActivity() {
 
     private val menuItems = listOf(
         MenuItem(
-            text = "CustomView (basics)",
+            text = "CustomView (basics example)",
             onClick = { startActivity(Intent(this, BasicCustomViewActivity::class.java)) }
+        ),
+        MenuItem(
+            text = "CustomView (measuring)",
+            onClick = { startActivity(Intent(this, MeasuredCustomViewActivity::class.java)) }
         )
     )
 

@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:gravity="top"
     android:orientation="vertical"
-    android:padding="16dp"
     tools:context=".presentation.ViewsActivity">
 
     <TextView
@@ -15,7 +14,7 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:textSize="22sp"
-        android:paddingBottom="12dp"
+        android:paddingBottom="16dp"
         android:text="Views" />
 
     <ListView

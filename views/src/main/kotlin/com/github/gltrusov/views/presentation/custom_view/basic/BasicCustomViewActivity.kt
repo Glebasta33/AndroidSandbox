@@ -1,6 +1,5 @@
-package com.github.gltrusov.views.presentation.custom_view
+package com.github.gltrusov.views.presentation.custom_view.basic
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -9,7 +8,6 @@ import org.billthefarmer.markdown.MarkdownView
 
 internal class BasicCustomViewActivity : AppCompatActivity() {
 
-    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_basic_custom_view)

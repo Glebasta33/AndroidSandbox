@@ -1,4 +1,4 @@
-package com.github.gltrusov.views.presentation.custom_view
+package com.github.gltrusov.views.presentation.custom_view.basic
 
 import android.content.Context
 import android.graphics.Canvas
@@ -28,11 +28,6 @@ internal class BasicCustomView(context: Context, attrs: AttributeSet? = null) : 
     private val textPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = Color.WHITE
         textSize = 32f
-    }
-
-    override fun onAttachedToWindow() {
-        super.onAttachedToWindow()
-        println("MyTest: onAttachedToWindow")
     }
 
     override fun onDraw(canvas: Canvas) {
