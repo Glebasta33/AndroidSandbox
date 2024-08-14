@@ -9,4 +9,9 @@
 
     <dimen name="gant_period_name_text_size">14sp</dimen>
     <dimen name="gant_task_name_text_size">12sp</dimen>
+
+    <!-->Calendar region<-->
+
+    <dimen name="calendar_hour_height">60dp</dimen>
+    <!-->endregion<-->
 </resources>

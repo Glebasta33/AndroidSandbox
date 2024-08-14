@@ -10,6 +10,7 @@ import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import com.github.gltrusov.views.R
 import com.github.gltrusov.views.presentation.custom_view.basic.BasicCustomViewActivity
+import com.github.gltrusov.views.presentation.custom_view.calendar.CalendarCustomViewActivity
 import com.github.gltrusov.views.presentation.custom_view.gantt_chart.GanttChartCustomViewActivity
 import com.github.gltrusov.views.presentation.custom_view.on_measure.MeasuredCustomViewActivity
 import com.github.gltrusov.views.presentation.custom_view.state_preservation.StatePreservationCustomViewActivity
@@ -37,7 +38,14 @@ internal class ViewsActivity : AppCompatActivity() {
         ),
         MenuItem(
             text = "CustomView (state preservation & size changing)",
-            onClick = { startActivity(Intent(this, StatePreservationCustomViewActivity::class.java)) }
+            onClick = {
+                startActivity(
+                    Intent(
+                        this,
+                        StatePreservationCustomViewActivity::class.java
+                    )
+                )
+            }
         ),
         MenuItem(
             text = "CustomView (touch events & redrawing)",
@@ -46,6 +54,10 @@ internal class ViewsActivity : AppCompatActivity() {
         MenuItem(
             text = "Gantt Chart",
             onClick = { startActivity(Intent(this, GanttChartCustomViewActivity::class.java)) }
+        ),
+        MenuItem(
+            text = "Calendar",
+            onClick = { startActivity(Intent(this, CalendarCustomViewActivity::class.java)) }
         )
     )
 
