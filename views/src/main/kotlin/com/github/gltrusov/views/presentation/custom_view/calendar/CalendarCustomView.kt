@@ -1,18 +1,25 @@
 package com.github.gltrusov.views.presentation.custom_view.calendar
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.LinearGradient
 import android.graphics.Paint
+import android.graphics.PointF
 import android.graphics.RectF
 import android.graphics.Shader
 import android.os.Build
 import android.text.TextPaint
 import android.util.AttributeSet
+import android.view.MotionEvent
 import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.applyCanvas
+import androidx.core.graphics.createBitmap
+import androidx.core.graphics.withTranslation
 import com.github.gltrusov.views.R
 import com.github.gradle_sandbox.Markdown
 import java.time.LocalDateTime
@@ -58,10 +65,20 @@ internal class CalendarCustomView(context: Context, attrs: AttributeSet? = null)
     private val gradientStartColor = ContextCompat.getColor(context, R.color.blue_700)
     private val gradientEndColor = ContextCompat.getColor(context, R.color.blue_200)
 
+
+    private lateinit var bitmap: Bitmap
+
     private val contentHeight: Int
         get() = hourHeight * visibleHours.size
 
     private val now = LocalDateTime.now().withMinute(0).withSecond(0)
+
+
+    // Значения последнего эвента
+    private val lastPoint = PointF()
+    private var lastPointerId = 0
+
+    private val transformations = Transformations()
 
     private val visibleHours = initHours()
 
@@ -109,12 +126,18 @@ internal class CalendarCustomView(context: Context, attrs: AttributeSet? = null)
             gradientEndColor,
             Shader.TileMode.CLAMP
         )
+
+        bitmap = createBitmap(w, contentHeight).applyCanvas {
+            drawBackground()
+            drawHours()
+            drawEvents()
+        }
     }
 
     override fun onDraw(canvas: Canvas) = with(canvas) {
-        drawBackground()
-        drawHours()
-        drawEvents()
+        withTranslation(y = transformations.translationY) {
+            drawBitmap(bitmap, 0f, 0f, backgroundPaint)
+        }
     }
 
     private fun Canvas.drawBackground() {
@@ -137,22 +160,59 @@ internal class CalendarCustomView(context: Context, attrs: AttributeSet? = null)
 
     private fun Canvas.drawEvents() {
         uiEvents.forEachIndexed { i, uiEvent ->
-            uiEvent.updateRect()
-            val eventRect = uiEvent.rect
-            val eventTitle = uiEvent.event.title
+            if (uiEvent.isRectOnScreen) {
+                uiEvent.updateRect()
+                val eventRect = uiEvent.rect
+                val eventTitle = uiEvent.event.title
 
-            drawRoundRect(eventRect, eventCornerRadius, eventCornerRadius, eventPaint)
+                drawRoundRect(eventRect, eventCornerRadius, eventCornerRadius, eventPaint)
 
-            drawText(eventTitle, eventRect.left + 20f, eventRect.centerY(), eventNamePaint)
+                drawText(eventTitle, eventRect.left + 20f, eventRect.centerY(), eventNamePaint)
+            }
         }
     }
 
     // ascent - верхняя граница текста, descent - нижняя
     private fun Paint.getTextBaselineByCenter(center: Float) = center - (descent() + ascent()) / 2
 
+    @SuppressLint("ClickableViewAccessibility")
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        event ?: return false
+
+        return if (event.pointerCount == 1) processMove(event) else false
+    }
+
+    private fun processMove(event: MotionEvent): Boolean {
+        return when(event.action) {
+            MotionEvent.ACTION_DOWN -> {
+                lastPoint.set(event.x, event.y)
+                lastPointerId = event.getPointerId(0)
+                true
+            }
+            MotionEvent.ACTION_MOVE -> {
+                // Если размер контента меньше размера View - сдвиг недоступен
+                if (height < contentHeight) {
+                    val pointerId = event.getPointerId(0)
+                    // Чтобы избежать скачков - сдвигаем, только если поинтер(палец) тот же, что и раньше
+                    if (lastPointerId == pointerId){
+                        transformations.addTranslation(event.y - lastPoint.y)
+                    }
+
+                    // Запоминаем поинтер и последнюю точку в любом случае
+                    lastPoint.set(event.x, event.y)
+                    lastPointerId = event.getPointerId(0)
+                    true
+                } else {
+                    false
+                }
+            }
+            else -> false
+        }
+    }
+
     private fun initHours(): List<String> {
         val startTime = now.minusHours(1)
-        val endTime = now.plusHours(8)
+        val endTime = now.plusHours(16)
         var lastTime = startTime
         return mutableListOf<String>().apply {
             while (lastTime <= endTime) {
@@ -166,7 +226,7 @@ internal class CalendarCustomView(context: Context, attrs: AttributeSet? = null)
         val rect = RectF()
 
         val isRectOnScreen: Boolean
-            get() = rect.top < height && rect.bottom > 0
+            get() = rect.top < height /*&& rect.bottom > 0f*/
 
         private val text = visibleHours.first()
         private val textSizeX = eventNamePaint.measureText(text)
@@ -188,6 +248,31 @@ internal class CalendarCustomView(context: Context, attrs: AttributeSet? = null)
                 width - 20f,
                 getY(event.dateEnd) ?: (height + eventCornerRadius), //TODO?
             )
+        }
+    }
+
+    private inner class Transformations {
+        var translationY = 0f
+            private set
+
+        // На сколько максимально можно сдвинуть календарь
+        private val minTranslation: Float
+            get() = (height - contentHeight).toFloat().coerceAtMost(0f)
+
+        // Относительный сдвиг на dy
+        fun addTranslation(dy: Float) {
+            translationY = (translationY + dy).coerceIn(minTranslation, 0f)
+            invalidate()
+        }
+
+        // Пересчет текущих значений
+        fun recalculate() {
+            recalculateTranslationY()
+        }
+
+        // Когда изменился размер View надо пересчитать сдвиг
+        private fun recalculateTranslationY() {
+            translationY = translationY.coerceIn(minTranslation, 0f)
         }
     }
 

@@ -12,6 +12,6 @@
 
     <!-->Calendar region<-->
 
-    <dimen name="calendar_hour_height">40dp</dimen>
+    <dimen name="calendar_hour_height">60dp</dimen>
     <!-->endregion<-->
 </resources>

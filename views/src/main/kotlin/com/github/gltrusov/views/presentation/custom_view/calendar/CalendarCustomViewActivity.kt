@@ -23,13 +23,13 @@ internal class CalendarCustomViewActivity : AppCompatActivity() {
         val events = listOf(
             Event(
                 title = "Event 1",
-                dateStart = now.withHour(6).withMinute(0),
-                dateEnd = now.withHour(7).withMinute(0)
+                dateStart = now.plusHours(1).withMinute(0),
+                dateEnd = now.plusHours(2).withMinute(0)
             ),
             Event(
                 title = "Event 2",
-                dateStart = now.withHour(8).withMinute(0),
-                dateEnd = now.withHour(10).withMinute(30)
+                dateStart = now.plusHours(5).withMinute(0),
+                dateEnd = now.plusHours(6).withMinute(30)
             )
         )
 
