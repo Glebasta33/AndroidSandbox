@@ -1,17 +1,25 @@
 package com.github.gltrusov.views.presentation.custom_view.gantt_chart
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
+import android.graphics.LinearGradient
 import android.graphics.Paint
+import android.graphics.PointF
 import android.graphics.Rect
 import android.graphics.RectF
+import android.graphics.Shader
 import android.os.Build
 import android.text.TextPaint
 import android.util.AttributeSet
+import android.view.MotionEvent
 import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
+import androidx.core.graphics.applyCanvas
+import androidx.core.graphics.createBitmap
+import androidx.core.graphics.withTranslation
 import com.github.gltrusov.views.R
 import com.github.gradle_sandbox.Markdown
 import java.time.LocalDate
@@ -97,6 +105,8 @@ internal class GanttChartCustomView @JvmOverloads constructor(
     // Rect для рисования строк
     private val rowRect = Rect()
 
+    private lateinit var bitmap: Bitmap
+
     // endregion ===================================================================================
 
     // region Время
@@ -106,10 +116,12 @@ internal class GanttChartCustomView @JvmOverloads constructor(
     private val periods = initPeriods()
     // endregion
 
+    // Значения последнего эвента
+    private val lastPoint = PointF()
+    private var lastPointerId = 0
 
     // Отвечает за зум и сдвиги
-//    private val transformations = Transformations() TODO
-
+    private val transformations = Transformations()
 
     private var tasks: List<Task> = emptyList()
     private var uiTasks: List<UiTask> = emptyList()
@@ -156,8 +168,23 @@ internal class GanttChartCustomView @JvmOverloads constructor(
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         // Размер изменился, надо пересчитать ширину строки
         rowRect.set(0, 0, w, rowHeight)
+        // И размер градиента
+        taskShapePaint.shader = LinearGradient(
+            0f,
+            0f,
+            w.toFloat(),
+            0f,
+            gradientStartColor,
+            gradientEndColor,
+            Shader.TileMode.CLAMP
+        )
         // И прямоугольники тасок
         updateTasksRects()
+        // Перерисовываем bitmap
+        bitmap = createBitmap(contentWidth, h).applyCanvas {
+            drawPeriods()
+            drawTasks()
+        }
     }
 
     private fun updateTasksRects() {
@@ -167,8 +194,9 @@ internal class GanttChartCustomView @JvmOverloads constructor(
 
     override fun onDraw(canvas: Canvas) = with(canvas) {
         drawRows()
-        drawPeriods()
-        drawTasks()
+        withTranslation(x = transformations.translationX) {
+            drawBitmap(bitmap, 0f, 0f, rowPaint)
+        }
     }
 
     private fun Canvas.drawRows() {
@@ -229,7 +257,42 @@ internal class GanttChartCustomView @JvmOverloads constructor(
     // ascent - верхняя граница текста, descent - нижняя
     private fun Paint.getTextBaselineByCenter(center: Float) = center - (descent() + ascent()) / 2
 
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        event ?: return false
 
+        return if (event.pointerCount == 1) processMove(event) else false
+    }
+
+    private fun processMove(event: MotionEvent): Boolean {
+        return when (event.action) {
+            MotionEvent.ACTION_DOWN -> {
+                lastPoint.set(event.x, event.y)
+                lastPointerId = event.getPointerId(0)
+                true
+            }
+
+            MotionEvent.ACTION_MOVE -> {
+                // Если размер контента меньше размера View - сдвиг недоступен
+                if (width < contentWidth) {
+                    val pointerId = event.getPointerId(0)
+                    // Чтобы избежать скачков - сдвигаем, только если поинтер(палец) тот же, что и раньше
+                    if (lastPointerId == pointerId) {
+                        transformations.addTranslation(event.x - lastPoint.x)
+                    }
+
+                    // Запоминаем поинтер и последнюю точку в любом случае
+                    lastPoint.set(event.x, event.y)
+                    lastPointerId = event.getPointerId(0)
+
+                    true
+                } else {
+                    false
+                }
+            }
+
+            else -> false
+        }
+    }
     private fun initPeriods(): Map<PeriodType, List<String>> {
         // Один раз получаем все названия периодов для каждого из PeriodType
         return PeriodType.entries.associateWith { periodType ->
@@ -270,9 +333,34 @@ internal class GanttChartCustomView @JvmOverloads constructor(
         }
     }
 
+    private inner class Transformations {
+        var translationX = 0f
+            private set
+
+        // На сколько максимально можно сдвинуть диаграмму
+        private val minTranslation: Float
+            get() = (width - contentWidth).toFloat().coerceAtMost(0f)
+
+        // Относительный сдвиг на dx
+        fun addTranslation(dx: Float) {
+            translationX = (translationX + dx).coerceIn(minTranslation, 0f)
+            invalidate()
+        }
+
+        // Пересчет текущих значений
+        fun recalculate() {
+            recalculateTranslationX()
+        }
+
+        // Когда изменился размер View надо пересчитать сдвиг
+        private fun recalculateTranslationX() {
+            translationX = translationX.coerceIn(minTranslation, 0f)
+        }
+    }
+
     companion object {
         // Количество месяцев до и после текущей даты
-        private const val MONTH_COUNT = 2L
+        private const val MONTH_COUNT = 3L
         private const val MAX_SCALE = 2f
     }
 
