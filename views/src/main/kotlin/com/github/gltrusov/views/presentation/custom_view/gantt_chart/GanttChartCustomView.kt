@@ -1,11 +1,13 @@
 package com.github.gltrusov.views.presentation.custom_view.gantt_chart
 
+import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.LinearGradient
+import android.graphics.Matrix
 import android.graphics.Paint
+import android.graphics.Path
 import android.graphics.PointF
 import android.graphics.Rect
 import android.graphics.RectF
@@ -14,12 +16,10 @@ import android.os.Build
 import android.text.TextPaint
 import android.util.AttributeSet
 import android.view.MotionEvent
+import android.view.ScaleGestureDetector
 import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.applyCanvas
-import androidx.core.graphics.createBitmap
-import androidx.core.graphics.withTranslation
 import com.github.gltrusov.views.R
 import com.github.gradle_sandbox.Markdown
 import java.time.LocalDate
@@ -80,10 +80,8 @@ internal class GanttChartCustomView @JvmOverloads constructor(
     private val taskVerticalMargin = resources.getDimension(R.dimen.gant_task_vertical_margin)
 
     // Горизонтальный отступ текста таски внутри ее фигуры
-    private val taskTextHorizontalMargin = resources.getDimension(R.dimen.gant_task_text_horizontal_margin)
-
-    // Радиус круга, вырезаемого из фигуры таски
-    private val cutOutRadius = (rowHeight - taskVerticalMargin * 2) / 4
+    private val taskTextHorizontalMargin =
+        resources.getDimension(R.dimen.gant_task_text_horizontal_margin)
 
     // Чередующиеся цвета строк
     private val rowColors = listOf(
@@ -105,8 +103,6 @@ internal class GanttChartCustomView @JvmOverloads constructor(
     // Rect для рисования строк
     private val rowRect = Rect()
 
-    private lateinit var bitmap: Bitmap
-
     // endregion ===================================================================================
 
     // region Время
@@ -122,6 +118,9 @@ internal class GanttChartCustomView @JvmOverloads constructor(
 
     // Отвечает за зум и сдвиги
     private val transformations = Transformations()
+
+    // Обнаружение и рассчёт скейла
+    private val scaleGestureDetector = ScaleGestureDetector(context, ScaleListener())
 
     private var tasks: List<Task> = emptyList()
     private var uiTasks: List<UiTask> = emptyList()
@@ -180,23 +179,18 @@ internal class GanttChartCustomView @JvmOverloads constructor(
         )
         // И прямоугольники тасок
         updateTasksRects()
-        // Перерисовываем bitmap
-        bitmap = createBitmap(contentWidth, h).applyCanvas {
-            drawPeriods()
-            drawTasks()
-        }
     }
 
     private fun updateTasksRects() {
-        uiTasks.forEachIndexed { index, uiTask -> uiTask.updateRect(index) }
+        uiTasks.forEachIndexed { index, uiTask -> uiTask.updateInitialRect(index) }
+        transformations.recalculate()
     }
 
 
     override fun onDraw(canvas: Canvas) = with(canvas) {
         drawRows()
-        withTranslation(x = transformations.translationX) {
-            drawBitmap(bitmap, 0f, 0f, rowPaint)
-        }
+        drawPeriods()
+        drawTasks()
     }
 
     private fun Canvas.drawRows() {
@@ -219,36 +213,42 @@ internal class GanttChartCustomView @JvmOverloads constructor(
         val nameY = periodNamePaint.getTextBaselineByCenter(rowHeight / 2f)
         currentPeriods.forEachIndexed { index, periodName ->
             // По X текст рисуется относительно его начала
-//            val textWidth = periodNamePaint.measureText(periodName) TODO
-//            val periodCenter = periodWidth * transformations.scaleX * (index + 0.5f)
-            val nameX = periodWidth * (index + 0.5f) - periodNamePaint.measureText(periodName) / 2
+            val textWidth = periodNamePaint.measureText(periodName)
+            val periodCenter = periodWidth * transformations.scaleX * (index + 0.5f)
+            val nameX = (periodCenter - textWidth / 2) + transformations.translationX
             drawText(periodName, nameX, nameY, periodNamePaint)
             // Разделитель
-            val separatorX = periodWidth * (index + 1f)
+            val separatorX =
+                periodWidth * (index + 1f) * transformations.scaleX + transformations.translationX
             drawLine(separatorX, 0f, separatorX, height.toFloat(), separatorsPaint)
         }
     }
 
     private fun Canvas.drawTasks() {
+        val minTextLeft = taskTextHorizontalMargin
         uiTasks.forEach { uiTask ->
             if (uiTask.isRectOnScreen) {
+                drawPath(uiTask.path, taskShapePaint)
+
                 val taskRect = uiTask.rect
                 val taskName = uiTask.task.name
 
-                // Рисуем фигуру
-                drawRoundRect(taskRect, taskCornerRadius, taskCornerRadius, taskShapePaint)
-
                 // Расположение названия
-                val textX = taskRect.left + taskTextHorizontalMargin
-                val textY = taskNamePaint.getTextBaselineByCenter(taskRect.centerY())
+                val textStart =
+                    (taskRect.left + taskTextHorizontalMargin).coerceAtLeast(minTextLeft)
+                val maxTextWidth = taskRect.right - taskTextHorizontalMargin - textStart
                 // Количество символов из названия, которые поместятся в фигуру
-                val charsCount = taskNamePaint.breakText(
-                    taskName,
-                    true,
-                    taskRect.width() - taskTextHorizontalMargin * 2,
-                    null
-                )
-                drawText(taskName.substring(startIndex = 0, endIndex = charsCount), textX, textY, taskNamePaint)
+                if (maxTextWidth > 0) {
+                    val textY = taskNamePaint.getTextBaselineByCenter(taskRect.centerY())
+                    // Количество символов из названия, которые поместятся в фигуру
+                    val charsCount = taskNamePaint.breakText(taskName, true, maxTextWidth, null)
+                    drawText(
+                        taskName.substring(startIndex = 0, endIndex = charsCount),
+                        textStart,
+                        textY,
+                        taskNamePaint
+                    )
+                }
             }
         }
     }
@@ -257,10 +257,13 @@ internal class GanttChartCustomView @JvmOverloads constructor(
     // ascent - верхняя граница текста, descent - нижняя
     private fun Paint.getTextBaselineByCenter(center: Float) = center - (descent() + ascent()) / 2
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         event ?: return false
 
-        return if (event.pointerCount == 1) processMove(event) else false
+        return if (event.pointerCount > 1) scaleGestureDetector.onTouchEvent(event) else processMove(
+            event
+        )
     }
 
     private fun processMove(event: MotionEvent): Boolean {
@@ -293,6 +296,7 @@ internal class GanttChartCustomView @JvmOverloads constructor(
             else -> false
         }
     }
+
     private fun initPeriods(): Map<PeriodType, List<String>> {
         // Один раз получаем все названия периодов для каждого из PeriodType
         return PeriodType.entries.associateWith { periodType ->
@@ -309,14 +313,22 @@ internal class GanttChartCustomView @JvmOverloads constructor(
     }
 
     private inner class UiTask(val task: Task) {
+        // Rect с учетом всех преобразований
         val rect = RectF()
 
-        val isRectOnScreen: Boolean
-            get() = rect.top < height && (rect.right > 0 || rect.left < rect.width())
+        // Path для фигуры таски
+        val path = Path()
 
-        fun updateRect(index: Int) {
+        private val untransformedRect = RectF()
+
+        // Начальный Rect для текущих размеров View
+        val isRectOnScreen: Boolean
+            get() = rect.top < height && (rect.right > 0 || rect.left < width)
+
+        fun updateInitialRect(index: Int) {
             fun getX(date: LocalDate): Float? {
-                val periodIndex = periods.getValue(periodType).indexOf(periodType.getDateString(date))
+                val periodIndex =
+                    periods.getValue(periodType).indexOf(periodType.getDateString(date))
                 return if (periodIndex >= 0) {
                     periodWidth * (periodIndex + periodType.getPercentOfPeriod(date))
                 } else {
@@ -324,18 +336,39 @@ internal class GanttChartCustomView @JvmOverloads constructor(
                 }
             }
 
-            rect.set(
-                getX(task.dateStart) ?: - taskCornerRadius,
+            untransformedRect.set(
+                getX(task.dateStart) ?: -taskCornerRadius,
                 rowHeight * (index + 1f) + taskVerticalMargin,
                 getX(task.dateEnd) ?: (width + taskCornerRadius),
                 rowHeight * (index + 2f) - taskVerticalMargin,
             )
+            rect.set(untransformedRect)
+        }
+
+        fun transform(matrix: Matrix) {
+            matrix.mapRect(rect, untransformedRect)
+            updatePath()
+        }
+
+        private fun updatePath() {
+            if (isRectOnScreen) {
+                with(path) {
+                    reset()
+                    // Прямоугольник
+                    addRoundRect(rect, taskCornerRadius, taskCornerRadius, Path.Direction.CW)
+                }
+            }
         }
     }
 
     private inner class Transformations {
         var translationX = 0f
             private set
+        var scaleX = 1f
+            private set
+
+        // Матрица для преобразования фигур тасок
+        private val matrix = Matrix()
 
         // На сколько максимально можно сдвинуть диаграмму
         private val minTranslation: Float
@@ -344,17 +377,43 @@ internal class GanttChartCustomView @JvmOverloads constructor(
         // Относительный сдвиг на dx
         fun addTranslation(dx: Float) {
             translationX = (translationX + dx).coerceIn(minTranslation, 0f)
-            invalidate()
+            transformTasks()
+        }
+
+        // Относительное увеличение на sy
+        fun addScale(sx: Float) {
+            scaleX = (scaleX * sx).coerceIn(0.5f, MAX_SCALE)
+            recalculateTranslationX()
+            transformTasks()
         }
 
         // Пересчет текущих значений
         fun recalculate() {
             recalculateTranslationX()
+            transformTasks()
         }
 
         // Когда изменился размер View надо пересчитать сдвиг
         private fun recalculateTranslationX() {
             translationX = translationX.coerceIn(minTranslation, 0f)
+        }
+
+        private fun transformTasks() {
+            // Подготовка матрицы для трансформации фигур тасок
+            with(matrix) {
+                reset()
+                setScale(scaleX, 1f)
+                postTranslate(translationX, 0f)
+            }
+            uiTasks.forEach { it.transform(matrix) }
+            invalidate()
+        }
+    }
+
+    private inner class ScaleListener : ScaleGestureDetector.SimpleOnScaleGestureListener() {
+        override fun onScale(detector: ScaleGestureDetector): Boolean {
+            transformations.addScale(detector.scaleFactor)
+            return true
         }
     }
 
@@ -370,14 +429,17 @@ internal class GanttChartCustomView @JvmOverloads constructor(
 
             override fun getDateString(date: LocalDate): String = date.month.name
 
-            override fun getPercentOfPeriod(date: LocalDate): Float = (date.dayOfMonth - 1f) / date.lengthOfMonth()
+            override fun getPercentOfPeriod(date: LocalDate): Float =
+                (date.dayOfMonth - 1f) / date.lengthOfMonth()
         },
         WEEK {
             override fun increment(date: LocalDate): LocalDate = date.plusWeeks(1)
 
-            override fun getDateString(date: LocalDate): String = date.get(IsoFields.WEEK_OF_WEEK_BASED_YEAR).toString()
+            override fun getDateString(date: LocalDate): String =
+                date.get(IsoFields.WEEK_OF_WEEK_BASED_YEAR).toString()
 
-            override fun getPercentOfPeriod(date: LocalDate): Float = (date.dayOfWeek.value - 1f) / 7
+            override fun getPercentOfPeriod(date: LocalDate): Float =
+                (date.dayOfWeek.value - 1f) / 7
         };
 
         abstract fun increment(date: LocalDate): LocalDate
