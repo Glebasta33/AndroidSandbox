@@ -23,19 +23,19 @@ internal class CalendarCustomViewActivity : AppCompatActivity() {
         val events = listOf(
             Event(
                 title = "Event 1",
-                dateStart = now.withHour(9),
-                dateEnd = now.withHour(10)
+                dateStart = now.withHour(6).withMinute(0),
+                dateEnd = now.withHour(7).withMinute(0)
             ),
             Event(
                 title = "Event 2",
-                dateStart = now.withHour(11).withMinute(30),
-                dateEnd = now.withHour(12)
+                dateStart = now.withHour(8).withMinute(0),
+                dateEnd = now.withHour(10).withMinute(30)
             )
         )
 
         calendarCustomView.setEvents(events)
 
-        findViewById<MarkdownView>(R.id.markdown).loadMarkdownFile("file:///android_asset/calendar_markdown_view.md")
+//        findViewById<MarkdownView>(R.id.markdown).loadMarkdownFile("file:///android_asset/calendar_markdown_view.md")
 
     }
 }

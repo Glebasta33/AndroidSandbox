@@ -11,13 +11,13 @@
     <com.github.gltrusov.views.presentation.custom_view.calendar.CalendarCustomView
         android:id="@+id/calendar_custom_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         />
 
 
-    <org.billthefarmer.markdown.MarkdownView
-        android:id="@+id/markdown"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+<!--    <org.billthefarmer.markdown.MarkdownView-->
+<!--        android:id="@+id/markdown"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content" />-->
 
 </LinearLayout>
