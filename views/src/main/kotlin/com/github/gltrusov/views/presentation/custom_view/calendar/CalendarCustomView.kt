@@ -2,11 +2,12 @@ package com.github.gltrusov.views.presentation.custom_view.calendar
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.LinearGradient
+import android.graphics.Matrix
 import android.graphics.Paint
+import android.graphics.Path
 import android.graphics.PointF
 import android.graphics.RectF
 import android.graphics.Shader
@@ -14,12 +15,10 @@ import android.os.Build
 import android.text.TextPaint
 import android.util.AttributeSet
 import android.view.MotionEvent
+import android.view.ScaleGestureDetector
 import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.applyCanvas
-import androidx.core.graphics.createBitmap
-import androidx.core.graphics.withTranslation
 import com.github.gltrusov.views.R
 import com.github.gradle_sandbox.Markdown
 import java.time.LocalDateTime
@@ -65,9 +64,6 @@ internal class CalendarCustomView(context: Context, attrs: AttributeSet? = null)
     private val gradientStartColor = ContextCompat.getColor(context, R.color.blue_700)
     private val gradientEndColor = ContextCompat.getColor(context, R.color.blue_200)
 
-
-    private lateinit var bitmap: Bitmap
-
     private val contentHeight: Int
         get() = hourHeight * visibleHours.size
 
@@ -78,7 +74,12 @@ internal class CalendarCustomView(context: Context, attrs: AttributeSet? = null)
     private val lastPoint = PointF()
     private var lastPointerId = 0
 
+    // Отвечает за зум и сдвиги
     private val transformations = Transformations()
+
+    // Обнаружение и рассчёт скейла
+    private val scaleGestureDetector = ScaleGestureDetector(context, ScaleListener())
+
 
     private val visibleHours = initHours()
 
@@ -89,6 +90,7 @@ internal class CalendarCustomView(context: Context, attrs: AttributeSet? = null)
         if (events != this.events) {
             this.events = events
             uiEvents = events.map(::UiEvents)
+            updateEventsRects()
 
             requestLayout()
             invalidate()
@@ -126,18 +128,18 @@ internal class CalendarCustomView(context: Context, attrs: AttributeSet? = null)
             gradientEndColor,
             Shader.TileMode.CLAMP
         )
+        updateEventsRects()
+    }
 
-        bitmap = createBitmap(w, contentHeight).applyCanvas {
-            drawBackground()
-            drawHours()
-            drawEvents()
-        }
+    private fun updateEventsRects() {
+        uiEvents.forEach { uiEvent -> uiEvent.updateInitialRect() }
+        transformations.recalculate()
     }
 
     override fun onDraw(canvas: Canvas) = with(canvas) {
-        withTranslation(y = transformations.translationY) {
-            drawBitmap(bitmap, 0f, 0f, backgroundPaint)
-        }
+        drawBackground()
+        drawHours()
+        drawEvents()
     }
 
     private fun Canvas.drawBackground() {
@@ -147,12 +149,14 @@ internal class CalendarCustomView(context: Context, attrs: AttributeSet? = null)
     private fun Canvas.drawHours() {
         val textX = 20f
         visibleHours.forEachIndexed { index, text ->
-            val textY = hourNamePaint.getTextBaselineByCenter(hourHeight * index.toFloat())
+            val textY =
+                hourNamePaint.getTextBaselineByCenter(hourHeight * index.toFloat() * transformations.scaleY + transformations.translationY)
             drawText(text, textX, textY, eventNamePaint)
 
             val textSizeX = eventNamePaint.measureText(text)
 
-            val separatorY = hourHeight * index.toFloat()
+            val separatorY =
+                hourHeight * index.toFloat() * transformations.scaleY + transformations.translationY
             val separatorX = textX + textSizeX + 20f
             drawLine(separatorX, separatorY, width.toFloat() - 20f, separatorY, separatorsPaint)
         }
@@ -161,13 +165,19 @@ internal class CalendarCustomView(context: Context, attrs: AttributeSet? = null)
     private fun Canvas.drawEvents() {
         uiEvents.forEachIndexed { i, uiEvent ->
             if (uiEvent.isRectOnScreen) {
-                uiEvent.updateRect()
+                uiEvent.updateInitialRect()
                 val eventRect = uiEvent.rect
                 val eventTitle = uiEvent.event.title
 
-                drawRoundRect(eventRect, eventCornerRadius, eventCornerRadius, eventPaint)
+//                drawRoundRect(eventRect, eventCornerRadius, eventCornerRadius, eventPaint)
+                drawPath(uiEvent.path, eventPaint)
 
-                drawText(eventTitle, eventRect.left + 20f, eventRect.centerY(), eventNamePaint)
+                drawText(
+                    eventTitle,
+                    eventRect.left + 20f,
+                    eventRect.centerY() * transformations.scaleY + transformations.translationY,
+                    eventNamePaint
+                )
             }
         }
     }
@@ -179,22 +189,25 @@ internal class CalendarCustomView(context: Context, attrs: AttributeSet? = null)
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         event ?: return false
 
-        return if (event.pointerCount == 1) processMove(event) else false
+        return if (event.pointerCount > 1) scaleGestureDetector.onTouchEvent(event) else processMove(
+            event
+        )
     }
 
     private fun processMove(event: MotionEvent): Boolean {
-        return when(event.action) {
+        return when (event.action) {
             MotionEvent.ACTION_DOWN -> {
                 lastPoint.set(event.x, event.y)
                 lastPointerId = event.getPointerId(0)
                 true
             }
+
             MotionEvent.ACTION_MOVE -> {
                 // Если размер контента меньше размера View - сдвиг недоступен
                 if (height < contentHeight) {
                     val pointerId = event.getPointerId(0)
                     // Чтобы избежать скачков - сдвигаем, только если поинтер(палец) тот же, что и раньше
-                    if (lastPointerId == pointerId){
+                    if (lastPointerId == pointerId) {
                         transformations.addTranslation(event.y - lastPoint.y)
                     }
 
@@ -206,6 +219,7 @@ internal class CalendarCustomView(context: Context, attrs: AttributeSet? = null)
                     false
                 }
             }
+
             else -> false
         }
     }
@@ -225,15 +239,19 @@ internal class CalendarCustomView(context: Context, attrs: AttributeSet? = null)
     private inner class UiEvents(val event: Event) {
         val rect = RectF()
 
+        val path = Path()
+
         val isRectOnScreen: Boolean
             get() = rect.top < height /*&& rect.bottom > 0f*/
+
+        private val untransformedRect = RectF()
 
         private val text = visibleHours.first()
         private val textSizeX = eventNamePaint.measureText(text)
         private val eventX = textSizeX + 60f
         private val startTime = now.minusHours(1).hour
 
-        fun updateRect() {
+        fun updateInitialRect() {
             fun getY(time: LocalDateTime): Float {
                 var y = (time.hour.toFloat() - startTime) * hourHeight
                 if (time.minute != 0) {
@@ -242,18 +260,37 @@ internal class CalendarCustomView(context: Context, attrs: AttributeSet? = null)
                 return y
             }
 
-            rect.set(
+            untransformedRect.set(
                 eventX,
                 getY(event.dateStart) ?: eventCornerRadius, //TODO?
                 width - 20f,
                 getY(event.dateEnd) ?: (height + eventCornerRadius), //TODO?
             )
+            rect.set(untransformedRect)
+        }
+
+        fun transform(matrix: Matrix) {
+            matrix.mapRect(rect, untransformedRect)
+            updatePath()
+        }
+
+        private fun updatePath() {
+            if (isRectOnScreen) {
+                with(path) {
+                    reset()
+                    addRoundRect(rect, eventCornerRadius, eventCornerRadius, Path.Direction.CW)
+                }
+            }
         }
     }
 
     private inner class Transformations {
         var translationY = 0f
             private set
+        var scaleY = 1f
+            private set
+
+        private val matrix = Matrix()
 
         // На сколько максимально можно сдвинуть календарь
         private val minTranslation: Float
@@ -262,21 +299,46 @@ internal class CalendarCustomView(context: Context, attrs: AttributeSet? = null)
         // Относительный сдвиг на dy
         fun addTranslation(dy: Float) {
             translationY = (translationY + dy).coerceIn(minTranslation, 0f)
-            invalidate()
+            transformEvents()
+        }
+
+        fun addScale(sy: Float) {
+            scaleY = (scaleY * sy).coerceIn(0.5f, MAX_SCALE)
+            recalculateTranslationY()
+            transformEvents()
         }
 
         // Пересчет текущих значений
         fun recalculate() {
             recalculateTranslationY()
+            transformEvents()
         }
 
         // Когда изменился размер View надо пересчитать сдвиг
         private fun recalculateTranslationY() {
             translationY = translationY.coerceIn(minTranslation, 0f)
         }
+
+        private fun transformEvents() {
+            with(matrix) {
+                reset()
+                setScale(1f, scaleY)
+                postTranslate(0f, translationY)
+                uiEvents.forEach { it.transform(matrix) }
+                invalidate()
+            }
+        }
+    }
+
+    private inner class ScaleListener : ScaleGestureDetector.SimpleOnScaleGestureListener() {
+        override fun onScale(detector: ScaleGestureDetector): Boolean {
+            transformations.addScale(detector.scaleFactor)
+            return true
+        }
     }
 
     companion object {
+        private const val MAX_SCALE = 2f
         private const val HOUR_PATTERN = "HH:mm"
         private val formater = DateTimeFormatter.ofPattern(HOUR_PATTERN)
     }
