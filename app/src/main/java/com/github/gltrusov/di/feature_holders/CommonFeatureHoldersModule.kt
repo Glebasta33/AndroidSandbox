@@ -13,6 +13,7 @@ import com.github.gltrusov.compose.di.ComposeSandboxFeatureHolderModule
 import com.github.gltrusov.di.entrypoints.MainScreenEntryPointsFeatureHolder
 import com.github.gltrusov.di.entrypoints.api.MainScreenEntryPointsApi
 import com.github.gltrusov.fundamentals.di.AndroidOsFundamentalsFeatureHolderModule
+import com.github.gltrusov.multithreading.di.MultithreadingSandboxFeatureHolderModule
 import com.github.gltrusov.rxjava.di.RxJavaFeatureHolderModule
 import com.github.gltrusov.test_feature.di.TestFeatureFeatureHolderModule
 import com.github.gltrusov.views.di.ViewsFeatureHolderModule
@@ -30,7 +31,8 @@ import javax.inject.Singleton
         RxJavaFeatureHolderModule::class,
         TestFeatureFeatureHolderModule::class,
         AndroidOsFundamentalsFeatureHolderModule::class,
-        ViewsFeatureHolderModule::class
+        ViewsFeatureHolderModule::class,
+        MultithreadingSandboxFeatureHolderModule::class
     ]
 )
 abstract class CommonFeatureHoldersModule {
