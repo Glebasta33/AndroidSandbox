@@ -13,6 +13,8 @@ import android.graphics.Rect
 import android.graphics.RectF
 import android.graphics.Shader
 import android.os.Build
+import android.os.Parcel
+import android.os.Parcelable
 import android.text.TextPaint
 import android.util.AttributeSet
 import android.view.MotionEvent
@@ -138,6 +140,18 @@ internal class GanttChartCustomView @JvmOverloads constructor(
         }
     }
 
+    override fun onSaveInstanceState(): Parcelable {
+        return SavedState(super.onSaveInstanceState()).also(transformations::onSaveInstanceState)
+    }
+
+    override fun onRestoreInstanceState(state: Parcelable?) {
+        if (state is SavedState) {
+            super.onRestoreInstanceState(state.superState)
+            transformations.onRestoreInstanceState(state)
+        } else {
+            super.onRestoreInstanceState(state)
+        }
+    }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         val width = if (MeasureSpec.getMode(widthMeasureSpec) == MeasureSpec.UNSPECIFIED) {
@@ -387,6 +401,17 @@ internal class GanttChartCustomView @JvmOverloads constructor(
             transformTasks()
         }
 
+        fun onSaveInstanceState(state: SavedState) {
+            state.translationX = translationX
+            state.scaleX = scaleX
+        }
+
+        fun onRestoreInstanceState(state: SavedState) {
+            translationX = state.translationX
+            scaleX = state.scaleX
+            recalculate()
+        }
+
         // Пересчет текущих значений
         fun recalculate() {
             recalculateTranslationX()
@@ -414,6 +439,39 @@ internal class GanttChartCustomView @JvmOverloads constructor(
         override fun onScale(detector: ScaleGestureDetector): Boolean {
             transformations.addScale(detector.scaleFactor)
             return true
+        }
+    }
+
+    private class SavedState : BaseSavedState {
+        var translationX: Float = 0f
+        var scaleX: Float = 0f
+
+        // Конструктор для сохранения стейта
+        constructor(superState: Parcelable?) : super(superState)
+
+        // Конструктор для восстановления стейта
+        constructor(source: Parcel?) : super(source) {
+            source?.apply {
+                // Порядок имеет значение
+                translationX = readFloat()
+                scaleX = readFloat()
+            }
+        }
+
+        override fun writeToParcel(out: Parcel, flags: Int) {
+            super.writeToParcel(out, flags)
+            out.writeFloat(translationX)
+            out.writeFloat(scaleX)
+        }
+
+        companion object {
+            // Как у любого Parcelable:
+            @JvmField
+            val CREATOR: Parcelable.Creator<SavedState> = object : Parcelable.Creator<SavedState> {
+                override fun createFromParcel(source: Parcel?): SavedState  = SavedState(source)
+
+                override fun newArray(size: Int): Array<SavedState?> = arrayOfNulls(size)
+            }
         }
     }
 
