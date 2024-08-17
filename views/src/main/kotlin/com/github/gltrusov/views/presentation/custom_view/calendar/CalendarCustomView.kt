@@ -35,7 +35,7 @@ internal class CalendarCustomView(context: Context, attrs: AttributeSet? = null)
 
     private val separatorsPaint = Paint().apply {
         strokeWidth = resources.getDimension(R.dimen.gant_separator_width)
-        color = ContextCompat.getColor(context, R.color.grey_300)
+        color = ContextCompat.getColor(context, R.color.grey_500)
     }
 
     private val hourNamePaint = TextPaint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -56,6 +56,12 @@ internal class CalendarCustomView(context: Context, attrs: AttributeSet? = null)
     private val backgroundPaint = Paint().apply {
         color = Color.DKGRAY
     }
+
+    private val timelinePaint = Paint().apply {
+        strokeWidth = resources.getDimension(R.dimen.calendar_timeline_height)
+        color = ContextCompat.getColor(context, R.color.orange_700)
+        style = Paint.Style.FILL
+    }
     // endregion  ==================================================================================
 
     private val hourHeight = resources.getDimensionPixelSize(R.dimen.calendar_hour_height)
@@ -70,6 +76,7 @@ internal class CalendarCustomView(context: Context, attrs: AttributeSet? = null)
         get() = hourHeight * visibleHours.size
 
     private val now = LocalDateTime.now().withMinute(0).withSecond(0)
+    private val timeline = LocalDateTime.now()
 
 
     // Значения последнего эвента
@@ -155,6 +162,7 @@ internal class CalendarCustomView(context: Context, attrs: AttributeSet? = null)
         drawBackground()
         drawHours()
         drawEvents()
+        drawTimeline()
     }
 
     private fun Canvas.drawBackground() {
@@ -184,7 +192,6 @@ internal class CalendarCustomView(context: Context, attrs: AttributeSet? = null)
                 val eventRect = uiEvent.rect
                 val eventTitle = uiEvent.event.title
 
-//                drawRoundRect(eventRect, eventCornerRadius, eventCornerRadius, eventPaint)
                 drawPath(uiEvent.path, eventPaint)
 
                 drawText(
@@ -195,6 +202,21 @@ internal class CalendarCustomView(context: Context, attrs: AttributeSet? = null)
                 )
             }
         }
+    }
+
+    private fun Canvas.drawTimeline() {
+        val text = visibleHours.first()
+        val textSizeX = eventNamePaint.measureText(text)
+        val startX = textSizeX + 40f
+        val startTime = timeline.minusHours(1).hour
+        var y = (timeline.hour.toFloat() - startTime) * hourHeight
+
+        if (timeline.minute != 0) {
+            y += (timeline.minute.toFloat() / 60) * hourHeight
+        }
+        y = y * transformations.scaleY + transformations.translationY
+        drawLine(startX, y, width.toFloat() - 20f, y, timelinePaint)
+        drawCircle(startX, y, 12f, timelinePaint)
     }
 
     // ascent - верхняя граница текста, descent - нижняя
@@ -395,7 +417,7 @@ internal class CalendarCustomView(context: Context, attrs: AttributeSet? = null)
     }
 
     companion object {
-        private const val MAX_SCALE = 2f
+        private const val MAX_SCALE = 3f
         private const val HOUR_PATTERN = "HH:mm"
         private val formater = DateTimeFormatter.ofPattern(HOUR_PATTERN)
     }

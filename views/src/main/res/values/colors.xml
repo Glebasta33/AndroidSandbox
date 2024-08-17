@@ -15,4 +15,8 @@
     <color name="blue_700">#5594A4</color>
     <color name="blue_200">#94DCED</color>
     <!--endregion-->
+
+    <!--region Calendar-->
+    <color name="orange_700">#ffaa22</color>
+    <!--endregion-->
 </resources>
