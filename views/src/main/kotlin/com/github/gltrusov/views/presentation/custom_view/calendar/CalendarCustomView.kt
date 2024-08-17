@@ -12,6 +12,8 @@ import android.graphics.PointF
 import android.graphics.RectF
 import android.graphics.Shader
 import android.os.Build
+import android.os.Parcel
+import android.os.Parcelable
 import android.text.TextPaint
 import android.util.AttributeSet
 import android.view.MotionEvent
@@ -94,6 +96,19 @@ internal class CalendarCustomView(context: Context, attrs: AttributeSet? = null)
 
             requestLayout()
             invalidate()
+        }
+    }
+
+    override fun onSaveInstanceState(): Parcelable {
+        return SavedState(super.onSaveInstanceState()).also(transformations::onSaveState)
+    }
+
+    override fun onRestoreInstanceState(state: Parcelable?) {
+        if (state is SavedState) {
+            super.onRestoreInstanceState(state.superState)
+            transformations.onRestoreState(state)
+        } else {
+            super.onRestoreInstanceState(state)
         }
     }
 
@@ -308,6 +323,17 @@ internal class CalendarCustomView(context: Context, attrs: AttributeSet? = null)
             transformEvents()
         }
 
+        fun onSaveState(state: SavedState) {
+            state.translationY = translationY
+            state.scaleY = scaleY
+        }
+
+        fun onRestoreState(state: SavedState) {
+            translationY = state.translationY
+            scaleY = state.scaleY
+            recalculate()
+        }
+
         // Пересчет текущих значений
         fun recalculate() {
             recalculateTranslationY()
@@ -334,6 +360,37 @@ internal class CalendarCustomView(context: Context, attrs: AttributeSet? = null)
         override fun onScale(detector: ScaleGestureDetector): Boolean {
             transformations.addScale(detector.scaleFactor)
             return true
+        }
+    }
+
+    private class SavedState : BaseSavedState {
+        var translationY: Float = 0f
+        var scaleY: Float = 0f
+
+        // Конструктор для сохранения стейта
+        constructor(superState: Parcelable?) : super(superState)
+
+        // Конструктор для восстановления стейта
+        constructor(source: Parcel?) : super(source) {
+            source?.apply {
+                translationY = readFloat()
+                scaleY = readFloat()
+            }
+        }
+
+        override fun writeToParcel(out: Parcel, flags: Int) {
+            super.writeToParcel(out, flags)
+            out.writeFloat(translationY)
+            out.writeFloat(scaleY)
+        }
+
+        companion object {
+            @JvmField
+            val CREATOR: Parcelable.Creator<SavedState> = object : Parcelable.Creator<SavedState> {
+                override fun createFromParcel(source: Parcel?): SavedState = SavedState(source)
+
+                override fun newArray(size: Int): Array<SavedState?> = arrayOfNulls(size)
+            }
         }
     }
 
