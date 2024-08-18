@@ -1,4 +1,4 @@
-package com.github.gltrusov.multithreading.sandbox.custom_observer
+package com.github.gltrusov.multithreading.sandbox.android.custom_observer
 
 /**
  * Эта реализацию будет корректно работать только в 1 потоке.

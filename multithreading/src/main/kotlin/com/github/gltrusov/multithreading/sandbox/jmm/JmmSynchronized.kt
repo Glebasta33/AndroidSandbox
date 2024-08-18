@@ -1,4 +1,4 @@
-package com.github.gltrusov.multithreading.sandbox.fundamentals
+package com.github.gltrusov.multithreading.sandbox.jmm
 
 import kotlin.concurrent.thread
 

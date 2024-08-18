@@ -1,4 +1,4 @@
-package com.github.gltrusov.multithreading.sandbox.custom_observer
+package com.github.gltrusov.multithreading.sandbox.android.custom_observer
 
 internal interface Observer {
     fun onChanged()

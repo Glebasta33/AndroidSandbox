@@ -1,4 +1,4 @@
-package com.github.gltrusov.multithreading.sandbox.fundamentals
+package com.github.gltrusov.multithreading.sandbox.jmm
 
 /**
  * Re-Entrant - Повторно-Входимый - это свойтво synchronized-секций,
