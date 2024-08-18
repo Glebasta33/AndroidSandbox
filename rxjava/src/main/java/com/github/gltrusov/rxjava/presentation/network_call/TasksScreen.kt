@@ -24,7 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.github.gltrusov.rxjava.data.TaskDto
-import com.github.gltrusov.rxjava.presentation.MarkdownFrom
+import com.github.gltrusov.core.ui.compose.MarkdownFrom
 
 internal sealed interface TasksScreenState {
 

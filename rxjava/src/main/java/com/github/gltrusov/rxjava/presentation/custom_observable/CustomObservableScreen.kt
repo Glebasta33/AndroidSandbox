@@ -6,7 +6,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.github.gltrusov.rxjava.presentation.MarkdownFrom
+import com.github.gltrusov.core.ui.compose.MarkdownFrom
 
 @Composable
 fun CustomObservableScreen(

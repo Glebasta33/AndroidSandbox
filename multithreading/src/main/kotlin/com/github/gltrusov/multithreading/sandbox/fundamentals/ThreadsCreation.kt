@@ -1,5 +1,8 @@
 package com.github.gltrusov.multithreading.sandbox.fundamentals
 
+import com.github.gltrusov.core.ui.compose.logOnUi
+import com.github.gradle_sandbox.Markdown
+
 
 /**
  * ЖЦ потока:
@@ -14,7 +17,7 @@ private class MyTask : Runnable {
     override fun run() {
         val i: Int = 0 // сохраняется в локальном стеке потока
         Thread.sleep(1000)
-        println("MyTask. Thread name: ${Thread.currentThread().name}, i = $i")
+        logOnUi("MyTask. Thread name: ${Thread.currentThread().name}, i = $i")
     }
 }
 
@@ -23,11 +26,12 @@ private class MyThread : Thread() {
         super.run()
         val i: Int = 1 // сохраняется в локальном стеке потока
         sleep(2000)
-        println("MyThread. Thread name: ${currentThread().name}, i = $i")
+        logOnUi("MyThread. Thread name: ${currentThread().name}, i = $i")
     }
 }
 
-fun main() {
+@Markdown("threads_creation.md")
+fun ThreadsCreation() {
     val myTask = MyTask()
     val thread0 = Thread(myTask)
 
@@ -43,5 +47,9 @@ fun main() {
     thread1.join() // завершения фоновых потоков.
 
     // и продолжает выполнение...
-    println("Main. Thread name: ${Thread.currentThread().name}")
+    logOnUi("Main. Thread name: ${Thread.currentThread().name}")
+}
+
+fun main() {
+    ThreadsCreation()
 }

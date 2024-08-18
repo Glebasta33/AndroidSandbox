@@ -1,4 +1,4 @@
-package com.github.gltrusov.rxjava.presentation
+package com.github.gltrusov.core.ui.compose
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
@@ -12,7 +12,7 @@ import java.io.InputStreamReader
 @Composable
 fun MarkdownFrom(
     fileName: String,
-    modifier: Modifier
+    modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
     val mdFile = remember {

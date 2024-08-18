@@ -47,6 +47,8 @@ class MarkdownAnnotationProcessor : AbstractProcessor() {
 
             val foundFile = File(projectPath.toUri()).walk().find { it.name == simpleClassName }
 
+            println("MyTest path $foundFile")
+
             val foundFileSrc = foundFile?.path?.substringBefore("main") ?: return false
             val assetsDir = File(foundFileSrc).walk().find { it.name == "assets" } ?: return false
 

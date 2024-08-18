@@ -18,10 +18,26 @@ android {
             )
         }
     }
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.1"
+    }
+    defaultConfig {
+        minSdk = 24
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
 }
 
 dependencies {
     api(libs.material)
     api(libs.androidx.constraintlayout)
     implementation(libs.bundles.core)
+    implementation(libs.bundles.compose)
+    implementation(libs.markdownview.android)
 }

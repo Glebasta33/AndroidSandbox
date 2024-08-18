@@ -4,4 +4,5 @@ internal sealed class Screen(
     val title: String
 ) {
     data object HandlerAndExecutors : Screen("Handler and Executors")
+    data object ThreadsCreation : Screen("Thread creation")
 }
