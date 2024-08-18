@@ -10,6 +10,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.github.gltrusov.multithreading.sandbox.android.handler.HandlerAndExecutorsScreen
 
 @Composable
 internal fun RootNavGraph(
@@ -26,20 +27,17 @@ internal fun NavGraphBuilder.mainGraph(navController: NavHostController, screens
         LazyColumn {
             items(screens) { item ->
                 MenuCell(item.javaClass.simpleName) {
-                    navController.navigate(item.route)
+                    navController.navigate(item.title)
                 }
             }
         }
     }
 
     screens.forEach { screen ->
-        composable(screen.route) {
-//            when(screen) {
-//                Screen.CanvasBasics -> CanvasBasics()
-//                Screen.PathAndBrush -> PathAndBrush()
-//                Screen.DetectGestures -> DetectGestures()
-//                Screen.Terminal -> Terminal()
-//            }
+        composable(screen.title) {
+            when(screen) {
+                Screen.HandlerAndExecutors -> HandlerAndExecutorsScreen()
+            }
         }
     }
 }
