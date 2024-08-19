@@ -1,5 +1,7 @@
 package com.github.gltrusov.multithreading.sandbox.fundamentals
 
+import com.github.gltrusov.core.ui.compose.logOnUi
+import com.github.gradle_sandbox.Markdown
 import kotlin.concurrent.thread
 
 /**
@@ -28,24 +30,26 @@ import kotlin.concurrent.thread
  *         a = 1                println(b)
  *         println(b)   --->    a = 1
  * ```
-*/
-fun main() {
+ */
+@Markdown("race_condition.md")
+fun RaceCondition() {
     var a = 0
     var b = 0
 
     val thread0 = thread {
         a = 1
-        println("${Thread.currentThread().name} b == $b")
+        logOnUi("${Thread.currentThread().name} b == $b")
     }
 
     val thread1 = thread {
         b = 1
-        println("${Thread.currentThread().name} a == $a")
+        logOnUi("${Thread.currentThread().name} a == $a")
     }
 
     thread0.join()
     thread1.join()
 }
 
-
-private object C
+fun main() {
+    RaceCondition()
+}

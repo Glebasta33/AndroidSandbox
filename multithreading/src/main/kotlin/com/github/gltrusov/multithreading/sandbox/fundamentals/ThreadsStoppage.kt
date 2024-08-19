@@ -1,5 +1,7 @@
 package com.github.gltrusov.multithreading.sandbox.fundamentals
 
+import com.github.gltrusov.core.ui.compose.logOnUi
+import com.github.gradle_sandbox.Markdown
 import kotlin.concurrent.thread
 
 /**
@@ -33,14 +35,16 @@ import kotlin.concurrent.thread
  * }
  * ```
  */
-fun main() {
+
+@Markdown("threads_stoppage.md")
+fun ThreadsStoppage() {
     val thread = thread {
         repeat(100) { i ->
             // СПОСОБ 1:
             try {
                 // Выполнение тяжёлой работы
                 Thread.sleep(1000) // throws InterruptedException
-                println("Hello from ${Thread.currentThread().name} $i!")
+                logOnUi("Hello from ${Thread.currentThread().name} $i!")
             } catch (e: InterruptedException) {
                 // Очистить ресурсы
             }
@@ -48,7 +52,7 @@ fun main() {
             // СПОСОБ 2:
             if (/*!Thread.currentThread().isInterrupted*/ false) {
                 // Выполнение тяжёлой работы
-                println("Hello from ${Thread.currentThread().name} $i!")
+                logOnUi("Hello from ${Thread.currentThread().name} $i!")
             } else {
                 // Очистить ресурсы
             }
@@ -63,4 +67,8 @@ fun main() {
     //    thread.stop() - deprecated (unsafe)
 
     thread.join()
+}
+
+fun main() {
+    ThreadsStoppage()
 }

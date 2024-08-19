@@ -5,13 +5,13 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.github.gltrusov.multithreading.presentation.navigation.RootNavGraph
-import com.github.gltrusov.multithreading.presentation.navigation.Screen
 
 class MultithreadingSandboxActivity : ComponentActivity() {
     private val screens = listOf(
         Screen.HandlerAndExecutors,
-        Screen.ThreadsCreation
+        Screen.ThreadsCreation,
+        Screen.ThreadsStoppage,
+        Screen.RaceCondition
     )
 
 

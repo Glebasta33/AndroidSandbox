@@ -45,6 +45,8 @@ class MarkdownAnnotationProcessor : AbstractProcessor() {
 
             val simpleClassName = "${clazz.simpleName}.kt"
 
+            println("MyTest name $simpleClassName")
+
             val foundFile = File(projectPath.toUri()).walk().find { it.name == simpleClassName }
 
             println("MyTest path $foundFile")

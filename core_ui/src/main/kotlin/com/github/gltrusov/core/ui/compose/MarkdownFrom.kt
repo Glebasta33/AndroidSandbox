@@ -1,5 +1,6 @@
 package com.github.gltrusov.core.ui.compose
 
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -10,7 +11,7 @@ import java.io.BufferedReader
 import java.io.InputStreamReader
 
 @Composable
-fun MarkdownFrom(
+fun ColumnScope.MarkdownFrom(
     fileName: String,
     modifier: Modifier = Modifier
 ) {
@@ -22,6 +23,8 @@ fun MarkdownFrom(
     }
 
     MarkDown(text = mdFile, modifier = modifier
+        .weight(1f)
+        .fillMaxWidth()
         .fillMaxWidth()
     )
 }
