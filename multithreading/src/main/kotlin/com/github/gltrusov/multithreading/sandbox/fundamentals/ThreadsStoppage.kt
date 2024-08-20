@@ -7,7 +7,7 @@ import kotlin.concurrent.thread
 /**
  * Можно быстро создать и запустить поток
  * с помощью функции thread в Kotlin:
- * ```
+ *
  * public fun thread(
  *     start: Boolean = true,
  *     isDaemon: Boolean = false,
@@ -33,7 +33,6 @@ import kotlin.concurrent.thread
  *         thread.start() //Стартует автоматически!
  *     return thread
  * }
- * ```
  */
 
 @Markdown("threads_stoppage.md")

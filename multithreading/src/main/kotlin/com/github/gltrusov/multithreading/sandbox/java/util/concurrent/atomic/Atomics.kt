@@ -1,5 +1,7 @@
 package com.github.gltrusov.multithreading.sandbox.java.util.concurrent.atomic
 
+import com.github.gltrusov.core.ui.compose.logOnUi
+import com.github.gradle_sandbox.Markdown
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.concurrent.thread
 
@@ -36,8 +38,8 @@ private class AtomicCounterSafe {
     fun current(): Int = counter.get()
 }
 
-
-fun main() {
+@Markdown("Atomics.md")
+fun Atomics() {
     val counterUnsafe = CounterUnsafe()
 
     (1..100)
@@ -46,7 +48,7 @@ fun main() {
         }
         .forEach { thread -> thread.join()  }
 
-    println("Counter unsafe result: ${counterUnsafe.current()}") // 92832
+    logOnUi("Counter unsafe result: ${counterUnsafe.current()}") // 92832
 
     val atomicCounter = AtomicCounterSafe()
 
@@ -56,6 +58,9 @@ fun main() {
         }
         .forEach { thread -> thread.join()  }
 
-    println("Counter unsafe result: ${atomicCounter.current()}") // 100000
+    logOnUi("Counter unsafe result: ${atomicCounter.current()}") // 100000
+}
 
+fun main() {
+    Atomics()
 }

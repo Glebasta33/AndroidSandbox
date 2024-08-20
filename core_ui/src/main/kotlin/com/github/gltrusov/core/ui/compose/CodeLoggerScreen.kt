@@ -3,10 +3,13 @@ package com.github.gltrusov.core.ui.compose
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.Icon
@@ -36,10 +39,16 @@ fun CodeLoggerScreen(
     val lifecycleOwner = LocalLifecycleOwner.current
     val lifecycleState by lifecycleOwner.lifecycle.currentStateFlow.collectAsState()
 
+    val logsScrollState = rememberScrollState()
+
     LaunchedEffect(lifecycleState) {
         if (lifecycleState != Lifecycle.State.RESUMED) {
              UiLogger.clearLogs()
         }
+    }
+
+    LaunchedEffect(logsState.size) {
+        logsScrollState.animateScrollTo(logsScrollState.maxValue)
     }
 
     Column(
@@ -48,26 +57,35 @@ fun CodeLoggerScreen(
 
         markdown()
 
-        Icon(
-            Icons.Filled.PlayArrow,
-            contentDescription = null,
-            tint = Color.Green,
-            modifier = Modifier
-                .size(18.dp)
-                .padding(2.dp)
-                .clickable { action.invoke() }
-        )
-
-        Column(
+        Row(
             modifier = Modifier
                 .weight(1f)
-                .padding(horizontal = 4.dp)
+                .padding(4.dp)
                 .fillMaxWidth()
         ) {
-            logsState.forEach { line ->
-                Text(line, color = Color.Green)
+            Icon(
+                Icons.Filled.PlayArrow,
+                contentDescription = null,
+                tint = Color.Green,
+                modifier = Modifier
+                    .size(22.dp)
+                    .padding(2.dp)
+                    .clickable { action.invoke() }
+            )
+
+            Column(
+                modifier = Modifier
+                    .padding(top = 4.dp)
+                    .padding(start = 4.dp)
+                    .fillMaxWidth()
+                    .verticalScroll(logsScrollState)
+            ) {
+                logsState.forEach { line ->
+                    Text(line, color = Color.Green)
+                }
             }
         }
+
     }
 }
 
@@ -87,7 +105,7 @@ internal object UiLogger {
     }
 }
 
-fun logOnUi(text: String) {
+fun logOnUi(text: Any) {
         println(text)
-        UiLogger.log(text) //TODO: Добавить отображение времени HH:mm:SS
+        UiLogger.log(text.toString()) //TODO: Добавить отображение времени HH:mm:SS
 }

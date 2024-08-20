@@ -1,5 +1,8 @@
 package com.github.gltrusov.multithreading.sandbox.jmm
 
+import com.github.gltrusov.core.ui.compose.logOnUi
+import com.github.gradle_sandbox.Markdown
+
 /**
  * Re-Entrant - Повторно-Входимый - это свойтво synchronized-секций,
  * которое позволяет внутри synchronized-секции повторно входить в
@@ -9,15 +12,19 @@ package com.github.gltrusov.multithreading.sandbox.jmm
  * TODO Сделать пример с dead lock`ом
  * TODO Также есть live lock - изучить отличие от dead lock.
  */
-fun main() {
+@Markdown("jmm_synchronized_reentrant.md")
+fun JmmSynchronizedReentrant() {
     val lock = Any()
 
     fun check() = synchronized(lock) {
-        println("before sync block")
+        logOnUi("before sync block")
         synchronized(lock) {
-            println("inside sync block")
+            logOnUi("inside sync block")
         }
     }
 
     check()
+}
+fun main() {
+    JmmSynchronizedReentrant()
 }

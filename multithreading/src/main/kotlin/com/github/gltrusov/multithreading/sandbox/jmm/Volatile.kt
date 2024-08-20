@@ -1,5 +1,7 @@
 package com.github.gltrusov.multithreading.sandbox.jmm
 
+import com.github.gltrusov.core.ui.compose.logOnUi
+import com.github.gradle_sandbox.Markdown
 import kotlin.concurrent.thread
 
 /**
@@ -12,7 +14,8 @@ import kotlin.concurrent.thread
 @Volatile
 private var flag: Boolean = true
 
-fun main() {
+@Markdown("volatile.md")
+fun Volatile() {
     val thread0 = thread {
         Thread.sleep(3)
         flag = false
@@ -20,10 +23,13 @@ fun main() {
     val thread1 = thread {
         while(flag) {
             Thread.sleep(1)
-            println("${Thread.currentThread().name} is working")
+            logOnUi("${Thread.currentThread().name} is working")
         }
     }
 
     thread0.join()
     thread1.join()
+}
+fun main() {
+    Volatile()
 }

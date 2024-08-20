@@ -17,6 +17,14 @@ import com.github.gltrusov.multithreading.sandbox.android.handler.HandlerAndExec
 import com.github.gltrusov.multithreading.sandbox.fundamentals.RaceCondition
 import com.github.gltrusov.multithreading.sandbox.fundamentals.ThreadsCreation
 import com.github.gltrusov.multithreading.sandbox.fundamentals.ThreadsStoppage
+import com.github.gltrusov.multithreading.sandbox.java.util.concurrent.atomic.Atomics
+import com.github.gltrusov.multithreading.sandbox.java.util.concurrent.executors.ExecutorService
+import com.github.gltrusov.multithreading.sandbox.java.util.concurrent.locks.ReentrantLock
+import com.github.gltrusov.multithreading.sandbox.java.util.concurrent.locks.ReentrantReadWriteLock
+import com.github.gltrusov.multithreading.sandbox.java.util.concurrent.synchronisers.CountDownLatch
+import com.github.gltrusov.multithreading.sandbox.jmm.JmmSynchronized
+import com.github.gltrusov.multithreading.sandbox.jmm.JmmSynchronizedReentrant
+import com.github.gltrusov.multithreading.sandbox.jmm.Volatile
 import java.util.concurrent.Executors
 
 @Composable
@@ -57,10 +65,41 @@ internal fun NavGraphBuilder.mainGraph(navController: NavHostController, screens
                     markdown = { MarkdownFrom("threads_stoppage.md") },
                     action = { executorService.submit { ThreadsStoppage() } }
                 )
-
                 Screen.RaceCondition -> CodeLoggerScreen(
                     markdown = { MarkdownFrom("race_condition.md") },
                     action = { executorService.submit { RaceCondition() } }
+                )
+                Screen.JmmSynchronized -> CodeLoggerScreen(
+                    markdown = { MarkdownFrom("jmm_synchronized.md") },
+                    action = { executorService.submit { JmmSynchronized() } }
+                )
+                Screen.JmmSynchronizedReentrant -> CodeLoggerScreen(
+                    markdown = { MarkdownFrom("jmm_synchronized_reentrant.md") },
+                    action = { executorService.submit { JmmSynchronizedReentrant() } }
+                )
+                Screen.Volatile -> CodeLoggerScreen(
+                    markdown = { MarkdownFrom("volatile.md") },
+                    action = { executorService.submit { Volatile() } }
+                )
+                Screen.ReentrantLock -> CodeLoggerScreen(
+                    markdown = { MarkdownFrom("reentrant_lock.md") },
+                    action = { executorService.submit { ReentrantLock() } }
+                )
+                Screen.ReentrantReadWriteLock -> CodeLoggerScreen(
+                    markdown = { MarkdownFrom("reentrant_read_write_lock.md") },
+                    action = { executorService.submit { ReentrantReadWriteLock() } }
+                )
+                Screen.ExecutorService -> CodeLoggerScreen(
+                    markdown = { MarkdownFrom("ExecutorService.md") },
+                    action = { executorService.submit { ExecutorService() } }
+                )
+                Screen.Atomics -> CodeLoggerScreen(
+                    markdown = { MarkdownFrom("Atomics.md") },
+                    action = { executorService.submit { Atomics() } }
+                )
+                Screen.CountDownLatch -> CodeLoggerScreen(
+                    markdown = { MarkdownFrom("CountDownLatch.md") },
+                    action = { executorService.submit { CountDownLatch() } }
                 )
             }
         }
