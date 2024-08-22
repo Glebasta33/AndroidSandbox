@@ -9,5 +9,6 @@
         <activity android:name=".presentation.custom_view.touch_events.TouchEventsCustomViewActivity" android:exported="false" />
         <activity android:name=".presentation.custom_view.gantt_chart.GanttChartCustomViewActivity" android:exported="false" />
         <activity android:name=".presentation.custom_view.calendar.CalendarCustomViewActivity" android:exported="false" />
+        <activity android:name=".presentation.custom_view.habit_tracker.HabitTrackerActivity" android:exported="false" />
     </application>
 </manifest>

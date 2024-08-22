@@ -12,6 +12,7 @@ import com.github.gltrusov.views.R
 import com.github.gltrusov.views.presentation.custom_view.basic.BasicCustomViewActivity
 import com.github.gltrusov.views.presentation.custom_view.calendar.CalendarCustomViewActivity
 import com.github.gltrusov.views.presentation.custom_view.gantt_chart.GanttChartCustomViewActivity
+import com.github.gltrusov.views.presentation.custom_view.habit_tracker.HabitTrackerActivity
 import com.github.gltrusov.views.presentation.custom_view.on_measure.MeasuredCustomViewActivity
 import com.github.gltrusov.views.presentation.custom_view.state_preservation.StatePreservationCustomViewActivity
 import com.github.gltrusov.views.presentation.custom_view.touch_events.TouchEventsCustomViewActivity
@@ -58,6 +59,10 @@ internal class ViewsActivity : AppCompatActivity() {
         MenuItem(
             text = "Calendar",
             onClick = { startActivity(Intent(this, CalendarCustomViewActivity::class.java)) }
+        ),
+        MenuItem(
+            text = "Habit tracker",
+            onClick = { startActivity(Intent(this, HabitTrackerActivity::class.java)) }
         )
     )
 

@@ -15,4 +15,9 @@
     <dimen name="calendar_hour_height">60dp</dimen>
     <dimen name="calendar_timeline_height">2dp</dimen>
     <!-->endregion<-->
+
+    <!-->Habit tracker region<-->
+    <dimen name="habit_height">20dp</dimen>
+    <dimen name="habit_vertical_padding">8dp</dimen>
+    <!-->endregion<-->
 </resources>
